@@ -35,6 +35,11 @@ const GlobalStyle = createGlobalStyle`
         color: #333333;
         line-height: 100%;
     }
+
+    a {
+        color: #0091ea;
+        text-decoration: none;
+    }
 `;
 
 const App = ({ Component, pageProps }: AppProps) => {

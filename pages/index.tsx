@@ -1,8 +1,10 @@
 import styled from 'styled-components';
-import { Flask } from '@styled-icons/ionicons-solid';
+import { Flask, ChevronForward } from '@styled-icons/ionicons-solid';
 import Layout from '../components/Layout';
+import { IconLink } from '../components/atoms';
 
-const HeadDiv = styled.div`
+const HeaderSection = styled.section`
+    margin-bottom: 3em;
     text-align: center;
 `;
 
@@ -15,10 +17,19 @@ const CatchH1 = styled.h1`
     }
 `;
 
+const PageArticle = styled.article`
+    border: 2px solid gray;
+    border-radius: 20px;
+    padding: 1em;
+    h2 {
+        font-family: 'Noto Sans JP', sans-serif;
+    }
+`;
+
 const App = () => {
     return (
         <Layout>
-            <HeadDiv>
+            <HeaderSection>
                 <div style={{
                     padding: '1em',
                 }}>
@@ -28,8 +39,18 @@ const App = () => {
                     Welcome to
                     <div>hideo54 Lab</div>
                 </CatchH1>
-                <p>小さな制作物や研究結果を公開しています。</p>
-            </HeadDiv>
+                <p>小さな制作物や研究結果を公開します。</p>
+            </HeaderSection>
+            <section>
+                <PageArticle>
+                    <h2>
+                        <IconLink RightIcon={ChevronForward} href='/senkyo/san-2019-tokyo'>
+                            2019年参院選における東京都の地区別投票傾向分析
+                        </IconLink>
+                    </h2>
+                    <p>ひとくちに東京都と言っても、地区ごとにみると、その投票傾向は少しずつ違っています。2019年に行われた参院選の開票結果を使って、その傾向をヴィジュアライズしています。</p>
+                </PageArticle>
+            </section>
         </Layout>
     );
 };
