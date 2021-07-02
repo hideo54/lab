@@ -47,13 +47,16 @@ const generateColor = (v: number) => { // v: 0 - 1
 
 const RangeSlider = styled(Slider)`
     margin-top: 3em;
+    span.MuiSlider-track {
+        background: linear-gradient(90deg, blue, lime, red);
+    }
     span.MuiSlider-thumb {
-        span.PrivateValueLabel-circle-8 {
+        &, span.PrivateValueLabel-circle-8 {
             color: blue;
         }
     }
     span.MuiSlider-thumb:last-child {
-        span.PrivateValueLabel-circle-8 {
+        &, span.PrivateValueLabel-circle-8 {
             color: red;
         }
     }
