@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import { Flask, ChevronForward } from '@styled-icons/ionicons-solid';
+import { ChevronForward } from '@styled-icons/ionicons-outline';
+import { Flask } from '@styled-icons/ionicons-solid';
 import Layout from '../components/Layout';
 import { IconLink } from '../components/atoms';
 
