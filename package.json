@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/hideo54/lab#readme",
   "dependencies": {
+    "@material-ui/core": "^4.11.4",
     "@styled-icons/fa-brands": "^10.34.0",
     "@styled-icons/ionicons-outline": "^10.34.0",
     "@styled-icons/ionicons-solid": "^10.34.0",
