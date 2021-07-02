@@ -30,7 +30,6 @@ const tokaIds = [
 const parties = ['自由民主党', '立憲民主党', '公明党', '日本維新の会', '日本共産党', '国民民主党', 'れいわ新選組', '社会民主党', 'NHKから国民を守る党'] as const;
 
 const generateColor = (v: number) => { // v: 0 - 1
-    console.log(v);
     const clamp = (x: number) => {
         if (x < 0) return 0;
         if (x > 1) return 1;
@@ -45,6 +44,20 @@ const generateColor = (v: number) => { // v: 0 - 1
     ).join('');
     // https://stackoverflow.com/a/46628410/5864292
 };
+
+const RangeSlider = styled(Slider)`
+    margin-top: 3em;
+    span.MuiSlider-thumb {
+        span.PrivateValueLabel-circle-8 {
+            color: blue;
+        }
+    }
+    span.MuiSlider-thumb:last-child {
+        span.PrivateValueLabel-circle-8 {
+            color: red;
+        }
+    }
+`;
 
 const App = () => {
     const [ party, setParty ] = useState<typeof parties[number]>('自由民主党');
@@ -74,7 +87,7 @@ const App = () => {
                         {parties.map(p => <MenuItem key={p} value={p}>{p}</MenuItem>)}
                     </Select>
                 </FormControl>
-                <Slider value={range} onChange={handleRangeChange} max={65} valueLabelDisplay='on' style={{ marginTop: '3em' }} />
+                <RangeSlider value={range} onChange={handleRangeChange} max={65} valueLabelDisplay='on' />
                 <FormControlLabel control={tokubetsukuCheckbox} label='特別区のみを表示' />
             </ControlsDiv>
             <MapOfTokyo viewBox={showTokubetsukuOnly ? tokubetsukuViewbox : mainViewbox} style={{
@@ -97,7 +110,13 @@ const App = () => {
                     }
                 `).join('')
             }</style>
-            <h2>Credit</h2>
+            <h2>注意</h2>
+            <ul>
+                <li>得票率が指定した範囲に収まらない場合、高低とも黒色になることに注意してください。</li>
+                <li>党名は2019年7月当時のものです。当時の「NHKから国民を守る党」は、現在「嵐の党」に改名しています。</li>
+                <li>当時の「立憲民主党」と「国民民主党」は、2020年9月に合流しています (現在の立憲民主党)。</li>
+            </ul>
+            <h2>クレジット</h2>
             <p>
                 開票データは、東京都選挙管理委員会事務局の「<IconLink RightIcon={Open} href='https://www.senkyo.metro.tokyo.lg.jp/election/sanngiin-all/sanngiin-sokuhou2019/'>参議院議員選挙（令和元年7月21日執行） 投開票結果</IconLink>」ページからダウンロードできる「政党等別得票総数開票区別一覧」データから、「得票総数」の値を用いています。つまり、「政党等の得票総数」と「名簿登載者の得票総数」を足した値です。
             </p>
@@ -108,7 +127,7 @@ const App = () => {
                     href='https://ja.wikipedia.org/wiki/%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB:%E5%8C%85%E6%8B%AC%E8%87%AA%E6%B2%BB%E4%BD%93%E5%8C%BA%E7%94%BB%E5%9B%B3_13000.svg'
                 >
                     ファイル:包括自治体区画図 13000.svg
-                </IconLink> (GNU Free Documentation License) に、リンクの削除、不要なデータを取り除く軽量化、IDの付与などの改変を独自に加えたものです。このファイルは<Link href='/images/Map_of_Tokyo_Ja.svg'>こちら</Link>にて、同じ GNU Free Documentation License のもと公開いたします。
+                </IconLink> (GNU Free Documentation License) に、リンクの削除、不要なデータを取り除く軽量化、IDの付与などの改変を独自に加えたものです。このファイルは<Link href='/images/Map_of_Tokyo_Ja.svg'>こちら</Link>にて、同じ GNU Free Documentation License のもと公開しています。
             </p>
         </Layout>
     );
