@@ -69,47 +69,55 @@
         <path id="lakes" d="M383,125l5-3l-2,13l-2-5l-2,4l-2-4l-1,4l-1-2l-7,4l7-8l-11-3H383z M202,35l5,1l-4,4v-3l-10-2H202z M386,137l4,1l-2,5l-10-4L386,137 z M88,123l5-1l1,3l3-6v3h9l-3-4l5-6l4,10v6l-3-5l-2,1l2,8l-4-2l1-5l-12,3l-2-4l-2,12l-3-3v4l1-5l-11-5l-2,5l-5-1l1,5l-8,6l3-6h4v-7 h-7l-3-5l-4,2l-4-5h-4l5-1l3,5l4-3l4,6l5-2l3,3l5-5l10,5v-3l-6-1v-11l2,10L88,123z M239,355l2-3l6,5l9-8l-1-3l5,1l-5,10l-5,2l3,4 l-6-1l9,8l-1,2l7,9l-13-8l-2-8l-3,5v-5l-4-8l-2,1l2,6l-3-3l-6,6l2-10L239,355z M252,292l3,5l5-3l13,11l1-4l7-3l-1,6l6-2l2,5l-9,1 l-2-4l-6,5l-3-5l-6-3l2-1l-3-4l-7,2l-1-5l-10,5l3-6H252z M281,288l-5,3l-1-4l5-1L281,288z M206,288l4-3l-8-5v-5l6,1l7,7l5-3l-3,5 l2,7l-3-4H206z"/>
     </g>
     <g id="toshobu">
-        <g id="oshima-box" transform="translate(171,340)">
-            <rect id="rect313" x="-10" y="-10" width="170" height="170"/>
-            <rect id="rect315" y="0" width="150" height="150"/>
-            <path id="oshima" d="M119,92l-3-10l4-10l-5-5l-3-15l-2-6l-8-7l-11-9l-2,1l-15-6l2,3h-3l-12-9l-5,2l-4-2l-2,5l-7,10v8l2,21h-3l3,1l4,9l-3,15l-1,6l7,9 l-2,8l16,5l13,11l17,3l6-1l7,4l5-3l-3-7l6,4l4-11l-5-7l5-11L119,92z"/>
+        <g id="oshima-group">
+            <g id="oshima-box" transform="translate(171,340)">
+                <rect id="rect313" x="-10" y="-10" width="170" height="170"/>
+                <rect id="rect315" y="0" width="150" height="150"/>
+                <path id="oshima" d="M119,92l-3-10l4-10l-5-5l-3-15l-2-6l-8-7l-11-9l-2,1l-15-6l2,3h-3l-12-9l-5,2l-4-2l-2,5l-7,10v8l2,21h-3l3,1l4,9l-3,15l-1,6l7,9 l-2,8l16,5l13,11l17,3l6-1l7,4l5-3l-3-7l6,4l4-11l-5-7l5-11L119,92z"/>
+            </g>
+            <g id="izu-box-1" transform="translate(1,250)">
+                <rect id="rect330" x="-10" y="-10" width="180" height="380"/>
+                <rect id="rect332" y="0" width="160" height="360"/>
+                <path id="toshima" d="M133,37l11-11l-3-7l-7-2l1-2l-1,2l-4-1l-6,11l3,8L133,37z"/>
+                <path id="niijima" d="M139,68l1,1l3,7l6-2L139,68z M108,192l9,11l11,5l2-13l2-44l9-13l2-4l-4-4l4-6l-1-4l-9-8l2,10l-4,5v-2l-5,1l-3,6l-8,10l-3,23 l-5,7l-4-2l2,4L108,192z M90,165l3,5l-1,2l2,1l1-5L90,165z M89,216l3-6l1-3l-7-2l-7-4l-3,2l2,4l-3,4l-3-3l1,4l-6,5l5,3l3-5l2,2 l5,3l6-3l-1-2L89,216z"/>
+                <path id="kouzushima" d="M42,324l5-2l2,4h3l-1-13l-2-12l-14-8l-8-4l-6,8l2,8l-7,4l1,2l3,2l-2,2l1,7l-4-1l5,4l-3,4l-6,2v9l-2-1l7,6l5-2l6,1l1-4l1,2l2-8 l5,3l2-5l-2-3l3,1l-3-2L42,324z M61,319l2,3l2-3H61z M63,322l3,3v-3H63z"/>
+            </g>
         </g>
-        <g id="izu-box-1" transform="translate(1,250)">
-            <rect id="rect330" x="-10" y="-10" width="180" height="380"/>
-            <rect id="rect332" y="0" width="160" height="360"/>
-            <path id="toshima" d="M133,37l11-11l-3-7l-7-2l1-2l-1,2l-4-1l-6,11l3,8L133,37z"/>
-            <path id="niijima" d="M139,68l1,1l3,7l6-2L139,68z M108,192l9,11l11,5l2-13l2-44l9-13l2-4l-4-4l4-6l-1-4l-9-8l2,10l-4,5v-2l-5,1l-3,6l-8,10l-3,23 l-5,7l-4-2l2,4L108,192z M90,165l3,5l-1,2l2,1l1-5L90,165z M89,216l3-6l1-3l-7-2l-7-4l-3,2l2,4l-3,4l-3-3l1,4l-6,5l5,3l3-5l2,2 l5,3l6-3l-1-2L89,216z"/>
-            <path id="kouzushima" d="M42,324l5-2l2,4h3l-1-13l-2-12l-14-8l-8-4l-6,8l2,8l-7,4l1,2l3,2l-2,2l1,7l-4-1l5,4l-3,4l-6,2v9l-2-1l7,6l5-2l6,1l1-4l1,2l2-8 l5,3l2-5l-2-3l3,1l-3-2L42,324z M61,319l2,3l2-3H61z M63,322l3,3v-3H63z"/>
+        <g id="miyake-group">
+            <g id="miyake-box" transform="translate(121,500)">
+                <rect id="rect353" x="-10" y="-10" width="130" height="130"/>
+                <rect id="rect355" y="0" width="110" height="110"/>
+                <path id="miyake" d="M81,82l7-7V65l3-1l-4-5l3-10l-4-15l-6-3l-10-9l-3,1l-11-2l-10,4h-8l-5,3l-2,5l3,8l-9,13v7l-7,6l5,5l-1,5l3-1l-3,2l2,13l5-1l12,7 l8-3l7,1l2-2l6,2l2-4L81,82z"/>
+            </g>
+            <g id="mikurajima-box" transform="translate(241,500)">
+                <rect id="rect368" x="-10" y="-10" width="100" height="130"/>
+                <rect id="rect370" y="0" width="80" height="110"/>
+                <path id="mikurajima" d="M51,81l7-3l6-16L53,43l-10-8l-12,4l-9,13l-1,15l2,7l8,4L51,81z"/>
+            </g>
         </g>
-        <g id="miyake-box" transform="translate(121,500)">
-            <rect id="rect353" x="-10" y="-10" width="130" height="130"/>
-            <rect id="rect355" y="0" width="110" height="110"/>
-            <path id="miyake" d="M81,82l7-7V65l3-1l-4-5l3-10l-4-15l-6-3l-10-9l-3,1l-11-2l-10,4h-8l-5,3l-2,5l3,8l-9,13v7l-7,6l5,5l-1,5l3-1l-3,2l2,13l5-1l12,7 l8-3l7,1l2-2l6,2l2-4L81,82z"/>
+        <g id="hachijo-group">
+            <g id="hachijo-box" transform="translate(331,430)">
+                <rect id="rect383" x="-10" y="-10" width="220" height="200"/>
+                <rect id="rect385" y="0" width="200" height="180"/>
+                <path id="hachijo" d="M174,98l2-8l-8-15l-23-5l2-2l-2,1l-3-7l-9-3l-5-6v-3l-7-5l-11-10H96l-7,1l-3,5l-4,12l2,7l7,14l4,11l12,5l3,2l3-3l2,13v11l5,6 l10,6l4-1l5,5l6-1l5,5l6,7l4-3l-2-9v-7l4-8l15-4l1-4L174,98z M47,73l4,2v-6l-1-6l-5-2l-3-5h-4l-4-1l-2,5l4,4l4,9H47z"/>
+            </g>
+            <g id="aogashima-box" transform="translate(331,530)">
+                <rect id="rect398" x="-10" y="-10" width="90" height="100"/>
+                <rect id="rect400" y="0" width="70" height="80"/>
+                <path id="aogashima" d="M42,55l9-5v-8l-4-4l-5-7l-11-3l-1,18l4,6L42,55z"/>
+            </g>
         </g>
-        <g id="mikurajima-box" transform="translate(241,500)">
-            <rect id="rect368" x="-10" y="-10" width="100" height="130"/>
-            <rect id="rect370" y="0" width="80" height="110"/>
-            <path id="mikurajima" d="M51,81l7-3l6-16L53,43l-10-8l-12,4l-9,13l-1,15l2,7l8,4L51,81z"/>
-        </g>
-        <g id="hachijo-box" transform="translate(331,430)">
-            <rect id="rect383" x="-10" y="-10" width="220" height="200"/>
-            <rect id="rect385" y="0" width="200" height="180"/>
-            <path id="hachijo" d="M174,98l2-8l-8-15l-23-5l2-2l-2,1l-3-7l-9-3l-5-6v-3l-7-5l-11-10H96l-7,1l-3,5l-4,12l2,7l7,14l4,11l12,5l3,2l3-3l2,13v11l5,6 l10,6l4-1l5,5l6-1l5,5l6,7l4-3l-2-9v-7l4-8l15-4l1-4L174,98z M47,73l4,2v-6l-1-6l-5-2l-3-5h-4l-4-1l-2,5l4,4l4,9H47z"/>
-        </g>
-        <g id="aogashima-box" transform="translate(331,530)">
-            <rect id="rect398" x="-10" y="-10" width="90" height="100"/>
-            <rect id="rect400" y="0" width="70" height="80"/>
-            <path id="aogashima" d="M42,55l9-5v-8l-4-4l-5-7l-11-3l-1,18l4,6L42,55z"/>
-        </g>
-        <g id="ogasawara-box-1" transform="translate(541,430)">
-            <rect id="rect413" x="-10" y="-10" width="130" height="200"/>
-            <rect id="rect415" y="0" width="110" height="180"/>
-            <path id="ogasawara-1" d="M37,53l4,3l4,1l-1-5l4-1l6-7l2-10h-3l-3-4l1-6l4-3l-7-3l-3-4l-4,3l3,4l-2,3l2,7h-3v9l-2,5l4,2l-1,4L37,53z M57,86l-2,4h11h15h3 v-4l-8-3l1-7l-5-2l-2-6l-7,2l-4,3l1-6l-4,1l-6-5l-2-6l-3,7l4,3l-6,3l4,5l-3,4l5-2l11,5L57,86z M30,81l-6-2l2,4l-4,3l8-1V81z M83,146l3-1l-2-5l-4-3l1-4l1-12l-2-4l-5-1v-9l-5-9h-3l-8-4h-6h-9l-5,5l1,6l3,5l6-1l-2-3l8-7l1,11l6,4l-3,9l-20,1l1,3l4-1l5,3 l-1,3l2,5l-6-1l-1,6l3-1l-5,11l2,4l1-5l4,3l6-4l9,5l1,2l7-3l1,5h8l-5-6l2-7l-3-3l5-3L83,146z M89,103l3,3l4,1l-2-3L89,103z M31,152l3,11l2-5l-4-7L31,152z"/>
-        </g>
-        <g id="ogasawara-box-2" transform="translate(661,430)">
-            <rect id="rect428" x="-10" y="-10" width="160" height="200"/>
-            <rect id="rect430" y="0" width="140" height="180"/>
-            <path id="ogasawara-2" d="M82,65h3v-4h-5l-1,3l-7,1l-7-4l-3-13l3-4l3-10l-2,1l-12,4l-4-1v-4l-1-5l11-6l4,1l1-3l-5-3l-4-3l-1,3h-8l-2-2l2,9l-3-2l-5,1l-3-8 l-4-6l-3,3l3,8l4,8l5,10l7,9l-3,7h4l3,1l-4,7l2,2l5,14l1,5l4,1l2-4v8l7-2l4,7l4,9l-5,7h5l4-3l-1-7l-2-11l-4-4l-4-8l3-5v-6L82,65 z M40,119l-3-11h-5l-2,6l2,1v7l2-3l2,4L40,119z M61,132l1-3h-5l-7,5L61,132z M119,151l9-3l-4-3l-4-4l-3,8L119,151z M62,163v-9 l-6-3l-1,2l2,12l-4,2l6,4L62,163z M110,154l-5-3l-7,2l-2,6v2l10-1L110,154z"/>
+        <g id="ogasawara">
+            <g id="ogasawara-box-1" transform="translate(541,430)">
+                <rect id="rect413" x="-10" y="-10" width="130" height="200"/>
+                <rect id="rect415" y="0" width="110" height="180"/>
+                <path id="ogasawara-1" d="M37,53l4,3l4,1l-1-5l4-1l6-7l2-10h-3l-3-4l1-6l4-3l-7-3l-3-4l-4,3l3,4l-2,3l2,7h-3v9l-2,5l4,2l-1,4L37,53z M57,86l-2,4h11h15h3 v-4l-8-3l1-7l-5-2l-2-6l-7,2l-4,3l1-6l-4,1l-6-5l-2-6l-3,7l4,3l-6,3l4,5l-3,4l5-2l11,5L57,86z M30,81l-6-2l2,4l-4,3l8-1V81z M83,146l3-1l-2-5l-4-3l1-4l1-12l-2-4l-5-1v-9l-5-9h-3l-8-4h-6h-9l-5,5l1,6l3,5l6-1l-2-3l8-7l1,11l6,4l-3,9l-20,1l1,3l4-1l5,3 l-1,3l2,5l-6-1l-1,6l3-1l-5,11l2,4l1-5l4,3l6-4l9,5l1,2l7-3l1,5h8l-5-6l2-7l-3-3l5-3L83,146z M89,103l3,3l4,1l-2-3L89,103z M31,152l3,11l2-5l-4-7L31,152z"/>
+            </g>
+            <g id="ogasawara-box-2" transform="translate(661,430)">
+                <rect id="rect428" x="-10" y="-10" width="160" height="200"/>
+                <rect id="rect430" y="0" width="140" height="180"/>
+                <path id="ogasawara-2" d="M82,65h3v-4h-5l-1,3l-7,1l-7-4l-3-13l3-4l3-10l-2,1l-12,4l-4-1v-4l-1-5l11-6l4,1l1-3l-5-3l-4-3l-1,3h-8l-2-2l2,9l-3-2l-5,1l-3-8 l-4-6l-3,3l3,8l4,8l5,10l7,9l-3,7h4l3,1l-4,7l2,2l5,14l1,5l4,1l2-4v8l7-2l4,7l4,9l-5,7h5l4-3l-1-7l-2-11l-4-4l-4-8l3-5v-6L82,65 z M40,119l-3-11h-5l-2,6l2,1v7l2-3l2,4L40,119z M61,132l1-3h-5l-7,5L61,132z M119,151l9-3l-4-3l-4-4l-3,8L119,151z M62,163v-9 l-6-3l-1,2l2,12l-4,2l6,4L62,163z M110,154l-5-3l-7,2l-2,6v2l10-1L110,154z"/>
+            </g>
         </g>
     </g>
 </svg>
