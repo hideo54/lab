@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, createRef, useEffect } from 'react';
 import Link from 'next/link';
 import { FormControl, InputLabel, Select, MenuItem, FormControlLabel, Slider, Checkbox } from '@material-ui/core';
 import styled from 'styled-components';
@@ -7,6 +7,7 @@ import { Open } from '@styled-icons/ionicons-outline';
 import Layout from '../../components/Layout';
 import { IconLink } from '../../components/atoms';
 import votes from '../../public/data/san-2019-tokyo.json';
+import districtNameDict from '../../public/data/tokyo-district-name-dict.json';
 import MapOfTokyo from '../../public/images/Map_of_Tokyo_Ja.svg';
 
 const H1 = styled.h1`
@@ -19,14 +20,25 @@ const ControlsDiv = styled.div`
     text-align: center;
 `;
 
+const IslandsDiv = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80px;
+    height: 40px;
+    border: 1px solid #333333;
+    margin-left: auto;
+    cursor: pointer;
+`;
+
 const mainViewbox = '28 12 747 375';
 const tokubetsukuViewbox = '501 89 275 279';
 const tokubetsukuIds = [
     'chiyoda', 'chuo', 'minato', 'shinjuku', 'bunkyo', 'taito', 'sumida', 'koto', 'shinagawa', 'meguro', 'ota', 'setagaya', 'shibuya', 'nakano', 'suginami', 'toshima', 'kita', 'arakawa', 'itabashi', 'nerima', 'adachi', 'katsushika', 'edogawa',
-];
+] as const;
 const tokaIds = [
     'hachioji', 'tachikawa', 'musashino', 'mitaka', 'ome', 'fuchu', 'akishima', 'chofu', 'machida', 'koganei', 'kodaira', 'hino', 'higashimurayama', 'kokubunji', 'kunitachi', 'fussa', 'komae', 'higashiyamato', 'kiyose', 'higashikurume', 'musashimurayama', 'tama', 'inagi', 'hamura', 'akiruno', 'nishitokyo', 'mizuho', 'hinode', 'hinohara', 'okutama', 'toshobu',
-];
+] as const;
 const parties = ['自由民主党', '立憲民主党', '公明党', '日本維新の会', '日本共産党', '国民民主党', 'れいわ新選組', '社会民主党', 'NHKから国民を守る党'] as const;
 
 const generateColor = (v: number) => { // v: 0 - 1
@@ -39,7 +51,7 @@ const generateColor = (v: number) => { // v: 0 - 1
     const r = (t: number) => clamp(1.5 - Math.abs(2 * t - 1));
     const g = (t: number) => clamp(1.5 - Math.abs(2 * t));
     const b = (t: number) => clamp(1.5 - Math.abs(2 * t + 1));
-    return [r, g, b].map(f =>
+    return '#' + [r, g, b].map(f =>
         ('00' + Math.floor(f(t) * 255).toString(16)).slice(-2)
     ).join('');
     // https://stackoverflow.com/a/46628410/5864292
@@ -48,7 +60,8 @@ const generateColor = (v: number) => { // v: 0 - 1
 const RangeSlider = styled(Slider)`
     margin-top: 3em;
     span.MuiSlider-track {
-        background: linear-gradient(90deg, blue, lime, red);
+        background: linear-gradient(to right, #00007f, #004cff, #19ffe5, #e5ff19, #ff4c00, #7f0000);
+        // 0, 0.2, ..., 1.0 で generateColor した
     }
     span.MuiSlider-thumb {
         &, span.PrivateValueLabel-circle-8 {
@@ -64,8 +77,9 @@ const RangeSlider = styled(Slider)`
 
 const App = () => {
     const [ party, setParty ] = useState<typeof parties[number]>('自由民主党');
-    const [ range, setRange ] = useState([0, 65]);
+    const [ range, setRange ] = useState([0, 50]);
     const [ showTokubetsukuOnly, setShowTokubetsukuOnly ] = useState(false);
+    const [ selectedId, setSelectedId ] = useState<keyof typeof votes | null>(null);
     const handlePartyChange = (event: React.ChangeEvent<{ value: typeof parties[number] }>) => {
         setParty(event.target.value);
     };
@@ -77,12 +91,33 @@ const App = () => {
     };
     const tokubetsukuCheckbox = <Checkbox checked={showTokubetsukuOnly} onChange={handleTargetChange} />;
     const targetIds = [...tokubetsukuIds, ...(showTokubetsukuOnly ? [] : tokaIds)];
+    const svgRef = createRef<SVGElement>();
+    useEffect(() => {
+        targetIds.map(id => {
+            const path = svgRef.current.querySelector(`#Map_of_Tokyo_Ja_svg__${id}`) as SVGPathElement;
+            path.style.fill = generateColor((100 * votes[id][party] - range[0]) / (range[1] - range[0]));
+        });
+        const islands = document.getElementById('toshobu');
+        const islandsV = (100 * votes['toshobu'][party] - range[0]) / (range[1] - range[0]);
+        islands.style.backgroundColor = generateColor(islandsV);
+        console.log(islandsV);
+        islands.style.color = 0.3 < islandsV && islandsV < 0.74 ? '#333333' : 'white';
+    }, [ range, party ]);
+    useEffect(() => {
+        targetIds.map(id => {
+            const path = svgRef.current.querySelector(`#Map_of_Tokyo_Ja_svg__${id}`) as SVGPathElement;
+            path.onclick = e => {
+                const id = (e.target as SVGPathElement).id.slice('Map_of_Tokyo_Ja_svg__'.length) as typeof targetIds[number];
+                setSelectedId(id);
+            };
+        });
+    }, []);
     return (
         <Layout
             title='2019年参院選における東京都の地区別投票傾向分析 | hideo54 Lab'
             description='ひとくちに東京都と言っても、地区ごとにみると、その投票傾向は少しずつ違っています。2019年に行われた参院選の開票結果を使って、その傾向をヴィジュアライズしています。'
         >
-            <H1>2019年参院選における東京都の区画別投票傾向分析</H1>
+            <H1>2019年参院選における東京都の区画別投票傾向</H1>
             <ControlsDiv>
                 <FormControl variant='outlined'>
                     <InputLabel id='party'>政党</InputLabel>
@@ -90,12 +125,19 @@ const App = () => {
                         {parties.map(p => <MenuItem key={p} value={p}>{p}</MenuItem>)}
                     </Select>
                 </FormControl>
-                <RangeSlider value={range} onChange={handleRangeChange} max={65} valueLabelDisplay='on' />
+                <RangeSlider value={range} onChange={handleRangeChange} max={50} valueLabelDisplay='on' />
                 <FormControlLabel control={tokubetsukuCheckbox} label='特別区のみを表示' />
             </ControlsDiv>
-            <MapOfTokyo viewBox={showTokubetsukuOnly ? tokubetsukuViewbox : mainViewbox} style={{
+            <MapOfTokyo viewBox={showTokubetsukuOnly ? tokubetsukuViewbox : mainViewbox} ref={svgRef} style={{
                 maxHeight: '50vh',
             }} />
+            <IslandsDiv id='toshobu' onClick={() => { setSelectedId('toshobu'); }}>島しょ部</IslandsDiv>
+            <h2>選択した区画の得票率</h2>
+            {selectedId ? (
+                <p>{districtNameDict[selectedId]}: {Math.round(votes[selectedId][party] * 1000) / 10}%</p>
+            ) : (
+                <p>東京都全体の得票率: </p>
+            )}
             <style>{`
                 #Map_of_Tokyo_Ja_svg__main {
                     fill: white;
@@ -105,14 +147,10 @@ const App = () => {
                 ${showTokubetsukuOnly ? `#Map_of_Tokyo_Ja_svg__toka,` : ''} #Map_of_Tokyo_Ja_svg__toshobu, #Map_of_Tokyo_Ja_svg__lakes, #Map_of_Tokyo_Ja_svg__outside {
                     display: none;
                 }
+                svg path {
+                    cursor: pointer;
+                }
             `}</style>
-            <style>{
-                targetIds.map(id => `
-                    #Map_of_Tokyo_Ja_svg__${id} {
-                        fill: #${generateColor((100 * votes[id][party] - range[0]) / (range[1] - range[0]))};
-                    }
-                `).join('')
-            }</style>
             <h2>注意</h2>
             <ul>
                 <li>得票率が指定した範囲に収まらない場合、高低とも黒色になることに注意してください。</li>

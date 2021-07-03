@@ -5,6 +5,7 @@ module.exports = {
             use: [{
                 loader: '@svgr/webpack',
                 options: {
+                    ref: true,
                     svgoConfig: {
                         plugins: [{
                             cleanupIDs: false,
