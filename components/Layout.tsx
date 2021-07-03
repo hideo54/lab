@@ -7,13 +7,14 @@ const Layout = ({
     description = '新しいプロダクトにするほどでもないような、小さな制作物や研究結果を公開する場所。',
     imageUrl = 'https://img.hideo54.com/icons/main.png',
     twitterCardType = 'summary',
+    header,
 }: {
     children?: ReactNode;
     title?: string;
     description?: string;
     imageUrl?: string;
     twitterCardType?: 'summary' | 'summary_large_image' | 'app' | 'player';
-    Header?: JSX.Element;
+    header?: JSX.Element;
 }) => (
     <>
         <Head>
@@ -32,6 +33,7 @@ const Layout = ({
             <link rel='icon' type='image/png' href='https://img.hideo54.com/icons/main.png' />
             <link rel='apple-touch-icon' href='https://img.hideo54.com/icons/main.png' />
         </Head>
+        {header && <header>{header}</header>}
         <main>
             {children}
         </main>

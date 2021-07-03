@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { FormControl, InputLabel, Select, MenuItem, FormControlLabel, Slider, Checkbox } from '@material-ui/core';
 import styled from 'styled-components';
 import { WikipediaW } from '@styled-icons/fa-brands';
-import { Open } from '@styled-icons/ionicons-outline';
+import { ChevronBack, Open } from '@styled-icons/ionicons-outline';
 import Layout from '../../components/Layout';
 import { IconLink } from '../../components/atoms';
 import votes from '../../public/data/san-2019-tokyo-percent.json';
@@ -117,6 +117,14 @@ const App = () => {
         <Layout
             title='2019年参院選における東京都の地区別投票傾向分析 | hideo54 Lab'
             description='ひとくちに東京都と言っても、地区ごとにみると、その投票傾向は少しずつ違っています。2019年に行われた参院選の開票結果を使って、その傾向をヴィジュアライズしています。'
+            header={(
+                <div style={{
+                    marginTop: '1em',
+                    paddingLeft: '1em',
+                }}>
+                    <IconLink LeftIcon={ChevronBack} href='/'>トップページ</IconLink>
+                </div>
+            )}
         >
             <H1>2019年参院選における東京都の区画別投票傾向</H1>
             <ControlsDiv>

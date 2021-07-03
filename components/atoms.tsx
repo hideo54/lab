@@ -9,13 +9,11 @@ export const IconLink: React.FC<{
 }> = ({ children, LeftIcon, RightIcon, href }) => {
     const Left = LeftIcon && styled(LeftIcon)`
         vertical-align: text-bottom;
-        margin-left: 0.4em;
         margin-right: 0.2em;
     `;
     const Right = RightIcon && styled(RightIcon)`
         vertical-align: text-bottom;
         margin-left: 0.2em;
-        margin-right: 0.4em;
     `;
     if (href.startsWith('/')) {
         return (
