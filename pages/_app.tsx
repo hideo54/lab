@@ -1,5 +1,8 @@
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 import type { AppProps } from 'next/app';
 import { createGlobalStyle } from 'styled-components';
+import * as gtag from '../lib/gtag';
 
 const GlobalStyle = createGlobalStyle`
     body {
@@ -43,6 +46,17 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const App = ({ Component, pageProps }: AppProps) => {
+    const router = useRouter();
+    useEffect(() => {
+        const handleRouteChange = (url: string) => {
+            gtag.pageview(url);
+        };
+        router.events.on('routeChangeComplete', handleRouteChange);
+        return () => {
+            router.events.off('routeChangeComplete', handleRouteChange);
+        };
+    }, [router.events]);
+    // https://github.com/vercel/next.js/blob/canary/examples/with-google-analytics/pages/_app.js
     return (
         <>
             <Component {...pageProps} />
