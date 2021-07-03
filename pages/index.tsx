@@ -19,6 +19,7 @@ const CatchH1 = styled.h1`
 `;
 
 const PageArticle = styled.article`
+    margin: 1em 0;
     border: 2px solid gray;
     border-radius: 20px;
     padding: 1em;
