@@ -6,7 +6,7 @@ import { WikipediaW } from '@styled-icons/fa-brands';
 import { Open } from '@styled-icons/ionicons-outline';
 import Layout from '../../components/Layout';
 import { IconLink } from '../../components/atoms';
-import votes from '../../public/data/san-2019-tokyo.json';
+import votes from '../../public/data/san-2019-tokyo-percent.json';
 import districtNameDict from '../../public/data/tokyo-district-name-dict.json';
 import MapOfTokyo from '../../public/images/Map_of_Tokyo_Ja.svg';
 
@@ -100,7 +100,6 @@ const App = () => {
         const islands = document.getElementById('toshobu');
         const islandsV = (100 * votes['toshobu'][party] - range[0]) / (range[1] - range[0]);
         islands.style.backgroundColor = generateColor(islandsV);
-        console.log(islandsV);
         islands.style.color = 0.3 < islandsV && islandsV < 0.74 ? '#333333' : 'white';
     }, [ range, party ]);
     useEffect(() => {
