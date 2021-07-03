@@ -66,12 +66,12 @@ const RangeSlider = styled(Slider)`
         // 0, 0.2, ..., 1.0 で generateColor した
     }
     span.MuiSlider-thumb {
-        &, span.PrivateValueLabel-circle-8 {
+        &, span.MuiSlider-valueLabel > span {
             color: blue;
         }
     }
     span.MuiSlider-thumb:last-child {
-        &, span.PrivateValueLabel-circle-8 {
+        &, span.MuiSlider-valueLabel > span {
             color: red;
         }
     }
