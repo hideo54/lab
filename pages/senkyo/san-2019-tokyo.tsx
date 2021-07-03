@@ -97,11 +97,13 @@ const App = () => {
             const path = svgRef.current.querySelector(`#Map_of_Tokyo_Ja_svg__${id}`) as SVGPathElement;
             path.style.fill = generateColor((100 * votes[id][party] - range[0]) / (range[1] - range[0]));
         });
-        const islands = document.getElementById('toshobu');
-        const islandsV = (100 * votes['toshobu'][party] - range[0]) / (range[1] - range[0]);
-        islands.style.backgroundColor = generateColor(islandsV);
-        islands.style.color = 0.3 < islandsV && islandsV < 0.74 ? '#333333' : 'white';
-    }, [ range, party ]);
+        if (!showTokubetsukuOnly) {
+            const islands = document.getElementById('toshobu');
+            const islandsV = (100 * votes['toshobu'][party] - range[0]) / (range[1] - range[0]);
+            islands.style.backgroundColor = generateColor(islandsV);
+            islands.style.color = 0.3 < islandsV && islandsV < 0.74 ? '#333333' : 'white';
+        }
+    }, [ party, range, showTokubetsukuOnly ]);
     useEffect(() => {
         targetIds.map(id => {
             const path = svgRef.current.querySelector(`#Map_of_Tokyo_Ja_svg__${id}`) as SVGPathElement;
@@ -130,7 +132,7 @@ const App = () => {
             <MapOfTokyo viewBox={showTokubetsukuOnly ? tokubetsukuViewbox : mainViewbox} ref={svgRef} style={{
                 maxHeight: '50vh',
             }} />
-            <IslandsDiv id='toshobu' onClick={() => { setSelectedId('toshobu'); }}>島しょ部</IslandsDiv>
+            {showTokubetsukuOnly || <IslandsDiv id='toshobu' onClick={() => { setSelectedId('toshobu'); }}>島しょ部</IslandsDiv>}
             <h2>選択した区画の得票率</h2>
             {selectedId ? (
                 <p>{districtNameDict[selectedId]}: {Math.round(votes[selectedId][party] * 1000) / 10}%</p>
