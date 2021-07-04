@@ -117,8 +117,10 @@ const App = () => {
     }, []);
     return (
         <Layout
-            title='2019年参院選における東京都の地区別投票傾向分析 | hideo54 Lab'
-            description='ひとくちに東京都と言っても、地区ごとにみると、その投票傾向は少しずつ違っています。2019年に行われた参院選の開票結果を使って、その傾向をヴィジュアライズしています。'
+            title='2019年参院選における東京都の区画別投票傾向分析 | hideo54 Lab'
+            description='2019年に行われた参院選の開票結果を使って、東京都の区画別の投票傾向をヴィジュアライズしています。'
+            imageUrl='https://cae42fdb738e.ngrok.io/images/san-2019-tokyo.png'
+            twitterCardType='summary_large_image'
             header={(
                 <div style={{
                     marginTop: '1em',
