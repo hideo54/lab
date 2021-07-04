@@ -119,7 +119,7 @@ const App = () => {
         <Layout
             title='2019年参院選における東京都の区画別投票傾向分析 | hideo54 Lab'
             description='2019年に行われた参院選の開票結果を使って、東京都の区画別の投票傾向をヴィジュアライズしています。'
-            imageUrl='https://cae42fdb738e.ngrok.io/images/san-2019-tokyo.png'
+            imageUrl='https://lab.hideo54.com/images/san-2019-tokyo.png'
             twitterCardType='summary_large_image'
             header={(
                 <div style={{
