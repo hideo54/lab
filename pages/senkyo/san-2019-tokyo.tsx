@@ -115,6 +115,23 @@ const App = () => {
             };
         });
     }, []);
+    useEffect(() => {
+        const copiedElements = document.getElementsByClassName('copy');
+        Array.prototype.forEach.call(copiedElements, e => { e.remove(); });
+        if (selectedId && selectedId !== 'all') {
+            const root = document.getElementById('Map_of_Tokyo_Ja_svg__main');
+            const selected = document.getElementById('Map_of_Tokyo_Ja_svg__' + selectedId);
+            const selectedCopy = selected.cloneNode() as SVGPathElement;
+            selectedCopy.style.strokeWidth = '5';
+            selectedCopy.style.strokeLinejoin = 'round';
+            // selectedCopy.style.stroke = 'white'; // いい色がわからん
+            selectedCopy.style.fillOpacity = '0';
+            selectedCopy.classList.add('copy');
+            root.appendChild(selectedCopy);
+        }
+        const islands = document.getElementById('toshobu');
+        islands.style.borderWidth = selectedId === 'toshobu' ? '5px' : '1px';
+    }, [ selectedId ]);
     return (
         <Layout
             title='2019年参院選における東京都の区画別投票傾向分析 | hideo54 Lab'
