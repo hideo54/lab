@@ -62,7 +62,7 @@ const events: Event[] = [
         date: '2012-10-01',
         caption: '野田第3次改造内閣発足',
     },
-]
+];
 
 export const getStaticProps = async () => {
     const dataStr = await fs.readFile('./public/data/approval-rate.json', 'utf-8');
@@ -80,17 +80,14 @@ export const getStaticProps = async () => {
 const App = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
     const data = props.approvalRateData;
     const lineChart = (
-        <LineChart data={data}>
+        <LineChart data={data} margin={{ left: -20, right: 0, top: 5, bottom: 5 }}>
             <XAxis
                 dataKey='days'
                 type='number'
                 domain={['dataMin', 'dataMax']}
                 tick={false}
             />
-            <YAxis
-                domain={[0, 80]}
-                label={{ value: '%', position: 'insideLeft' }} tickCount={9}
-            />
+            <YAxis domain={[0, 80]} tickCount={9} tickFormatter={s => s + '%'} />
             <Line type='monotone' dataKey='approval' stroke='#FF0000' />
             <Line type='monotone' dataKey='disapproval' stroke='#0000FF' />
             {events.map(event => {
@@ -128,11 +125,17 @@ const App = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
             )}
         >
             <H1>民主党政権時の内閣支持率と主な出来事</H1>
-            <div style={{ height: '70vh' }}>
+            <div style={{ height: '50vh', margin: '0 auto' }}>
                 <ResponsiveContainer>
                     {lineChart}
                 </ResponsiveContainer>
             </div>
+            <h2>制作動機</h2>
+            <p>
+                日本再建イニシアティブ『<IconLink RightIcon={Open} href=''>民主党政権 失敗の検証</IconLink>』(中公新書) を読んでいて、民主党政権時の内閣支持率と主な出来事をわかりやすく図示したグラフが欲しくなったことがきっかけです。
+                <br />
+                この本は、3年3ヶ月で幕を閉じた民主党政権の失敗の理由を、当時政権を担っていた議員や関係者への多数のインタビューを踏まえながら、各政策に注目して詳細に分析した本で、おすすめの一冊です。
+            </p>
             <h2>クレジット</h2>
             <p>
                 内閣支持率のデータは、NHK放送文化研究所が公開している各年の<IconLink RightIcon={Open} href='https://www.nhk.or.jp/bunken/yoron/political/2009.html'>政治意識月例調査</IconLink>ページに掲載されているデータを利用しています。
