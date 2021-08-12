@@ -1,7 +1,7 @@
 import { InferGetStaticPropsType } from 'next';
 import styled from 'styled-components';
-import { ChevronBack } from '@styled-icons/ionicons-solid';
-import { LineChart, Line, XAxis, YAxis, ReferenceLine } from 'recharts';
+import { ChevronBack, Open } from '@styled-icons/ionicons-outline';
+import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, ReferenceLine, Brush } from 'recharts';
 import fs from 'fs/promises';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
@@ -28,7 +28,6 @@ export const getStaticProps = async () => {
         ...d,
         days: dayjs(d.day, 'M月D日').year(d.year).diff(dayjs('2009-09-01'), 'days'), // 2009/09/01 からの経過日数
     })).filter(d => d.days > 16);
-    console.log(approvalRateData[1]);
     return {
         props: { approvalRateData },
     };
@@ -36,6 +35,31 @@ export const getStaticProps = async () => {
 
 const App = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
     const data = props.approvalRateData;
+    const lineChart = (
+        <LineChart data={data}>
+            <XAxis
+                dataKey='days'
+                type='number'
+                domain={['dataMin', 'dataMax']}
+                tick={false}
+            />
+            <YAxis
+                domain={[0, 80]}
+                label={{ value: '%', position: 'insideLeft' }} tickCount={9}
+            />
+            <Line type='monotone' dataKey='approval' stroke='#FF0000' />
+            <Line type='monotone' dataKey='disapproval' stroke='#0000FF' />
+            <ReferenceLine label='hoge' x={20} />
+            <Brush
+                dataKey='days'
+                startIndex={0}
+                endIndex={6}
+                tickFormatter={n =>
+                    dayjs('2009-09-01').add(n, 'days').format('YY年M月')
+                }
+            />
+        </LineChart>
+    );
     return (
         <Layout
             title='民主党政権時の内閣支持率と主な出来事 | hideo54 Lab'
@@ -52,12 +76,15 @@ const App = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
             )}
         >
             <H1>民主党政権時の内閣支持率と主な出来事</H1>
-            <LineChart width={1000} height={200} data={data}>
-                <XAxis dataKey='days' type='number' domain={[0, 'dataMax']} tick={false} />
-                <YAxis label={{ value: '%', position: 'insideLeft' }} />
-                <Line type='monotone' dataKey='approval' stroke='#FF0000' />
-                <Line type='monotone' dataKey='disapproval' stroke='#0000FF' />
-            </LineChart>
+            <div style={{ height: '70vh' }}>
+                <ResponsiveContainer>
+                    {lineChart}
+                </ResponsiveContainer>
+            </div>
+            <h2>クレジット</h2>
+            <p>
+                内閣支持率のデータは、NHK放送文化研究所が公開している各年の<IconLink RightIcon={Open} href='https://www.nhk.or.jp/bunken/yoron/political/2009.html'>政治意識月例調査</IconLink>ページに掲載されているデータを利用しています。
+            </p>
         </Layout>
     );
 };
