@@ -1,9 +1,10 @@
 import { InferGetStaticPropsType } from 'next';
 import styled from 'styled-components';
 import { ChevronBack, Open } from '@styled-icons/ionicons-outline';
-import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, ReferenceLine, Brush } from 'recharts';
-import fs from 'fs/promises';
+import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, ReferenceLine, CartesianGrid, Legend, Brush } from 'recharts';
 import dayjs from 'dayjs';
+import fs from 'fs/promises';
+import yaml from 'yaml';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import Layout from '../../components/Layout';
 import { IconLink } from '../../components/atoms';
@@ -25,62 +26,27 @@ interface Event {
     caption: string;
 }
 
-const events: Event[] = [
-    {
-        date: '2009-09-16',
-        caption: '鳩山内閣発足',
-    },
-    {
-        date: '2010-06-08',
-        caption: '菅内閣発足',
-    },
-    {
-        date: '2010-09-17',
-        caption: '菅改造内閣発足',
-    },
-    {
-        date: '2011-01-14',
-        caption: '菅再改造内閣発足',
-    },
-    {
-        date: '2011-03-11',
-        caption: '東日本大震災',
-    },
-    {
-        date: '2011-09-02',
-        caption: '野田内閣発足',
-    },
-    {
-        date: '2012-01-13',
-        caption: '野田改造内閣発足',
-    },
-    {
-        date: '2012-06-04',
-        caption: '野田再改造内閣発足',
-    },
-    {
-        date: '2012-10-01',
-        caption: '野田第3次改造内閣発足',
-    },
-];
-
 export const getStaticProps = async () => {
-    const dataStr = await fs.readFile('./public/data/approval-rate.json', 'utf-8');
-    const originalApprovalRateData = JSON.parse(dataStr) as OriginalApprovalRateData[];
+    const originalApprovalRateData = JSON.parse(
+        await fs.readFile('./public/data/approval-rate.json', 'utf-8')
+    ) as OriginalApprovalRateData[];
     dayjs.extend(customParseFormat);
     const approvalRateData = originalApprovalRateData.map(d => ({
         ...d,
         days: dayjs(d.day, 'M月D日').year(d.year).diff(dayjs('2009-09-01'), 'days'), // 2009/09/01 からの経過日数
     })).filter(d => d.days > 16);
+    const eventsData = yaml.parse(
+        await fs.readFile('./public/data/minshu-events.yml', 'utf-8')
+    ) as Event[];
     return {
-        props: { approvalRateData },
+        props: { approvalRateData, eventsData },
     };
 };
 
 const App = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
-    const data = props.approvalRateData;
     const lineChart = (
-        <LineChart data={data} margin={{ left: -20, right: 0, top: 5, bottom: 5 }}>
+        <LineChart data={props.approvalRateData} margin={{ left: -20, right: 0, top: 5, bottom: 5 }}>
+            <CartesianGrid strokeDasharray='5 5' />
             <XAxis
                 dataKey='days'
                 type='number'
@@ -88,9 +54,12 @@ const App = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
                 tick={false}
             />
             <YAxis domain={[0, 80]} tickCount={9} tickFormatter={s => s + '%'} />
+            <Legend verticalAlign='top' align='right' formatter={s =>
+                s === 'approval' ? '支持する' : '支持しない'
+            } />
             <Line type='monotone' dataKey='approval' stroke='#FF0000' />
             <Line type='monotone' dataKey='disapproval' stroke='#0000FF' />
-            {events.map(event => {
+            {props.eventsData.map(event => {
                 const days = dayjs(event.date).diff('2009-09-01', 'days');
                 return (
                     <ReferenceLine x={days} label={{
@@ -102,7 +71,8 @@ const App = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
             <Brush
                 dataKey='days'
                 startIndex={0}
-                endIndex={6}
+                endIndex={12}
+                travellerWidth={20}
                 tickFormatter={n =>
                     dayjs('2009-09-01').add(n, 'days').format('YY年M月')
                 }
@@ -132,10 +102,16 @@ const App = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
             </div>
             <h2>制作動機</h2>
             <p>
-                日本再建イニシアティブ『<IconLink RightIcon={Open} href=''>民主党政権 失敗の検証</IconLink>』(中公新書) を読んでいて、民主党政権時の内閣支持率と主な出来事をわかりやすく図示したグラフが欲しくなったことがきっかけです。
+                <IconLink RightIcon={Open} href=''>
+                    日本再建イニシアティブ『民主党政権 失敗の検証』(中公新書)
+                </IconLink> を読んでいて、民主党政権時の内閣支持率と主な出来事をわかりやすく図示したグラフが欲しくなったことがきっかけです。
                 <br />
-                この本は、3年3ヶ月で幕を閉じた民主党政権の失敗の理由を、当時政権を担っていた議員や関係者への多数のインタビューを踏まえながら、各政策に注目して詳細に分析した本で、おすすめの一冊です。
+                この本は、3年3ヶ月で幕を閉じた民主党政権の失敗の理由を、当時政権を担っていた議員や関係者に対する多数のインタビューを踏まえながら、各政策に注目して詳細に分析した本で、おすすめの一冊です。
             </p>
+            <h2>注意</h2>
+            <ul>
+                <li>グラフの曲線は、各点をなだらかに結ぶように描かれたものです。点の打たれていない部分において、曲線のとおり推移していたわけではありません。</li>
+            </ul>
             <h2>クレジット</h2>
             <p>
                 内閣支持率のデータは、NHK放送文化研究所が公開している各年の<IconLink RightIcon={Open} href='https://www.nhk.or.jp/bunken/yoron/political/2009.html'>政治意識月例調査</IconLink>ページに掲載されているデータを利用しています。

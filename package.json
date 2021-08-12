@@ -26,6 +26,7 @@
     "@styled-icons/fa-brands": "^10.34.0",
     "@styled-icons/ionicons-outline": "^10.34.0",
     "@styled-icons/ionicons-solid": "^10.34.0",
+    "dayjs": "^1.10.6",
     "next": "^11.0.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -37,9 +38,9 @@
     "@types/lodash": "^4.14.172",
     "@types/react": "^17.0.11",
     "@types/styled-components": "^5.1.10",
-    "dayjs": "^1.10.6",
     "scrape-it": "^5.3.1",
     "ts-node": "^10.2.0",
-    "typescript": "^4.3.4"
+    "typescript": "^4.3.4",
+    "yaml": "^1.10.2"
   }
 }
