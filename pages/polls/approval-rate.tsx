@@ -20,6 +20,50 @@ interface OriginalApprovalRateData {
     disapproval: number;
 }
 
+interface Event {
+    date: string;
+    caption: string;
+}
+
+const events: Event[] = [
+    {
+        date: '2009-09-16',
+        caption: '鳩山内閣発足',
+    },
+    {
+        date: '2010-06-08',
+        caption: '菅内閣発足',
+    },
+    {
+        date: '2010-09-17',
+        caption: '菅改造内閣発足',
+    },
+    {
+        date: '2011-01-14',
+        caption: '菅再改造内閣発足',
+    },
+    {
+        date: '2011-03-11',
+        caption: '東日本大震災',
+    },
+    {
+        date: '2011-09-02',
+        caption: '野田内閣発足',
+    },
+    {
+        date: '2012-01-13',
+        caption: '野田改造内閣発足',
+    },
+    {
+        date: '2012-06-04',
+        caption: '野田再改造内閣発足',
+    },
+    {
+        date: '2012-10-01',
+        caption: '野田第3次改造内閣発足',
+    },
+]
+
 export const getStaticProps = async () => {
     const dataStr = await fs.readFile('./public/data/approval-rate.json', 'utf-8');
     const originalApprovalRateData = JSON.parse(dataStr) as OriginalApprovalRateData[];
@@ -49,7 +93,15 @@ const App = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
             />
             <Line type='monotone' dataKey='approval' stroke='#FF0000' />
             <Line type='monotone' dataKey='disapproval' stroke='#0000FF' />
-            <ReferenceLine label='hoge' x={20} />
+            {events.map(event => {
+                const days = dayjs(event.date).diff('2009-09-01', 'days');
+                return (
+                    <ReferenceLine x={days} label={{
+                        value: event.caption,
+                        angle: 90,
+                    }} />
+                );
+            })}
             <Brush
                 dataKey='days'
                 startIndex={0}
