@@ -29,6 +29,11 @@ interface Event {
     caption: string;
 }
 
+const categoryColor: {[key: string]: string} = {
+    組閣: '#E50300',
+    事件: '#8A2BE2',
+};
+
 export const getStaticProps = async () => {
     const originalApprovalRateData = JSON.parse(
         await fs.readFile('./public/data/approval-rate.json', 'utf-8')
@@ -48,6 +53,15 @@ export const getStaticProps = async () => {
         props: { approvalRateData, eventsData, categorySelectedDefault },
     };
 };
+
+const ColoredCheckboxLabelSpan = styled.span<{ color: string; }>`
+    svg.MuiSvgIcon-root {
+        color: ${props => props.color};
+    }
+    span.MuiFormControlLabel-label {
+        color: ${props => props.color};
+    }
+`;
 
 const App = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
     const allCategories = new Set(props.eventsData.map(d => d.category));
@@ -71,10 +85,18 @@ const App = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
                 if (!categorySelected[event.category]) return;
                 const days = dayjs(event.date).diff('2009-09-01', 'days');
                 return (
-                    <ReferenceLine x={days} label={{
-                        value: event.caption,
-                        angle: 90,
-                    }} />
+                    <ReferenceLine
+                        x={days}
+                        stroke={categoryColor[event.category]}
+                        strokeOpacity={0.2}
+                        strokeWidth={2}
+                        label={{
+                            value: event.caption,
+                            angle: 90,
+                            color: categoryColor[event.category],
+                            fontWeight: 'bold',
+                        }
+                    } />
                 );
             })}
             <Brush
@@ -89,18 +111,20 @@ const App = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
         </LineChart>
     );
     const checkboxes = Array.from(allCategories).map(category =>
-        <FormControlLabel key={category} label={category} control={
-            <Checkbox
-                name={category}
-                checked={categorySelected[category]}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                    setCategorySelected({
-                        ...categorySelected,
-                        [event.target.name]: event.target.checked,
-                    });
-                }}
-            />
-        } />
+        <ColoredCheckboxLabelSpan key={category} color={categoryColor[category]}>
+            <FormControlLabel label={category} control={
+                <Checkbox
+                    name={category}
+                    checked={categorySelected[category]}
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                        setCategorySelected({
+                            ...categorySelected,
+                            [event.target.name]: event.target.checked,
+                        });
+                    }}
+                />
+            } />
+        </ColoredCheckboxLabelSpan>
     );
     return (
         <Layout
