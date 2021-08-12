@@ -22,6 +22,10 @@ const ControlsDiv = styled.div`
     text-align: center;
 `;
 
+const MapDiv = styled.div`
+    text-align: center;
+`;
+
 const IslandsDiv = styled.div`
     display: flex;
     justify-content: center;
@@ -158,9 +162,11 @@ const App = () => {
                 <RangeSlider value={range} onChange={handleRangeChange} max={50} valueLabelDisplay='on' />
                 <FormControlLabel control={tokubetsukuCheckbox} label='特別区のみを表示' />
             </ControlsDiv>
-            <MapOfTokyo viewBox={showTokubetsukuOnly ? tokubetsukuViewbox : mainViewbox} ref={svgRef} style={{
-                maxHeight: '50vh',
-            }} />
+            <MapDiv>
+                <MapOfTokyo viewBox={showTokubetsukuOnly ? tokubetsukuViewbox : mainViewbox} ref={svgRef} style={{
+                    maxHeight: '50vh',
+                }} />
+            </MapDiv>
             {showTokubetsukuOnly || <IslandsDiv id='toshobu' onClick={() => { setSelectedId('toshobu'); }}>島しょ部</IslandsDiv>}
             <h2>選択中の区画: {selectedId ? districtNameDict[selectedId] : 'なし'}</h2>
             {selectedId ? <></> : <p>都全体の数字:</p>}
