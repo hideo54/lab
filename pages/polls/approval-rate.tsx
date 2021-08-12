@@ -1,6 +1,10 @@
+import { InferGetStaticPropsType } from 'next';
 import styled from 'styled-components';
 import { ChevronBack } from '@styled-icons/ionicons-solid';
 import { LineChart, Line, XAxis, YAxis, ReferenceLine } from 'recharts';
+import fs from 'fs/promises';
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
 import Layout from '../../components/Layout';
 import { IconLink } from '../../components/atoms';
 
@@ -8,35 +12,30 @@ const H1 = styled.h1`
     font-family: 'Noto Sans JP', sans-serif;
 `;
 
-interface PollData {
-    month: number; // 仕方なく。2009年9月1日からの経過日数でよさそう。
+interface OriginalApprovalRateData {
+    year: number;
+    month: number;
+    day: string;
     approval: number;
     disapproval: number;
 }
 
-const App = () => {
-    const data: PollData[] = [
-        {
-            month: 9,
-            approval: 80,
-            disapproval: 10,
-        },
-        {
-            month: 10,
-            approval: 75,
-            disapproval: 15,
-        },
-        {
-            month: 11,
-            approval: 65,
-            disapproval: 25,
-        },
-        {
-            month: 20,
-            approval: 65,
-            disapproval: 25,
-        },
-    ];
+export const getStaticProps = async () => {
+    const dataStr = await fs.readFile('./public/data/approval-rate.json', 'utf-8');
+    const originalApprovalRateData = JSON.parse(dataStr) as OriginalApprovalRateData[];
+    dayjs.extend(customParseFormat);
+    const approvalRateData = originalApprovalRateData.map(d => ({
+        ...d,
+        days: dayjs(d.day, 'M月D日').year(d.year).diff(dayjs('2009-09-01'), 'days'), // 2009/09/01 からの経過日数
+    })).filter(d => d.days > 16);
+    console.log(approvalRateData[1]);
+    return {
+        props: { approvalRateData },
+    };
+};
+
+const App = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
+    const data = props.approvalRateData;
     return (
         <Layout
             title='民主党政権時の内閣支持率と主な出来事 | hideo54 Lab'
@@ -53,12 +52,11 @@ const App = () => {
             )}
         >
             <H1>民主党政権時の内閣支持率と主な出来事</H1>
-            <p>Hello</p>
             <LineChart width={1000} height={200} data={data}>
-                <XAxis dataKey='month' type='number' domain={['dataMin', 'dataMax']} />
-                <YAxis />
+                <XAxis dataKey='days' type='number' domain={[0, 'dataMax']} tick={false} />
+                <YAxis label={{ value: '%', position: 'insideLeft' }} />
                 <Line type='monotone' dataKey='approval' stroke='#FF0000' />
-                <ReferenceLine x={9.5} alwaysShow label='hoge' stroke='green' />
+                <Line type='monotone' dataKey='disapproval' stroke='#0000FF' />
             </LineChart>
         </Layout>
     );
