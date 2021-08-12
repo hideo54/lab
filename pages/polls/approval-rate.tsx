@@ -128,7 +128,7 @@ const App = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
             </div>
             <h2>制作動機</h2>
             <p>
-                <IconLink RightIcon={Open} href=''>
+                <IconLink RightIcon={Open} href='https://www.chuko.co.jp/shinsho/2013/09/102233.html'>
                     日本再建イニシアティブ『民主党政権 失敗の検証』(中公新書)
                 </IconLink> を読んでいて、民主党政権時の内閣支持率と主な出来事をわかりやすく図示したグラフが欲しくなったことがきっかけです。
                 <br />
