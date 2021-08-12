@@ -1,7 +1,9 @@
+import React, { useState } from 'react';
 import { InferGetStaticPropsType } from 'next';
 import styled from 'styled-components';
 import { ChevronBack, Open } from '@styled-icons/ionicons-outline';
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, ReferenceLine, CartesianGrid, Legend, Brush } from 'recharts';
+import { FormControlLabel, Checkbox } from '@material-ui/core';
 import dayjs from 'dayjs';
 import fs from 'fs/promises';
 import yaml from 'yaml';
@@ -23,6 +25,7 @@ interface OriginalApprovalRateData {
 
 interface Event {
     date: string;
+    category: string;
     caption: string;
 }
 
@@ -38,12 +41,17 @@ export const getStaticProps = async () => {
     const eventsData = yaml.parse(
         await fs.readFile('./public/data/minshu-events.yml', 'utf-8')
     ) as Event[];
+    const categorySelectedDefault = Object.fromEntries(
+        eventsData.map(e => [ e.category, true])
+    );
     return {
-        props: { approvalRateData, eventsData },
+        props: { approvalRateData, eventsData, categorySelectedDefault },
     };
 };
 
 const App = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
+    const allCategories = new Set(props.eventsData.map(d => d.category));
+    const [ categorySelected, setCategorySelected ] = useState(props.categorySelectedDefault);
     const lineChart = (
         <LineChart data={props.approvalRateData} margin={{ left: -20, right: 0, top: 5, bottom: 5 }}>
             <CartesianGrid strokeDasharray='5 5' />
@@ -60,6 +68,7 @@ const App = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
             <Line type='monotone' dataKey='approval' stroke='#FF0000' />
             <Line type='monotone' dataKey='disapproval' stroke='#0000FF' />
             {props.eventsData.map(event => {
+                if (!categorySelected[event.category]) return;
                 const days = dayjs(event.date).diff('2009-09-01', 'days');
                 return (
                     <ReferenceLine x={days} label={{
@@ -78,6 +87,20 @@ const App = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
                 }
             />
         </LineChart>
+    );
+    const checkboxes = Array.from(allCategories).map(category =>
+        <FormControlLabel key={category} label={category} control={
+            <Checkbox
+                name={category}
+                checked={categorySelected[category]}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                    setCategorySelected({
+                        ...categorySelected,
+                        [event.target.name]: event.target.checked,
+                    });
+                }}
+            />
+        } />
     );
     return (
         <Layout
@@ -99,6 +122,9 @@ const App = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
                 <ResponsiveContainer>
                     {lineChart}
                 </ResponsiveContainer>
+            </div>
+            <div style={{ textAlign: 'center' }}>
+                {checkboxes}
             </div>
             <h2>制作動機</h2>
             <p>
