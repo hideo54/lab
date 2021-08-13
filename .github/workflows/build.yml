@@ -1,0 +1,33 @@
+name: Build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [15.x]
+    env:
+      NEXT_TELEMETRY_DISABLED: 1 # https://nextjs.org/telemetry
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - uses: actions/cache@v2
+      with: # https://github.com/actions/cache/blob/main/examples.md#node---npm
+        path: ~/.npm
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: ${{ runner.os }}-node-
+    - uses: actions/cache@v2
+      with: # https://nextjs.org/docs/messages/no-cache#github-actions
+        path: ${{ github.workspace }}/.next/cache
+        key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}
+    - run: npm ci
+    - run: npm run build --if-present
