@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { InferGetStaticPropsType } from 'next';
 import styled from 'styled-components';
 import { Open } from '@styled-icons/ionicons-outline';
-import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, ReferenceLine, CartesianGrid, Legend, Brush } from 'recharts';
+import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, ReferenceLine, CartesianGrid, Legend, Tooltip, Brush } from 'recharts';
 import { FormControlLabel, Checkbox } from '@material-ui/core';
 import dayjs from 'dayjs';
 import fs from 'fs/promises';
@@ -31,6 +31,7 @@ interface Event {
 
 const categoryColor: {[key: string]: string} = {
     組閣: '#E50300',
+    政治: '#16A085',
     事件: '#8A2BE2',
 };
 
@@ -108,6 +109,10 @@ const App = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
                     } />
                 );
             })}
+            <Tooltip
+                formatter={(value, name) => [ value + '%', name === 'approval' ? '支持する' : '支持しない']}
+                labelFormatter={v => dayjs('2009-09-01').add(v, 'days').format('YYYY年M月D日')}
+            />
             <Brush
                 dataKey='days'
                 startIndex={0}
@@ -159,11 +164,22 @@ const App = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
                 この本は、3年3ヶ月で幕を閉じた民主党政権の失敗の理由を、当時政権を担っていた議員や関係者に対する多数のインタビューを踏まえながら、各政策に注目して詳細に分析した本で、おすすめの一冊です。
             </p>
             <h2>注意</h2>
-            <p>グラフの曲線は、各点をなだらかに結ぶように描かれたものです。点の打たれていない部分において、曲線のとおり推移していたわけではありません。</p>
+            <ul>
+                <li>世論調査は通常数日かけて行われますが、今回はその期間の初日を調査日としています。たとえば、9月18日から20日にかけて行われた世論調査は、9月18日の世論調査として取り扱っています。</li>
+                <li>グラフの曲線は、各点をなだらかに結ぶように描かれたものです。点の打たれていない部分において、曲線のとおり推移していたわけではありません。</li>
+            </ul>
             <h2>クレジット</h2>
-            <p>
-                内閣支持率のデータは、NHK放送文化研究所が公開している各年の<IconLink RightIcon={Open} href='https://www.nhk.or.jp/bunken/yoron/political/2009.html'>政治意識月例調査</IconLink>ページに掲載されているデータを利用しています。
-            </p>
+            <ul>
+                <li>
+                    内閣支持率のデータは、NHK放送文化研究所が公開している各年の<IconLink RightIcon={Open} href='https://www.nhk.or.jp/bunken/yoron/political/2009.html'>政治意識月例調査</IconLink>ページに掲載されているデータを利用しています。
+                </li>
+                <li>
+                    出来事については、上述の『民主党政権 失敗の検証』の記述を適宜参考にしつつ、重要と思ったものを選んで載せています。また、同書が行った民主党衆議院議員へのアンケート内の「民主党政権が有権者の支持を失う決定的なターニングポイントはどの時期だと思いますか?」の質問の選択肢となっている出来事はすべて載せました。
+                </li>
+                <li>
+                    出来事について、<IconLink RightIcon={Open} href='https://www.jiji.com/jc/graphics?p=ve_pol_election-syugiin20121124j-04-w680'>時事通信社『【図解・政治】衆院選・民主党政権3年の歩み (2012年11月)』(時事ドットコム)</IconLink> も参考にしました。
+                </li>
+            </ul>
         </Layout>
     );
 };
