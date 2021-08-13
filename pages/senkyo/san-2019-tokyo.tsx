@@ -22,6 +22,10 @@ const ControlsDiv = styled.div`
     text-align: center;
 `;
 
+const MapDiv = styled.div`
+    text-align: center;
+`;
+
 const IslandsDiv = styled.div`
     display: flex;
     justify-content: center;
@@ -115,6 +119,23 @@ const App = () => {
             };
         });
     }, []);
+    useEffect(() => {
+        const copiedElements = document.getElementsByClassName('copy');
+        Array.prototype.forEach.call(copiedElements, e => { e.remove(); });
+        if (selectedId && selectedId !== 'all') {
+            const root = document.getElementById('Map_of_Tokyo_Ja_svg__main');
+            const selected = document.getElementById('Map_of_Tokyo_Ja_svg__' + selectedId);
+            const selectedCopy = selected.cloneNode() as SVGPathElement;
+            selectedCopy.style.strokeWidth = '5';
+            selectedCopy.style.strokeLinejoin = 'round';
+            // selectedCopy.style.stroke = 'white'; // いい色がわからん
+            selectedCopy.style.fillOpacity = '0';
+            selectedCopy.classList.add('copy');
+            root.appendChild(selectedCopy);
+        }
+        const islands = document.getElementById('toshobu');
+        islands.style.borderWidth = selectedId === 'toshobu' ? '5px' : '1px';
+    }, [ selectedId ]);
     return (
         <Layout
             title='2019年参院選における東京都の区画別投票傾向分析 | hideo54 Lab'
@@ -141,9 +162,11 @@ const App = () => {
                 <RangeSlider value={range} onChange={handleRangeChange} max={50} valueLabelDisplay='on' />
                 <FormControlLabel control={tokubetsukuCheckbox} label='特別区のみを表示' />
             </ControlsDiv>
-            <MapOfTokyo viewBox={showTokubetsukuOnly ? tokubetsukuViewbox : mainViewbox} ref={svgRef} style={{
-                maxHeight: '50vh',
-            }} />
+            <MapDiv>
+                <MapOfTokyo viewBox={showTokubetsukuOnly ? tokubetsukuViewbox : mainViewbox} ref={svgRef} style={{
+                    maxHeight: '50vh',
+                }} />
+            </MapDiv>
             {showTokubetsukuOnly || <IslandsDiv id='toshobu' onClick={() => { setSelectedId('toshobu'); }}>島しょ部</IslandsDiv>}
             <h2>選択中の区画: {selectedId ? districtNameDict[selectedId] : 'なし'}</h2>
             {selectedId ? <></> : <p>都全体の数字:</p>}
