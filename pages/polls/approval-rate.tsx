@@ -62,6 +62,9 @@ const GraphDiv = styled.div`
     .recharts-brush-slide {
         fill: #0091EA;
     }
+    span.MuiIconButton-label > input { /* なぜか出る標準の checkbox (カス…) */
+        display: none;
+    }
 `;
 
 const ColoredCheckboxLabelSpan = styled.span<{ color: string; }>`
