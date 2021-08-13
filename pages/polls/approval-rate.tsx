@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { InferGetStaticPropsType } from 'next';
 import styled from 'styled-components';
-import { ChevronBack, Open } from '@styled-icons/ionicons-outline';
+import { Open } from '@styled-icons/ionicons-outline';
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, ReferenceLine, CartesianGrid, Legend, Brush } from 'recharts';
 import { FormControlLabel, Checkbox } from '@material-ui/core';
 import dayjs from 'dayjs';
@@ -9,7 +9,7 @@ import fs from 'fs/promises';
 import yaml from 'yaml';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import Layout from '../../components/Layout';
-import { IconLink } from '../../components/atoms';
+import { IconLink, goTopHeader } from '../../components/atoms';
 
 const H1 = styled.h1`
     font-family: 'Noto Sans JP', sans-serif;
@@ -42,7 +42,7 @@ export const getStaticProps = async () => {
     const approvalRateData = originalApprovalRateData.map(d => ({
         ...d,
         days: dayjs(d.day, 'M月D日').year(d.year).diff(dayjs('2009-09-01'), 'days'), // 2009/09/01 からの経過日数
-    })).filter(d => d.days > 16);
+    })).filter(d => d.days > 0);
     const eventsData = yaml.parse(
         await fs.readFile('./public/data/minshu-events.yml', 'utf-8')
     ) as Event[];
@@ -53,6 +53,15 @@ export const getStaticProps = async () => {
         props: { approvalRateData, eventsData, categorySelectedDefault },
     };
 };
+
+const GraphDiv = styled.div`
+    height: 50vh;
+    margin: 0 auto;
+    text-align: center;
+    .recharts-brush-slide {
+        fill: #0091EA;
+    }
+`;
 
 const ColoredCheckboxLabelSpan = styled.span<{ color: string; }>`
     svg.MuiSvgIcon-root {
@@ -132,24 +141,15 @@ const App = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
             description='民主党が政権を担っていた2009年9月から2012年12月の間の内閣支持率と主な出来事をグラフにまとめています。'
             imageUrl='https://lab.hideo54.com/images/approval-rate.png'
             twitterCardType='summary_large_image'
-            header={(
-                <div style={{
-                    marginTop: '1em',
-                    paddingLeft: '1em',
-                }}>
-                    <IconLink LeftIcon={ChevronBack} href='/'>トップページ</IconLink>
-                </div>
-            )}
+            header={goTopHeader}
         >
             <H1>民主党政権時の内閣支持率と主な出来事</H1>
-            <div style={{ height: '50vh', margin: '0 auto' }}>
+            <GraphDiv>
                 <ResponsiveContainer>
                     {lineChart}
                 </ResponsiveContainer>
-            </div>
-            <div style={{ textAlign: 'center' }}>
                 {checkboxes}
-            </div>
+            </GraphDiv>
             <h2>制作動機</h2>
             <p>
                 <IconLink RightIcon={Open} href='https://www.chuko.co.jp/shinsho/2013/09/102233.html'>
@@ -159,9 +159,7 @@ const App = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
                 この本は、3年3ヶ月で幕を閉じた民主党政権の失敗の理由を、当時政権を担っていた議員や関係者に対する多数のインタビューを踏まえながら、各政策に注目して詳細に分析した本で、おすすめの一冊です。
             </p>
             <h2>注意</h2>
-            <ul>
-                <li>グラフの曲線は、各点をなだらかに結ぶように描かれたものです。点の打たれていない部分において、曲線のとおり推移していたわけではありません。</li>
-            </ul>
+            <p>グラフの曲線は、各点をなだらかに結ぶように描かれたものです。点の打たれていない部分において、曲線のとおり推移していたわけではありません。</p>
             <h2>クレジット</h2>
             <p>
                 内閣支持率のデータは、NHK放送文化研究所が公開している各年の<IconLink RightIcon={Open} href='https://www.nhk.or.jp/bunken/yoron/political/2009.html'>政治意識月例調査</IconLink>ページに掲載されているデータを利用しています。

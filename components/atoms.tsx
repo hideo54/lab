@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import styled from 'styled-components';
 import { StyledIcon } from '@styled-icons/styled-icon';
+import { ChevronBack } from '@styled-icons/ionicons-outline';
 
 export const IconLink: React.FC<{
     LeftIcon?: StyledIcon;
@@ -34,3 +35,14 @@ export const IconLink: React.FC<{
         </a>
     );
 };
+
+const GoTopDiv = styled.div`
+    margin-top: 1em;
+    padding-left: 1em;
+`;
+
+export const goTopHeader = (
+    <GoTopDiv>
+        <IconLink LeftIcon={ChevronBack} href='/'>トップページ</IconLink>
+    </GoTopDiv>
+);
