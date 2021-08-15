@@ -27,7 +27,7 @@ export const IconLink: React.FC<{
         );
     }
     return (
-        <a href={href} target='_blank'>
+        <a href={href} target='_blank' rel="noreferrer">
             {LeftIcon && <Left size={'1.2em'} />}
             {children}
             {RightIcon && <Right size={'1.2em'} />}

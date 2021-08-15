@@ -53,7 +53,7 @@ const generateColor = (v: number) => { // v: 0 - 1
         if (x > 1) return 1;
         return x;
     };
-    const t = v * 2 - 1 // v: (0, 1) -> t: (-1, 1)
+    const t = v * 2 - 1; // v: (0, 1) -> t: (-1, 1)
     const r = (t: number) => clamp(1.5 - Math.abs(2 * t - 1));
     const g = (t: number) => clamp(1.5 - Math.abs(2 * t));
     const b = (t: number) => clamp(1.5 - Math.abs(2 * t + 1));
@@ -82,14 +82,14 @@ const RangeSlider = styled(Slider)`
 `;
 
 const App = () => {
-    const [ party, setParty ] = useState<typeof parties[number]>('自由民主党');
-    const [ range, setRange ] = useState([0, 50]);
-    const [ showTokubetsukuOnly, setShowTokubetsukuOnly ] = useState(false);
-    const [ selectedId, setSelectedId ] = useState<keyof typeof votesPercent | null>(null);
+    const [party, setParty] = useState<typeof parties[number]>('自由民主党');
+    const [range, setRange] = useState([0, 50]);
+    const [showTokubetsukuOnly, setShowTokubetsukuOnly] = useState(false);
+    const [selectedId, setSelectedId] = useState<keyof typeof votesPercent | null>(null);
     const handlePartyChange = (event: React.ChangeEvent<{ value: typeof parties[number] }>) => {
         setParty(event.target.value);
     };
-    const handleRangeChange = (event: any, newValue: number[]) => {
+    const handleRangeChange = (event: unknown, newValue: number[]) => {
         setRange(newValue);
     };
     const handleTargetChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -135,7 +135,7 @@ const App = () => {
         }
         const islands = document.getElementById('toshobu');
         islands.style.borderWidth = selectedId === 'toshobu' ? '5px' : '1px';
-    }, [ selectedId ]);
+    }, [selectedId]);
     return (
         <Layout
             title='2019年参院選における東京都の区画別投票傾向分析 | hideo54 Lab'
@@ -189,7 +189,7 @@ const App = () => {
                     stroke: #333333;
                     stroke-width: 0.5;
                 }
-                ${showTokubetsukuOnly ? `#Map_of_Tokyo_Ja_svg__toka,` : ''} #Map_of_Tokyo_Ja_svg__toshobu, #Map_of_Tokyo_Ja_svg__lakes, #Map_of_Tokyo_Ja_svg__outside {
+                ${showTokubetsukuOnly ? '#Map_of_Tokyo_Ja_svg__toka,' : ''} #Map_of_Tokyo_Ja_svg__toshobu, #Map_of_Tokyo_Ja_svg__lakes, #Map_of_Tokyo_Ja_svg__outside {
                     display: none;
                 }
                 svg path {
