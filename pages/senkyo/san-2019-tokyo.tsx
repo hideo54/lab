@@ -53,7 +53,7 @@ const generateColor = (v: number) => { // v: 0 - 1
         if (x > 1) return 1;
         return x;
     };
-    const t = v * 2 - 1 // v: (0, 1) -> t: (-1, 1)
+    const t = v * 2 - 1; // v: (0, 1) -> t: (-1, 1)
     const r = (t: number) => clamp(1.5 - Math.abs(2 * t - 1));
     const g = (t: number) => clamp(1.5 - Math.abs(2 * t));
     const b = (t: number) => clamp(1.5 - Math.abs(2 * t + 1));
@@ -82,14 +82,14 @@ const RangeSlider = styled(Slider)`
 `;
 
 const App = () => {
-    const [ party, setParty ] = useState<typeof parties[number]>('自由民主党');
-    const [ range, setRange ] = useState([0, 50]);
-    const [ showTokubetsukuOnly, setShowTokubetsukuOnly ] = useState(false);
-    const [ selectedId, setSelectedId ] = useState<keyof typeof votesPercent | null>(null);
+    const [party, setParty] = useState<typeof parties[number]>('自由民主党');
+    const [range, setRange] = useState([0, 50]);
+    const [showTokubetsukuOnly, setShowTokubetsukuOnly] = useState(false);
+    const [selectedId, setSelectedId] = useState<keyof typeof votesPercent | 'all' | null>(null);
     const handlePartyChange = (event: React.ChangeEvent<{ value: typeof parties[number] }>) => {
         setParty(event.target.value);
     };
-    const handleRangeChange = (event: any, newValue: number[]) => {
+    const handleRangeChange = (event: unknown, newValue: number[]) => {
         setRange(newValue);
     };
     const handleTargetChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -100,19 +100,19 @@ const App = () => {
     const svgRef = createRef<SVGElement>();
     useEffect(() => {
         targetIds.map(id => {
-            const path = svgRef.current.querySelector(`#Map_of_Tokyo_Ja_svg__${id}`) as SVGPathElement;
+            const path = svgRef.current?.querySelector(`#Map_of_Tokyo_Ja_svg__${id}`) as SVGPathElement;
             path.style.fill = generateColor((100 * votesPercent[id][party] - range[0]) / (range[1] - range[0]));
         });
         if (!showTokubetsukuOnly) {
-            const islands = document.getElementById('toshobu');
+            const islands = document.getElementById('toshobu')!;
             const islandsV = (100 * votesPercent['toshobu'][party] - range[0]) / (range[1] - range[0]);
             islands.style.backgroundColor = generateColor(islandsV);
             islands.style.color = 0.3 < islandsV && islandsV < 0.74 ? '#333333' : 'white';
         }
-    }, [ party, range, showTokubetsukuOnly ]);
+    }, [party, range, showTokubetsukuOnly]);
     useEffect(() => {
         targetIds.map(id => {
-            const path = svgRef.current.querySelector(`#Map_of_Tokyo_Ja_svg__${id}`) as SVGPathElement;
+            const path = svgRef.current!.querySelector(`#Map_of_Tokyo_Ja_svg__${id}`) as SVGPathElement;
             path.onclick = e => {
                 const id = (e.target as SVGPathElement).id.slice('Map_of_Tokyo_Ja_svg__'.length) as typeof targetIds[number];
                 setSelectedId(id);
@@ -123,8 +123,8 @@ const App = () => {
         const copiedElements = document.getElementsByClassName('copy');
         Array.prototype.forEach.call(copiedElements, e => { e.remove(); });
         if (selectedId && selectedId !== 'all') {
-            const root = document.getElementById('Map_of_Tokyo_Ja_svg__main');
-            const selected = document.getElementById('Map_of_Tokyo_Ja_svg__' + selectedId);
+            const root = document.getElementById('Map_of_Tokyo_Ja_svg__main')!;
+            const selected = document.getElementById('Map_of_Tokyo_Ja_svg__' + selectedId)!;
             const selectedCopy = selected.cloneNode() as SVGPathElement;
             selectedCopy.style.strokeWidth = '5';
             selectedCopy.style.strokeLinejoin = 'round';
@@ -133,9 +133,9 @@ const App = () => {
             selectedCopy.classList.add('copy');
             root.appendChild(selectedCopy);
         }
-        const islands = document.getElementById('toshobu');
+        const islands = document.getElementById('toshobu')!;
         islands.style.borderWidth = selectedId === 'toshobu' ? '5px' : '1px';
-    }, [ selectedId ]);
+    }, [selectedId]);
     return (
         <Layout
             title='2019年参院選における東京都の区画別投票傾向分析 | hideo54 Lab'
@@ -155,10 +155,12 @@ const App = () => {
             <ControlsDiv>
                 <FormControl variant='outlined'>
                     <InputLabel id='party'>政党</InputLabel>
+                    {/* @ts-expect-error とりあえず棚上げ */}
                     <Select value={party} onChange={handlePartyChange} labelId='party' label='政党'>
                         {parties.map(p => <MenuItem key={p} value={p}>{p}</MenuItem>)}
                     </Select>
                 </FormControl>
+                {/* @ts-expect-error とりあえず棚上げ */}
                 <RangeSlider value={range} onChange={handleRangeChange} max={50} valueLabelDisplay='on' />
                 <FormControlLabel control={tokubetsukuCheckbox} label='特別区のみを表示' />
             </ControlsDiv>
@@ -168,7 +170,7 @@ const App = () => {
                 }} />
             </MapDiv>
             {showTokubetsukuOnly || <IslandsDiv id='toshobu' onClick={() => { setSelectedId('toshobu'); }}>島しょ部</IslandsDiv>}
-            <h2>選択中の区画: {selectedId ? districtNameDict[selectedId] : 'なし'}</h2>
+            <h2>選択中の区画: {selectedId && selectedId !== 'all' && selectedId !== 'tokubetsuku' ? districtNameDict[selectedId] : 'なし'}</h2>
             {selectedId ? <></> : <p>都全体の数字:</p>}
             <ul>
                 <li>当時の有権者数: {yukenshasu[selectedId || 'all'].toLocaleString()}</li>
@@ -189,7 +191,7 @@ const App = () => {
                     stroke: #333333;
                     stroke-width: 0.5;
                 }
-                ${showTokubetsukuOnly ? `#Map_of_Tokyo_Ja_svg__toka,` : ''} #Map_of_Tokyo_Ja_svg__toshobu, #Map_of_Tokyo_Ja_svg__lakes, #Map_of_Tokyo_Ja_svg__outside {
+                ${showTokubetsukuOnly ? '#Map_of_Tokyo_Ja_svg__toka,' : ''} #Map_of_Tokyo_Ja_svg__toshobu, #Map_of_Tokyo_Ja_svg__lakes, #Map_of_Tokyo_Ja_svg__outside {
                     display: none;
                 }
                 svg path {

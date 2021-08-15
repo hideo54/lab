@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "next start",
     "export": "next build && next export",
-    "lint": "next lint",
+    "lint": "eslint components/ pages/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -34,10 +34,12 @@
     "styled-components": "^5.3.0"
   },
   "devDependencies": {
+    "@hideo54/eslint-config": "^1.0.5",
     "@svgr/webpack": "^5.5.0",
     "@types/lodash": "^4.14.172",
     "@types/react": "^17.0.11",
     "@types/styled-components": "^5.1.10",
+    "eslint": "^7.32.0",
     "scrape-it": "^5.3.1",
     "ts-node": "^10.2.0",
     "typescript": "^4.3.4",
