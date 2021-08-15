@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import styled from 'styled-components';
 import { StyledIcon } from '@styled-icons/styled-icon';
 
 export const IconLink: React.FC<{

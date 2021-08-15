@@ -109,7 +109,7 @@ const App = () => {
             islands.style.backgroundColor = generateColor(islandsV);
             islands.style.color = 0.3 < islandsV && islandsV < 0.74 ? '#333333' : 'white';
         }
-    }, [ party, range, showTokubetsukuOnly ]);
+    }, [party, range, showTokubetsukuOnly]);
     useEffect(() => {
         targetIds.map(id => {
             const path = svgRef.current!.querySelector(`#Map_of_Tokyo_Ja_svg__${id}`) as SVGPathElement;
