@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import styled from 'styled-components';
 import { StyledIcon } from '@styled-icons/styled-icon';
 import { ChevronBack } from '@styled-icons/ionicons-outline';
 

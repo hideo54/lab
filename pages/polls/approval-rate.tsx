@@ -99,6 +99,7 @@ const App = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
                 const days = dayjs(event.date).diff('2009-09-01', 'days');
                 return (
                     <ReferenceLine
+                        key={event.caption}
                         x={days}
                         stroke={categoryColor[event.category]}
                         strokeOpacity={0.2}
@@ -108,12 +109,12 @@ const App = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
                             angle: 90,
                             color: categoryColor[event.category],
                             fontWeight: 'bold',
-                        }
-                    } />
+                        }}
+                    />
                 );
             })}
             <Tooltip
-                formatter={(value, name) => [ value + '%', name === 'approval' ? '支持する' : '支持しない']}
+                formatter={(value: string, name: string) => [ value + '%', name === 'approval' ? '支持する' : '支持しない']}
                 labelFormatter={v => dayjs('2009-09-01').add(v, 'days').format('YYYY年M月D日')}
             />
             <Brush
