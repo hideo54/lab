@@ -104,14 +104,14 @@ const calcXRange = (populations: number[], idealSum: number) => {
 
 const Simulator: React.VFC = () => {
     const [numOfSeats, setNumOfSheats] = useState(289);
-    const [xRange, setXRange] = useState<[number, number]>([0, 0]);
+    const [xRange, setXRange] = useState<[number, number]>([472108, 474964]);
     const populations = prefecturesJson.map(pref => pref.population2020);
     const [populationsDivided, setPopulationsDivided] = useState(populations);
     const currentSeats = prefecturesJson.map(pref => pref.numberOfPrefSenkyoku2017);
     const currentSum = sum(currentSeats);
-    const [numOfIncrease, setNumOfIncrease] = useState(0);
-    const [numOfDecrease, setNumOfDecrease] = useState(0);
-    const [numOfChangedPrefs, setNumOfChangedPrefs] = useState(0);
+    const [numOfIncrease, setNumOfIncrease] = useState(10);
+    const [numOfDecrease, setNumOfDecrease] = useState(10);
+    const [numOfChangedPrefs, setNumOfChangedPrefs] = useState(15);
     useEffect(() => {
         const [xFrom, xTo] = calcXRange(populations, numOfSeats);
         setXRange([xFrom, xTo]);
