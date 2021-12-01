@@ -12,6 +12,12 @@ const H1 = styled.h1`
 const ControlsDiv = styled.div`
     text-align: center;
     margin: 1em 0;
+    div {
+        margin: 1em 0;
+        span.number {
+            font-size: 1.2em;
+        }
+    }
     .x {
         font-size: 1.2em;
     }
@@ -29,7 +35,7 @@ const Table = styled.table`
                 color: #888888;
             }
             &.positive {
-                color: red;
+                color: #d7033a;
                 font-weight: bold;
             }
             &.negative {
@@ -56,54 +62,73 @@ const sum = (nums: number[]) => (
     nums.reduce((prev, cur) => prev + cur)
 );
 
+const describeNumberSign = (n: number) => (
+    n === 0 ? 'zero number' : (
+        n > 0 ? 'positive number' : 'negative number'
+    )
+);
+
+const calcX = (populations: number[], idealSum: number) => {
+    return 472500;
+};
+
 const Simulator: React.VFC = () => {
+    const [numOfSeats, setNumOfSheats] = useState(289);
     const [x, setX] = useState(472500);
     const populations = prefecturesJson.map(pref => pref.population2020);
-    const [populationDivided, setPopulationDevided] = useState(populations);
-    const currentSum = sum(prefecturesJson.map(pref => pref.numberOfPrefSenkyoku2017));
-    const describeNumberSign = (n: number) => (
-        n === 0 ? 'zero number' : (
-            n > 0 ? 'positive number' : 'negative number'
-        )
-    );
+    const [populationsDivided, setPopulationsDivided] = useState(populations);
+    const currentSeats = prefecturesJson.map(pref => pref.numberOfPrefSenkyoku2017);
+    const currentSum = sum(currentSeats);
+    const [numOfIncrease, setNumOfIncrease] = useState(0);
+    const [numOfDecrease, setNumOfDecrease] = useState(0);
+    const [numOfChangedPrefs, setNumOfChangedPrefs] = useState(0);
     useEffect(() => {
-        setPopulationDevided(populations.map(p => Math.ceil(p / x)));
-    }, [x]);
+        const x = calcX(populations, numOfSeats);
+        setX(x);
+        const newPopulationsDivided = populations.map(p => Math.ceil(p / x));
+        setPopulationsDivided(newPopulationsDivided);
+        const changes = newPopulationsDivided.map((p, i) => p - currentSeats[i]);
+        setNumOfIncrease(sum(changes.filter(n => n > 0)));
+        setNumOfDecrease(-sum(changes.filter(n => n < 0)));
+        setNumOfChangedPrefs(newPopulationsDivided.filter((p, i) => p !== currentSeats[i]).length);
+    }, [numOfSeats]);
     return (
         <div>
             <ControlsDiv>
                 <div className='x'>X = {x.toLocaleString()}</div>
+                <div>増減: <span className='number'>{numOfIncrease}増{numOfDecrease}減</span></div>
+                <div>増減のおこる都道府県の数: <span className='number'>{numOfChangedPrefs}</span></div>
             </ControlsDiv>
             <Table>
                 <thead>
                     <tr>
                         <th>都道府県</th>
-                        <th>2020年時点の人口</th>
+                        <th>人口 (2020)</th>
                         <th>現行<br />(2017, 2021)</th>
                         <th>適用後</th>
                         <th>増減</th>
                     </tr>
                     <tr>
                         <th>合計</th>
-                        <th className='number right'>{sum(populations).toLocaleString()}</th>
-                        <th className='number'>{sum(prefecturesJson.map(pref => pref.numberOfPrefSenkyoku2017))}</th>
-                        <th className='number'>{sum(populationDivided)}</th>
-                        <th>{sum(populationDivided) - currentSum}</th>
+                        <th className='right'>{sum(populations).toLocaleString()}</th>
+                        <th>{sum(prefecturesJson.map(pref => pref.numberOfPrefSenkyoku2017))}</th>
+                        <th className='number'>{sum(populationsDivided)}</th>
+                        <th>{sum(populationsDivided) - currentSum}</th>
                     </tr>
                 </thead>
                 <tbody>
                     {prefecturesJson.map((pref, i) => (
                         <tr key={i}>
                             <td>{pref.prefName}</td>
-                            <td className='number right'>{pref.population2020.toLocaleString()}</td>
-                            <td className='number'>{pref.numberOfPrefSenkyoku2017}</td>
+                            <td className='right'>{pref.population2020.toLocaleString()}</td>
+                            <td>{pref.numberOfPrefSenkyoku2017}</td>
                             <td className='number'>{Math.ceil(pref.population2020 / x)}</td>
                             <td
                                 className={
-                                    describeNumberSign(populationDivided[i] - pref.numberOfPrefSenkyoku2017)
+                                    describeNumberSign(populationsDivided[i] - pref.numberOfPrefSenkyoku2017)
                                 }
                             >
-                                {populationDivided[i] - pref.numberOfPrefSenkyoku2017}
+                                {populationsDivided[i] - pref.numberOfPrefSenkyoku2017}
                             </td>
                         </tr>
                     ))}
@@ -137,7 +162,7 @@ const App: React.VFC = () => {
             <p>
                 人口データは、e-Stat が提供する「
                 <IconAnchor RightIcon={Open} href='https://www.senkyo.metro.tokyo.lg.jp/election/sanngiin-all/sanngiin-sokuhou2019/'>
-                    国勢調査 / 令和２年国勢調査 / 人口等基本集計　（主な内容：男女・年齢・配偶関係，世帯の構成，住居の状態，母子・父子世帯，国籍など）
+                    国勢調査 / 令和2年国勢調査 / 人口等基本集計　（主な内容：男女・年齢・配偶関係，世帯の構成，住居の状態，母子・父子世帯，国籍など）
                 </IconAnchor>
                 」(00200521) データを利用しています。
             </p>
