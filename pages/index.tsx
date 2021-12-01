@@ -50,6 +50,14 @@ const App = () => {
             <section>
                 <PageArticle>
                     <h2>
+                        <IconNextLink RightIcon={ChevronForward} href='/senkyo/adams-simulator'>
+                            アダムズ方式シミュレータ
+                        </IconNextLink>
+                    </h2>
+                    <p>「一票の格差」是正のための議員定数配分で使われる「アダムス方式」。その配分のされかたを確認できるシミュレータです。</p>
+                </PageArticle>
+                <PageArticle>
+                    <h2>
                         <IconNextLink RightIcon={ChevronForward} href='/senkyo/san-2019-tokyo'>
                             2019年参院選における東京都の地区別投票傾向
                         </IconNextLink>

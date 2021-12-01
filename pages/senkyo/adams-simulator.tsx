@@ -1,0 +1,131 @@
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
+import { ChevronBack, Open } from '@styled-icons/ionicons-outline';
+import { IconAnchor, IconNextLink, ColorfulSlider } from '@hideo54/reactor';
+import Layout from '../../components/Layout';
+import prefecturesJson from '../../public/data/prefectures.json';
+
+const H1 = styled.h1`
+    font-family: 'Noto Sans JP', sans-serif;
+`;
+
+const ControlsDiv = styled.div`
+    text-align: center;
+`;
+
+const Table = styled.table`
+    margin: 0 auto;
+    border-collapse: collapse;
+    th, td {
+        text-align: center;
+        padding: 0.5em;
+        &.number {
+            font-size: 1.2em;
+        }
+        &.right {
+            text-align: right;
+        }
+    }
+    thead tr:last-child {
+        border-bottom: 1px solid #888888;
+    }
+    tbody tr:nth-child(even) {
+        background-color: #eeeeee;
+        @media (prefers-color-scheme: dark) {
+            background-color: #222222;
+        }
+    }
+`;
+
+const sum = (nums: number[]) => (
+    nums.reduce((prev, cur) => prev + cur)
+);
+
+const Simulator: React.VFC = () => {
+    const [x, setX] = useState(401750);
+    const populations = prefecturesJson.map(pref => pref.population2020);
+    const [populationDivided, setPopulationDevided] = useState(populations);
+    const currentSum = sum(prefecturesJson.map(pref => pref.numberOfPrefSenkyoku2017));
+    useEffect(() => {
+        setPopulationDevided(populations.map(p => Math.floor(p / x)));
+    }, [x]);
+    return (
+        <div>
+            <ControlsDiv>
+                <div>X: {x.toLocaleString()}</div>
+            </ControlsDiv>
+            <ColorfulSlider
+                value={x}
+                min={401700}
+                max={401900}
+                color='#0091ea'
+                onChange={e => {
+                    setX(parseInt(e.target.value));
+                }}
+            />
+            <Table>
+                <thead>
+                    <tr>
+                        <th>都道府県</th>
+                        <th>2020年時点の人口</th>
+                        <th>現行<br />(2017, 2021)</th>
+                        <th>適用後</th>
+                        <th>増減</th>
+                    </tr>
+                    <tr>
+                        <th>合計</th>
+                        <th className='number right'>{sum(populations).toLocaleString()}</th>
+                        <th className='number'>{sum(prefecturesJson.map(pref => pref.numberOfPrefSenkyoku2017))}</th>
+                        <th className='number'>{sum(populationDivided)}</th>
+                        <th>{sum(populationDivided) - currentSum}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {prefecturesJson.map((pref, i) => (
+                        <tr key={i}>
+                            <td>{pref.prefName}</td>
+                            <td className='number right'>{pref.population2020.toLocaleString()}</td>
+                            <td className='number'>{pref.numberOfPrefSenkyoku2017}</td>
+                            <td>{Math.floor(pref.population2020 / x)}</td>
+                            <td>{populationDivided[i] - pref.numberOfPrefSenkyoku2017}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </Table>
+        </div>
+    );
+};
+
+const App: React.VFC = () => {
+    return (
+        <Layout
+            title='アダムズ方式シミュレータ | hideo54 Lab'
+            description='「一票の格差」是正のための議員定数配分で使われる「アダムス方式」。その配分のされかたを確認できるシミュレータです。'
+            header={(
+                <div style={{
+                    marginTop: '1em',
+                    paddingLeft: '1em',
+                }}>
+                    <IconNextLink LeftIcon={ChevronBack} href='/'>トップページ</IconNextLink>
+                </div>
+            )}
+        >
+            <H1>アダムズ方式シミュレータ</H1>
+            <Simulator />
+            <h2>注意</h2>
+            <ul>
+                <li>ご意見・ご感想・ご要望などあればhideo54へ。(Twitter: <IconAnchor RightIcon={Open} href='https://twitter.com/hideo54'>@hideo54</IconAnchor>)</li>
+            </ul>
+            <h2>クレジット</h2>
+            <p>
+                人口データは、e-Stat が提供する「
+                <IconAnchor RightIcon={Open} href='https://www.senkyo.metro.tokyo.lg.jp/election/sanngiin-all/sanngiin-sokuhou2019/'>
+                    国勢調査 / 令和２年国勢調査 / 人口等基本集計　（主な内容：男女・年齢・配偶関係，世帯の構成，住居の状態，母子・父子世帯，国籍など）
+                </IconAnchor>
+                」(00200521) データを利用しています。
+            </p>
+        </Layout>
+    );
+};
+
+export default App;
