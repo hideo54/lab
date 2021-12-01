@@ -68,13 +68,42 @@ const describeNumberSign = (n: number) => (
     )
 );
 
-const calcX = (populations: number[], idealSum: number) => {
-    return 472500;
+const bisect = (populations: number[], idealSum: number) => {
+    let min =   100_000;
+    let max = 1_000_000;
+    let biggest = Math.floor((min + max) / 2);
+    const calcSumOfDivided = (x: number) => sum(populations.map(p => Math.ceil(p / x)));
+    while (true) {
+        if (calcSumOfDivided(biggest) > idealSum) {
+            min = biggest;
+            biggest = Math.floor((min + max) / 2);
+        } else if (calcSumOfDivided(biggest) < idealSum) {
+            max = biggest;
+            biggest = Math.floor((min + max) / 2);
+        } else {
+            if (calcSumOfDivided(biggest + 1) > idealSum - 1) {
+                min = biggest;
+                biggest = Math.floor((min + max) / 2);
+            } else if (calcSumOfDivided(biggest + 1) < idealSum - 1) {
+                max = biggest;
+                biggest = Math.floor((min + max) / 2);
+            } else {
+                break;
+            }
+        }
+    }
+    return biggest;
+};
+
+const calcXRange = (populations: number[], idealSum: number) => {
+    const to = bisect(populations, idealSum);
+    const from = bisect(populations, idealSum + 1) + 1;
+    return [from, to];
 };
 
 const Simulator: React.VFC = () => {
     const [numOfSeats, setNumOfSheats] = useState(289);
-    const [x, setX] = useState(472500);
+    const [xRange, setXRange] = useState<[number, number]>([0, 0]);
     const populations = prefecturesJson.map(pref => pref.population2020);
     const [populationsDivided, setPopulationsDivided] = useState(populations);
     const currentSeats = prefecturesJson.map(pref => pref.numberOfPrefSenkyoku2017);
@@ -83,9 +112,9 @@ const Simulator: React.VFC = () => {
     const [numOfDecrease, setNumOfDecrease] = useState(0);
     const [numOfChangedPrefs, setNumOfChangedPrefs] = useState(0);
     useEffect(() => {
-        const x = calcX(populations, numOfSeats);
-        setX(x);
-        const newPopulationsDivided = populations.map(p => Math.ceil(p / x));
+        const [xFrom, xTo] = calcXRange(populations, numOfSeats);
+        setXRange([xFrom, xTo]);
+        const newPopulationsDivided = populations.map(p => Math.ceil(p / xFrom));
         setPopulationsDivided(newPopulationsDivided);
         const changes = newPopulationsDivided.map((p, i) => p - currentSeats[i]);
         setNumOfIncrease(sum(changes.filter(n => n > 0)));
@@ -95,7 +124,7 @@ const Simulator: React.VFC = () => {
     return (
         <div>
             <ControlsDiv>
-                <div className='x'>X = {x.toLocaleString()}</div>
+                <div>X ∈ [{xRange.join(', ')}]</div>
                 <div>増減: <span className='number'>{numOfIncrease}増{numOfDecrease}減</span></div>
                 <div>増減のおこる都道府県の数: <span className='number'>{numOfChangedPrefs}</span></div>
             </ControlsDiv>
@@ -122,7 +151,7 @@ const Simulator: React.VFC = () => {
                             <td>{pref.prefName}</td>
                             <td className='right'>{pref.population2020.toLocaleString()}</td>
                             <td>{pref.numberOfPrefSenkyoku2017}</td>
-                            <td className='number'>{Math.ceil(pref.population2020 / x)}</td>
+                            <td className='number'>{Math.ceil(pref.population2020 / xRange[0])}</td>
                             <td
                                 className={
                                     describeNumberSign(populationsDivided[i] - pref.numberOfPrefSenkyoku2017)
