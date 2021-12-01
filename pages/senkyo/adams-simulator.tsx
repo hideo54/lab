@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { ChevronBack, Open } from '@styled-icons/ionicons-outline';
-import { IconAnchor, IconNextLink, ColorfulSlider } from '@hideo54/reactor';
+import { IconAnchor, IconNextLink } from '@hideo54/reactor';
 import Layout from '../../components/Layout';
 import prefecturesJson from '../../public/data/prefectures.json';
 
@@ -11,6 +11,10 @@ const H1 = styled.h1`
 
 const ControlsDiv = styled.div`
     text-align: center;
+    margin: 1em 0;
+    .x {
+        font-size: 1.2em;
+    }
 `;
 
 const Table = styled.table`
@@ -21,6 +25,17 @@ const Table = styled.table`
         padding: 0.5em;
         &.number {
             font-size: 1.2em;
+            &.zero {
+                color: #888888;
+            }
+            &.positive {
+                color: red;
+                font-weight: bold;
+            }
+            &.negative {
+                color: #0091ea;
+                font-weight: bold;
+            }
         }
         &.right {
             text-align: right;
@@ -42,27 +57,23 @@ const sum = (nums: number[]) => (
 );
 
 const Simulator: React.VFC = () => {
-    const [x, setX] = useState(401750);
+    const [x, setX] = useState(472500);
     const populations = prefecturesJson.map(pref => pref.population2020);
     const [populationDivided, setPopulationDevided] = useState(populations);
     const currentSum = sum(prefecturesJson.map(pref => pref.numberOfPrefSenkyoku2017));
+    const describeNumberSign = (n: number) => (
+        n === 0 ? 'zero number' : (
+            n > 0 ? 'positive number' : 'negative number'
+        )
+    );
     useEffect(() => {
         setPopulationDevided(populations.map(p => Math.ceil(p / x)));
     }, [x]);
     return (
         <div>
             <ControlsDiv>
-                <div>X: {x.toLocaleString()}</div>
+                <div className='x'>X = {x.toLocaleString()}</div>
             </ControlsDiv>
-            <ColorfulSlider
-                value={x}
-                min={401700}
-                max={401900}
-                color='#0091ea'
-                onChange={e => {
-                    setX(parseInt(e.target.value));
-                }}
-            />
             <Table>
                 <thead>
                     <tr>
@@ -86,8 +97,14 @@ const Simulator: React.VFC = () => {
                             <td>{pref.prefName}</td>
                             <td className='number right'>{pref.population2020.toLocaleString()}</td>
                             <td className='number'>{pref.numberOfPrefSenkyoku2017}</td>
-                            <td>{Math.floor(pref.population2020 / x)}</td>
-                            <td>{populationDivided[i] - pref.numberOfPrefSenkyoku2017}</td>
+                            <td className='number'>{Math.ceil(pref.population2020 / x)}</td>
+                            <td
+                                className={
+                                    describeNumberSign(populationDivided[i] - pref.numberOfPrefSenkyoku2017)
+                                }
+                            >
+                                {populationDivided[i] - pref.numberOfPrefSenkyoku2017}
+                            </td>
                         </tr>
                     ))}
                 </tbody>
