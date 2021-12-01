@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { ChevronBack, Open } from '@styled-icons/ionicons-outline';
-import { IconAnchor, IconNextLink } from '@hideo54/reactor';
+import { IconAnchor, IconNextLink, ColorfulSlider } from '@hideo54/reactor';
 import Layout from '../../components/Layout';
 import prefecturesJson from '../../public/data/prefectures.json';
 
@@ -14,17 +14,18 @@ const ControlsDiv = styled.div`
     margin: 1em 0;
     div {
         margin: 1em 0;
-        span.number {
-            font-size: 1.2em;
-        }
     }
-    .x {
+    .large {
         font-size: 1.2em;
+    }
+    .bold {
+        font-weight: bold;
     }
 `;
 
 const Table = styled.table`
     margin: 0 auto;
+    margin-top: 2em;
     border-collapse: collapse;
     th, td {
         text-align: center;
@@ -59,7 +60,7 @@ const Table = styled.table`
 `;
 
 const sum = (nums: number[]) => (
-    nums.reduce((prev, cur) => prev + cur)
+    nums.reduce((prev, cur) => prev + cur, 0)
 );
 
 const describeNumberSign = (n: number) => (
@@ -124,10 +125,24 @@ const Simulator: React.VFC = () => {
     return (
         <div>
             <ControlsDiv>
+                <div className='large bold'>衆院小選挙区選挙の合計数</div>
+                <div className='large'>{numOfSeats}</div>
+                <ColorfulSlider
+                    value={numOfSeats}
+                    min={250}
+                    max={350}
+                    color='#0091ea'
+                    onChange={e => {
+                        setNumOfSheats(e.target.valueAsNumber);
+                    }}
+                />
+                <div>↓</div>
+                <div className='large bold'>計算結果</div>
                 <div>X ∈ [{xRange.join(', ')}]</div>
-                <div>増減: <span className='number'>{numOfIncrease}増{numOfDecrease}減</span></div>
-                <div>増減のおこる都道府県の数: <span className='number'>{numOfChangedPrefs}</span></div>
+                <div>増減: <span className='large'>{numOfIncrease}増{numOfDecrease}減</span></div>
+                <div>増減のおこる都道府県の数: <span className='large'>{numOfChangedPrefs}</span></div>
             </ControlsDiv>
+            <hr />
             <Table>
                 <thead>
                     <tr>
@@ -142,7 +157,9 @@ const Simulator: React.VFC = () => {
                         <th className='right'>{sum(populations).toLocaleString()}</th>
                         <th>{sum(prefecturesJson.map(pref => pref.numberOfPrefSenkyoku2017))}</th>
                         <th className='number'>{sum(populationsDivided)}</th>
-                        <th>{sum(populationsDivided) - currentSum}</th>
+                        <th className={describeNumberSign(sum(populationsDivided) - currentSum)}>
+                            {sum(populationsDivided) - currentSum}
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
