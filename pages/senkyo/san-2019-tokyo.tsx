@@ -4,8 +4,8 @@ import { FormControl, InputLabel, Select, MenuItem, FormControlLabel, Slider, Ch
 import styled from 'styled-components';
 import { WikipediaW } from '@styled-icons/fa-brands';
 import { ChevronBack, Open } from '@styled-icons/ionicons-outline';
+import { IconAnchor, IconNextLink } from '@hideo54/reactor';
 import Layout from '../../components/Layout';
-import { IconLink } from '../../components/atoms';
 import yukenshasu from '../../public/data/san-2019-tokyo-yukenshasu.json';
 import votes from '../../public/data/san-2019-tokyo-votes.json';
 import votesPercent from '../../public/data/san-2019-tokyo-percent.json';
@@ -147,7 +147,7 @@ const App = () => {
                     marginTop: '1em',
                     paddingLeft: '1em',
                 }}>
-                    <IconLink LeftIcon={ChevronBack} href='/'>トップページ</IconLink>
+                    <IconNextLink LeftIcon={ChevronBack} href='/'>トップページ</IconNextLink>
                 </div>
             )}
         >
@@ -206,20 +206,20 @@ const App = () => {
                 <li>得票率が指定した範囲に収まらない場合、高低とも黒色になることに注意してください。</li>
                 <li>党名は2019年7月当時のものです。当時の「NHKから国民を守る党」は、現在「嵐の党」に改名しています。</li>
                 <li>当時の「立憲民主党」と「国民民主党」は、2020年9月に合流しています (現在の立憲民主党)。</li>
-                <li>ご意見・ご感想・ご要望などあればhideo54へ。(Twitter: <IconLink RightIcon={Open} href='https://twitter.com/hideo54'>@hideo54</IconLink>)</li>
+                <li>ご意見・ご感想・ご要望などあればhideo54へ。(Twitter: <IconAnchor RightIcon={Open} href='https://twitter.com/hideo54'>@hideo54</IconAnchor>)</li>
             </ul>
             <h2>クレジット</h2>
             <p>
-                開票データは、東京都選挙管理委員会事務局の「<IconLink RightIcon={Open} href='https://www.senkyo.metro.tokyo.lg.jp/election/sanngiin-all/sanngiin-sokuhou2019/'>参議院議員選挙（令和元年7月21日執行） 投開票結果</IconLink>」ページからダウンロードできる「政党等別得票総数開票区別一覧」データから、「得票総数」の値を用いています。つまり、「政党等の得票総数」と「名簿登載者の得票総数」を足した値です。
+                開票データは、東京都選挙管理委員会事務局の「<IconAnchor RightIcon={Open} href='https://www.senkyo.metro.tokyo.lg.jp/election/sanngiin-all/sanngiin-sokuhou2019/'>参議院議員選挙（令和元年7月21日執行） 投開票結果</IconAnchor>」ページからダウンロードできる「政党等別得票総数開票区別一覧」データから、「得票総数」の値を用いています。つまり、「政党等の得票総数」と「名簿登載者の得票総数」を足した値です。
             </p>
             <p>
-                東京都区画地図は、Lincun, ニンジンシチュー, LT sfm による <IconLink
+                東京都区画地図は、Lincun, ニンジンシチュー, LT sfm による <IconAnchor
                     LeftIcon={WikipediaW}
                     RightIcon={Open}
                     href='https://ja.wikipedia.org/wiki/%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB:%E5%8C%85%E6%8B%AC%E8%87%AA%E6%B2%BB%E4%BD%93%E5%8C%BA%E7%94%BB%E5%9B%B3_13000.svg'
                 >
                     ファイル:包括自治体区画図 13000.svg
-                </IconLink> (GNU Free Documentation License) に、リンクの削除、不要なデータを取り除く軽量化、IDの付与などの改変を独自に加えたものです。このファイルは<Link href='/images/Map_of_Tokyo_Ja.svg'>こちら</Link>にて、同じ GNU Free Documentation License のもと公開しています。
+                </IconAnchor> (GNU Free Documentation License) に、リンクの削除、不要なデータを取り除く軽量化、IDの付与などの改変を独自に加えたものです。このファイルは<Link href='/images/Map_of_Tokyo_Ja.svg'>こちら</Link>にて、同じ GNU Free Documentation License のもと公開しています。
             </p>
         </Layout>
     );

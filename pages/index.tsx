@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { ChevronForward } from '@styled-icons/ionicons-outline';
 import { Flask } from '@styled-icons/ionicons-solid';
+import { IconNextLink } from '@hideo54/reactor';
 import Layout from '../components/Layout';
-import { IconLink } from '../components/atoms';
 
 const HeaderSection = styled.section`
     margin-bottom: 3em;
@@ -46,9 +46,9 @@ const App = () => {
             <section>
                 <PageArticle>
                     <h2>
-                        <IconLink RightIcon={ChevronForward} href='/senkyo/san-2019-tokyo'>
+                        <IconNextLink RightIcon={ChevronForward} href='/senkyo/san-2019-tokyo'>
                             2019年参院選における東京都の地区別投票傾向
-                        </IconLink>
+                        </IconNextLink>
                     </h2>
                     <p>ひとくちに東京都と言っても、地区ごとにみると、その投票傾向は少しずつ違っています。2019年に行われた参院選の開票結果を使って、その傾向をヴィジュアライズしています。</p>
                 </PageArticle>
