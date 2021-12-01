@@ -207,7 +207,7 @@ const App: React.VFC = () => {
             <h2>クレジット</h2>
             <p>
                 人口データは、e-Stat が提供する「
-                <IconAnchor RightIcon={Open} href='https://www.senkyo.metro.tokyo.lg.jp/election/sanngiin-all/sanngiin-sokuhou2019/'>
+                <IconAnchor RightIcon={Open} href='https://www.e-stat.go.jp/stat-search/files?stat_infid=000032142404'>
                     国勢調査 / 令和2年国勢調査 / 人口等基本集計　（主な内容：男女・年齢・配偶関係，世帯の構成，住居の状態，母子・父子世帯，国籍など）
                 </IconAnchor>
                 」(00200521) データを利用しています。
