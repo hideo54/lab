@@ -19,10 +19,14 @@ const CatchH1 = styled.h1`
 `;
 
 const PageArticle = styled.article`
-    margin: 1em 0;
-    border: 2px solid gray;
+    margin: 2em 0;
     border-radius: 20px;
     padding: 1em;
+    box-shadow: 0 0 10px #CCCCCC;
+    @media (prefers-color-scheme: dark) {
+        background-color: #111111;
+        box-shadow: 0 0 10px #444444;
+    }
     h2 {
         font-family: 'Noto Sans JP', sans-serif;
     }

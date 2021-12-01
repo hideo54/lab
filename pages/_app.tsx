@@ -7,6 +7,9 @@ import * as gtag from '../lib/gtag';
 const GlobalStyle = createGlobalStyle`
     body {
         -webkit-text-size-adjust: 100%;
+        @media (prefers-color-scheme: dark) {
+            background-color: #000000;
+        }
     }
 
     body, select, button {
@@ -33,6 +36,9 @@ const GlobalStyle = createGlobalStyle`
     h1, h2, h3, h4, h5, h6, p, div, span {
         :not(a &) {
             color: #333333;
+            @media (prefers-color-scheme: dark) {
+                color: #eeeeee;
+            }
         }
     }
 

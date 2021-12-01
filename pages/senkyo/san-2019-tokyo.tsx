@@ -20,6 +20,18 @@ const ControlsDiv = styled.div`
     margin: 2em 0;
     padding: 0 1em;
     text-align: center;
+
+    @media (prefers-color-scheme: dark) {
+        .MuiFormLabel-root, .MuiSvgIcon-root {
+            color: #dddddd;
+        }
+        .MuiOutlinedInput-notchedOutline {
+            border-color: #dddddd;
+        }
+        .MuiInputBase-root {
+            color: #eeeeee;
+        }
+    }
 `;
 
 const MapDiv = styled.div`
