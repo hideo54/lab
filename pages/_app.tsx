@@ -30,18 +30,19 @@ const GlobalStyle = createGlobalStyle`
         padding: 0 1em;
     }
 
-    h1, h2, h3, h4, h5, h6, p, div {
-        color: #333333;
-    }
-
-    span {
-        color: #333333;
-        line-height: 100%;
+    h1, h2, h3, h4, h5, h6, p, div, span {
+        :not(a &) {
+            color: #333333;
+        }
     }
 
     a {
         color: #0091ea;
         text-decoration: none;
+    }
+
+    span, li {
+        line-height: 1.5em;
     }
 `;
 
