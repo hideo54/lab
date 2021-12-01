@@ -47,7 +47,7 @@ const Simulator: React.VFC = () => {
     const [populationDivided, setPopulationDevided] = useState(populations);
     const currentSum = sum(prefecturesJson.map(pref => pref.numberOfPrefSenkyoku2017));
     useEffect(() => {
-        setPopulationDevided(populations.map(p => Math.floor(p / x)));
+        setPopulationDevided(populations.map(p => Math.ceil(p / x)));
     }, [x]);
     return (
         <div>
