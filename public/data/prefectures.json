@@ -3,282 +3,329 @@
         "prefName": "北海道",
         "prefId": "hokkaido",
         "numberOfPrefSenkyoku2017": 12,
+        "population2015": 5381733,
         "population2020": 5224614
     },
     {
         "prefName": "青森県",
         "prefId": "aomori",
         "numberOfPrefSenkyoku2017": 3,
+        "population2015": 1308265,
         "population2020": 1237984
     },
     {
         "prefName": "岩手県",
         "prefId": "iwate",
         "numberOfPrefSenkyoku2017": 3,
+        "population2015": 1279594,
         "population2020": 1210534
     },
     {
         "prefName": "宮城県",
         "prefId": "miyagi",
         "numberOfPrefSenkyoku2017": 6,
+        "population2015": 2333899,
         "population2020": 2301996
     },
     {
         "prefName": "秋田県",
         "prefId": "akita",
         "numberOfPrefSenkyoku2017": 3,
+        "population2015": 1023119,
         "population2020": 959502
     },
     {
         "prefName": "山形県",
         "prefId": "yamagata",
         "numberOfPrefSenkyoku2017": 3,
+        "population2015": 1123891,
         "population2020": 1068027
     },
     {
         "prefName": "福島県",
         "prefId": "fukushima",
         "numberOfPrefSenkyoku2017": 5,
+        "population2015": 1914039,
         "population2020": 1833152
     },
     {
         "prefName": "茨城県",
         "prefId": "ibaraki",
         "numberOfPrefSenkyoku2017": 7,
+        "population2015": 2916976,
         "population2020": 2867009
     },
     {
         "prefName": "栃木県",
         "prefId": "tochigi",
         "numberOfPrefSenkyoku2017": 5,
+        "population2015": 1974255,
         "population2020": 1933146
     },
     {
         "prefName": "群馬県",
         "prefId": "gunma",
         "numberOfPrefSenkyoku2017": 5,
+        "population2015": 1973115,
         "population2020": 1939110
     },
     {
         "prefName": "埼玉県",
         "prefId": "saitama",
         "numberOfPrefSenkyoku2017": 15,
+        "population2015": 7266534,
         "population2020": 7344765
     },
     {
         "prefName": "千葉県",
         "prefId": "chiba",
         "numberOfPrefSenkyoku2017": 13,
+        "population2015": 6222666,
         "population2020": 6284480
     },
     {
         "prefName": "東京都",
         "prefId": "tokyo",
         "numberOfPrefSenkyoku2017": 25,
+        "population2015": 13515271,
         "population2020": 14047594
     },
     {
         "prefName": "神奈川県",
         "prefId": "kanagawa",
         "numberOfPrefSenkyoku2017": 18,
+        "population2015": 9126214,
         "population2020": 9237337
     },
     {
         "prefName": "新潟県",
         "prefId": "niigata",
         "numberOfPrefSenkyoku2017": 6,
+        "population2015": 2304264,
         "population2020": 2201272
     },
     {
         "prefName": "富山県",
         "prefId": "toyama",
         "numberOfPrefSenkyoku2017": 3,
+        "population2015": 1066328,
         "population2020": 1034814
     },
     {
         "prefName": "石川県",
         "prefId": "ishikawa",
         "numberOfPrefSenkyoku2017": 3,
+        "population2015": 1154008,
         "population2020": 1132526
     },
     {
         "prefName": "福井県",
         "prefId": "fukui",
         "numberOfPrefSenkyoku2017": 2,
+        "population2015": 786740,
         "population2020": 766863
     },
     {
         "prefName": "山梨県",
         "prefId": "yamanashi",
         "numberOfPrefSenkyoku2017": 2,
+        "population2015": 834930,
         "population2020": 809974
     },
     {
         "prefName": "長野県",
         "prefId": "nagano",
         "numberOfPrefSenkyoku2017": 5,
+        "population2015": 2098804,
         "population2020": 2048011
     },
     {
         "prefName": "岐阜県",
         "prefId": "gifu",
         "numberOfPrefSenkyoku2017": 5,
+        "population2015": 2031903,
         "population2020": 1978742
     },
     {
         "prefName": "静岡県",
         "prefId": "shizuoka",
         "numberOfPrefSenkyoku2017": 8,
+        "population2015": 3700305,
         "population2020": 3633202
     },
     {
         "prefName": "愛知県",
         "prefId": "aichi",
         "numberOfPrefSenkyoku2017": 15,
+        "population2015": 7483128,
         "population2020": 7542415
     },
     {
         "prefName": "三重県",
         "prefId": "mie",
         "numberOfPrefSenkyoku2017": 4,
+        "population2015": 1815865,
         "population2020": 1770254
     },
     {
         "prefName": "滋賀県",
         "prefId": "shiga",
         "numberOfPrefSenkyoku2017": 4,
+        "population2015": 1412916,
         "population2020": 1413610
     },
     {
         "prefName": "京都府",
         "prefId": "kyoto",
         "numberOfPrefSenkyoku2017": 6,
+        "population2015": 2610353,
         "population2020": 2578087
     },
     {
         "prefName": "大阪府",
         "prefId": "osaka",
         "numberOfPrefSenkyoku2017": 19,
+        "population2015": 8839469,
         "population2020": 8837685
     },
     {
         "prefName": "兵庫県",
         "prefId": "hyogo",
         "numberOfPrefSenkyoku2017": 12,
+        "population2015": 5534800,
         "population2020": 5465002
     },
     {
         "prefName": "奈良県",
         "prefId": "nara",
         "numberOfPrefSenkyoku2017": 3,
+        "population2015": 1364316,
         "population2020": 1324473
     },
     {
         "prefName": "和歌山県",
         "prefId": "wakayama",
         "numberOfPrefSenkyoku2017": 3,
+        "population2015": 963579,
         "population2020": 922584
     },
     {
         "prefName": "鳥取県",
         "prefId": "tottori",
         "numberOfPrefSenkyoku2017": 2,
+        "population2015": 573441,
         "population2020": 553407
     },
     {
         "prefName": "島根県",
         "prefId": "shimane",
         "numberOfPrefSenkyoku2017": 2,
+        "population2015": 694352,
         "population2020": 671126
     },
     {
         "prefName": "岡山県",
         "prefId": "okayama",
         "numberOfPrefSenkyoku2017": 5,
+        "population2015": 1921525,
         "population2020": 1888432
     },
     {
         "prefName": "広島県",
         "prefId": "hiroshima",
         "numberOfPrefSenkyoku2017": 7,
+        "population2015": 2843990,
         "population2020": 2799702
     },
     {
         "prefName": "山口県",
         "prefId": "yamaguchi",
         "numberOfPrefSenkyoku2017": 4,
+        "population2015": 1404729,
         "population2020": 1342059
     },
     {
         "prefName": "徳島県",
         "prefId": "tokushima",
         "numberOfPrefSenkyoku2017": 2,
+        "population2015": 755733,
         "population2020": 719559
     },
     {
         "prefName": "香川県",
         "prefId": "kagawa",
         "numberOfPrefSenkyoku2017": 3,
+        "population2015": 976263,
         "population2020": 950244
     },
     {
         "prefName": "愛媛県",
         "prefId": "ehime",
         "numberOfPrefSenkyoku2017": 4,
+        "population2015": 1385262,
         "population2020": 1334841
     },
     {
         "prefName": "高知県",
         "prefId": "kochi",
         "numberOfPrefSenkyoku2017": 2,
+        "population2015": 728276,
         "population2020": 691527
     },
     {
         "prefName": "福岡県",
         "prefId": "fukuoka",
         "numberOfPrefSenkyoku2017": 11,
+        "population2015": 5101556,
         "population2020": 5135214
     },
     {
         "prefName": "佐賀県",
         "prefId": "saga",
         "numberOfPrefSenkyoku2017": 2,
+        "population2015": 832832,
         "population2020": 811442
     },
     {
         "prefName": "長崎県",
         "prefId": "nagasaki",
         "numberOfPrefSenkyoku2017": 4,
+        "population2015": 1377187,
         "population2020": 1312317
     },
     {
         "prefName": "熊本県",
         "prefId": "kumamoto",
         "numberOfPrefSenkyoku2017": 4,
+        "population2015": 1786170,
         "population2020": 1738301
     },
     {
         "prefName": "大分県",
         "prefId": "oita",
         "numberOfPrefSenkyoku2017": 3,
+        "population2015": 1166338,
         "population2020": 1123852
     },
     {
         "prefName": "宮崎県",
         "prefId": "miyazaki",
         "numberOfPrefSenkyoku2017": 3,
+        "population2015": 1104069,
         "population2020": 1069576
     },
     {
         "prefName": "鹿児島県",
         "prefId": "kagoshima",
         "numberOfPrefSenkyoku2017": 4,
+        "population2015": 1648177,
         "population2020": 1588256
     },
     {
         "prefName": "沖縄県",
         "prefId": "okinawa",
         "numberOfPrefSenkyoku2017": 4,
+        "population2015": 1433566,
         "population2020": 1467480
     }
 ]
