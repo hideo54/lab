@@ -34,7 +34,7 @@ const PageArticle = styled.article`
 
 const App = () => {
     return (
-        <Layout>
+        <Layout header={<></>}>
             <HeaderSection>
                 <div style={{
                     padding: '1em',

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { ChevronBack, Open } from '@styled-icons/ionicons-outline';
-import { IconAnchor, IconNextLink, ColorfulSlider } from '@hideo54/reactor';
+import { Open } from '@styled-icons/ionicons-outline';
+import { IconAnchor, ColorfulSlider } from '@hideo54/reactor';
 import Layout from '../../components/Layout';
 import prefecturesJson from '../../public/data/prefectures.json';
 
@@ -189,14 +189,6 @@ const App: React.VFC = () => {
         <Layout
             title='アダムズ方式シミュレータ | hideo54 Lab'
             description='「一票の格差」是正のための議員定数配分で使われる「アダムス方式」。その配分のされかたを確認できるシミュレータです。'
-            header={(
-                <div style={{
-                    marginTop: '1em',
-                    paddingLeft: '1em',
-                }}>
-                    <IconNextLink LeftIcon={ChevronBack} href='/'>トップページ</IconNextLink>
-                </div>
-            )}
         >
             <H1>アダムズ方式シミュレータ</H1>
             <Simulator />
