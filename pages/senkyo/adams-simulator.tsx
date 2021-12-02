@@ -137,8 +137,8 @@ const Simulator: React.VFC = () => {
                 <div className='large'>{numOfSeats}</div>
                 <ColorfulSlider
                     value={numOfSeats}
-                    min={250}
-                    max={350}
+                    min={259}
+                    max={319}
                     color='#0091ea'
                     onChange={e => {
                         setNumOfSheats(e.target.valueAsNumber);
