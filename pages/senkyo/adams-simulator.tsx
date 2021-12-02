@@ -48,8 +48,16 @@ const Table = styled.table`
             text-align: right;
         }
     }
-    thead tr:last-child {
-        border-bottom: 1px solid #888888;
+    thead {
+        position: sticky;
+        top: 0;
+        background-color: #ffffff;
+        @media (prefers-color-scheme: dark) {
+            background-color: #000000;
+        }
+        tr:last-child {
+            border-bottom: 1px solid #888888;
+        }
     }
     tbody tr:nth-child(even) {
         background-color: #eeeeee;
