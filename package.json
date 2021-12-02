@@ -34,7 +34,7 @@
   },
   "devDependencies": {
     "@hideo54/eslint-config": "^1.0.5",
-    "@svgr/webpack": "^5.5.0",
+    "@svgr/webpack": "^6.1.0",
     "@types/react": "^17.0.11",
     "@types/styled-components": "^5.1.10",
     "eslint": "^8.0.0",
