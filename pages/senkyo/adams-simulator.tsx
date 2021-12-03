@@ -117,6 +117,8 @@ const SeatsInput = styled.input.attrs({
 })`
     font-size: 1.2em;
     width: 3.6em;
+    margin-left: 0.5em;
+    text-align: right;
 `;
 
 const Simulator: React.VFC = () => {
