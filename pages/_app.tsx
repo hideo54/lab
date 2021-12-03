@@ -47,7 +47,7 @@ const GlobalStyle = createGlobalStyle`
         text-decoration: none;
     }
 
-    span, li {
+    p, span, li {
         line-height: 1.5em;
     }
 

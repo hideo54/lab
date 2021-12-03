@@ -197,7 +197,7 @@ const Simulator: React.VFC = () => {
                                     setNumOfSeats(0);
                                 }
                             } else {
-                                if (0 < value && value < 999) {
+                                if (0 < value && value <= 999) {
                                     setNumOfSeats(value);
                                 }
                             }
@@ -271,30 +271,71 @@ const App: React.VFC = () => {
             <h2>注意</h2>
             <ul>
                 <li>
-                    2015年、2020年の人口データは、国勢調査による実数を使用しています (出典は下記)。
+                    2015年、2020年の人口データは、国勢調査による実数を使用しています [1][2]。
                 </li>
                 <li>
                     2025年以降の人口の数字は、2015年から2020年の増加率が一定のまま続くという過程による、極めて単純なモデルによる予測値を用いています。たとえば、2015年に人口1,000万人、2020年に人口900万人となった都道府県は、2025年に810万人、2030年に729万人になるとしています。
                 </li>
                 <li>
-                    ご意見・ご感想・ご要望などあればhideo54へ。(Twitter: <IconAnchor RightIcon={Open} href='https://twitter.com/hideo54'>@hideo54</IconAnchor>)
+                    ご意見・ご感想・ご要望などあれば{' '}
+                    <IconAnchor RightIcon={Open} href='https://hideo54.com/'>
+                        hideo54
+                    </IconAnchor>{' '}
+                    へ。
                 </li>
             </ul>
+            <h2>アダムズ方式とは?</h2>
+            <p>
+                各選挙区の人口をXで割った数字を<strong>切り上げた数字</strong>を定数とし、定数の和が与えた数字になるようにXを定めます。
+            </p>
+            <p>
+                比較的地方に有利な配分方式とされています [3]。
+            </p>
+            <p>
+                2016年1月の審議会で報告された調査会答申をうけ [4]、2016年5月に衆議院議員選挙区画定審議会設置法、公職選挙法が改正され、アダムズ方式の導入が決定されました [5]。
+                そして2021年11月30日に国勢調査の結果が公表されたことで、定数を「10増10減」とすることが確定しました [6]。
+            </p>
+            <p>
+                2022年6月までに政府の審議会が勧告を出し、それを受けて法律が改正・施行されたあとの衆議院選挙から、新たな区割りが適用されます [6]。
+            </p>
             <h2>クレジット</h2>
-            <p>
-                2020年の人口データは、政府統計の総合窓口 e-Stat が提供する「
-                <IconAnchor RightIcon={Open} href='https://www.e-stat.go.jp/stat-search/files?stat_infid=000032142404'>
-                    国勢調査 / 令和2年国勢調査 / 人口等基本集計（主な内容：男女・年齢・配偶関係，世帯の構成，住居の状態，母子・父子世帯，国籍など）
-                </IconAnchor>
-                」データを利用しています。
-            </p>
-            <p>
-                2015年の人口データは、政府統計の総合窓口 e-Stat が提供する「
-                <IconAnchor RightIcon={Open} href='https://www.e-stat.go.jp/stat-search/files?stat_infid=000031473210'>
-                    国勢調査 / 平成27年国勢調査 / 人口等基本集計（男女・年齢・配偶関係，世帯の構成，住居の状態など） 全国結果
-                </IconAnchor>
-                」データを利用しています。
-            </p>
+            <ol>
+                <li>
+                    「政府統計の総合窓口 (e-Stat)」、調査項目を調べる－国勢調査 (総務省)
+                    「
+                    <IconAnchor RightIcon={Open} href='https://www.e-stat.go.jp/stat-search/files?stat_infid=000031473210'>
+                        国勢調査 / 平成27年国勢調査 / 人口等基本集計（男女・年齢・配偶関係，世帯の構成，住居の状態など） 全国結果
+                    </IconAnchor>
+                    」
+                </li>
+                <li>
+                    「政府統計の総合窓口 (e-Stat)」、調査項目を調べる－国勢調査 (総務省)
+                    「
+                    <IconAnchor RightIcon={Open} href='https://www.e-stat.go.jp/stat-search/files?stat_infid=000032142404'>
+                        国勢調査 / 令和2年国勢調査 / 人口等基本集計（主な内容：男女・年齢・配偶関係，世帯の構成，住居の状態，母子・父子世帯，国籍など）
+                    </IconAnchor>
+                    」
+                </li>
+                <li>
+                    一森哲男, わが国の選挙制度改革とアダムズ方式 —議席配分の観点から—, 日本応用数理学会論文誌, Vol. 27 No. 3, 2017.{' '}
+                    <IconAnchor href='https://www.jstage.jst.go.jp/article/jsiamt/27/3/27_261/_pdf' RightIcon={Open}>PDF</IconAnchor>
+                </li>
+                <li>
+                    <IconAnchor href='https://www.soumu.go.jp/main_sosiki/singi/senkyoku/02gyosei14_03000064.html' RightIcon={Open}>
+                        第5回衆議院議員選挙区画定審議会
+                    </IconAnchor>
+                    「衆議院選挙制度に関する調査会答申」2016年1月.{' '}
+                    <IconAnchor href='https://www.soumu.go.jp/main_content/000395085.pdf' RightIcon={Open}>PDF</IconAnchor>
+                </li>
+                <li>
+                    総務省「衆議院議員選挙制度の改正について」2016年5月27日.{' '}
+                    <IconAnchor RightIcon={Open} href='https://www.soumu.go.jp/senkyo/senkyo_s/news/senkyo/shu_seido/index.html'>リンク</IconAnchor>
+                </li>
+                <li>
+                    NHKニュース “「10増10減」が確定 衆議院小選挙区 国勢調査結果受け” 2021年11月30日.{' '}
+                    <IconAnchor href='https://www3.nhk.or.jp/news/html/20211130/k10013368091000.html' RightIcon={Open}>リンク</IconAnchor>
+                </li>
+            </ol>
         </Layout>
     );
 };
