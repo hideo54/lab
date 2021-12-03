@@ -125,6 +125,7 @@ const SeatsInput = styled.input.attrs({
 `;
 
 const Simulator: React.VFC = () => {
+    const selectableYears = [2015, 2020, 2025, 2030, 2035, 2040, 2045];
     const [year, setYear] = useState(2020);
     const [numOfSeats, setNumOfSeats] = useState(289);
     const [xRange, setXRange] = useState<[number, number]>([472108, 474964]);
@@ -140,15 +141,10 @@ const Simulator: React.VFC = () => {
     const [numOfDecrease, setNumOfDecrease] = useState(10);
     const [numOfChangedPrefs, setNumOfChangedPrefs] = useState(15);
     useEffect(() => {
-        if (year === 2015) {
-            setPopulations(prefecturesJson.map(pref =>pref.population2015));
-        } else {
-            setPopulations(prefecturesJson.map(pref =>
-                Math.round(
-                    ((pref.population2020 / pref.population2015) ** ((year - 2020) / 5)) * pref.population2020
-                )
-            ));
-        }
+        setPopulations(prefecturesJson.map(pref =>
+            // @ts-expect-error ぐえ
+            pref[[2015, 2020].includes(year) ? `population${year}` : `population${year}-est2018`]
+        ));
     }, [year]);
     useEffect(() => {
         if (numOfSeats >= 47) {
@@ -165,17 +161,17 @@ const Simulator: React.VFC = () => {
     return (
         <div>
             <ControlsDiv>
-                <div>人口: {year}年{year > 2020 && ' (単純予測値)'}</div>
+                <div>人口: {year}年{year > 2020 && ' (推計値)'}</div>
                 <div>
                     <ColorfulSlider
                         value={year}
                         min={2015}
-                        max={2050}
+                        max={2045}
                         step={5}
                         color={year <= 2020 ? '#0091ea' : '#36c200'}
                         onChange={e => {
                             const newYear = e.target.valueAsNumber;
-                            if (!isNaN(newYear)) {
+                            if ((selectableYears).includes(newYear)) {
                                 setYear(newYear);
                             }
                         }}
@@ -223,7 +219,7 @@ const Simulator: React.VFC = () => {
                 <thead>
                     <tr>
                         <th>都道府県</th>
-                        <th>人口{year > 2020 && '予測'}<br />({year})</th>
+                        <th>人口{year > 2020 && '推計'}<br />({year})</th>
                         <th>現行<br />(2017, 2021)</th>
                         <th>適用後</th>
                         <th>増減</th>
@@ -274,7 +270,7 @@ const App: React.VFC = () => {
                     2015年、2020年の人口データは、国勢調査による実数を使用しています [1][2]。
                 </li>
                 <li>
-                    2025年以降の人口の数字は、2015年から2020年の増加率が一定のまま続くという過程による、極めて単純なモデルによる予測値を用いています。たとえば、2015年に人口1,000万人、2020年に人口900万人となった都道府県は、2025年に810万人、2030年に729万人になるとしています。
+                    2025年以降の人口の数字は、国立社会保障・人口問題研究所による推計人口を使用しています [3]。アダムズ方式の採用などを答申した、衆議院の「衆議院選挙制度に関する調査会」も、この研究所の試算を使用しています [4]。ただし本ページで用いた最新の推計は2018年時点のものです。
                 </li>
                 <li>
                     ご意見・ご感想・ご要望などあれば{' '}
@@ -289,16 +285,16 @@ const App: React.VFC = () => {
                 各選挙区の人口をXで割った数字を<strong>切り上げた数字</strong>を定数とし、定数の和が与えた数字になるようにXを定めます。
             </p>
             <p>
-                比較的地方に有利な配分方式とされています [3]。
+                比較的地方に有利な配分方式とされています [5]。
             </p>
             <p>
-                2016年1月の審議会で報告された調査会答申をうけ [4]、2016年5月に衆議院議員選挙区画定審議会設置法、公職選挙法が改正され、アダムズ方式の導入が決定されました [5]。
-                そして2021年11月30日に国勢調査の結果が公表されたことで、定数を「10増10減」とすることが確定しました [6]。
+                2016年1月の審議会で報告された調査会答申をうけ [4]、2016年5月に衆議院議員選挙区画定審議会設置法、公職選挙法が改正され、アダムズ方式の導入が決定されました [6]。
+                そして2021年11月30日に国勢調査の結果が公表されたことで、定数を「10増10減」とすることが確定しました [7]。
             </p>
             <p>
-                2022年6月までに政府の審議会が勧告を出し、それを受けて法律が改正・施行されたあとの衆議院選挙から、新たな区割りが適用されます [6]。
+                2022年6月までに政府の審議会が勧告を出し、それを受けて法律が改正・施行されたあとの衆議院選挙から、新たな区割りが適用されます [7]。
             </p>
-            <h2>クレジット</h2>
+            <h2>参考文献</h2>
             <ol>
                 <li>
                     「政府統計の総合窓口 (e-Stat)」、調査項目を調べる－国勢調査 (総務省)
@@ -317,8 +313,8 @@ const App: React.VFC = () => {
                     」
                 </li>
                 <li>
-                    一森哲男, わが国の選挙制度改革とアダムズ方式 —議席配分の観点から—, 日本応用数理学会論文誌, Vol. 27 No. 3, 2017.{' '}
-                    <IconAnchor href='https://www.jstage.jst.go.jp/article/jsiamt/27/3/27_261/_pdf' RightIcon={Open}>PDF</IconAnchor>
+                    国立社会保障・人口問題研究所「日本の地域別将来推計人口 (平成30 (2018) 年推計)」
+                    <IconAnchor RightIcon={Open} href='https://www.ipss.go.jp/pp-shicyoson/j/shicyoson18/t-page.asp'>リンク</IconAnchor>
                 </li>
                 <li>
                     <IconAnchor href='https://www.soumu.go.jp/main_sosiki/singi/senkyoku/02gyosei14_03000064.html' RightIcon={Open}>
@@ -326,6 +322,10 @@ const App: React.VFC = () => {
                     </IconAnchor>
                     「衆議院選挙制度に関する調査会答申」2016年1月.{' '}
                     <IconAnchor href='https://www.soumu.go.jp/main_content/000395085.pdf' RightIcon={Open}>PDF</IconAnchor>
+                </li>
+                <li>
+                    一森哲男, わが国の選挙制度改革とアダムズ方式 —議席配分の観点から—, 日本応用数理学会論文誌, Vol. 27 No. 3, 2017.{' '}
+                    <IconAnchor href='https://www.jstage.jst.go.jp/article/jsiamt/27/3/27_261/_pdf' RightIcon={Open}>PDF</IconAnchor>
                 </li>
                 <li>
                     総務省「衆議院議員選挙制度の改正について」2016年5月27日.{' '}
