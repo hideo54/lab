@@ -121,7 +121,7 @@ const SeatsInput = styled.input.attrs({
     font-size: 1.2em;
     width: 3.6em;
     margin-left: 0.5em;
-    text-align: right;
+    text-align: center;
 `;
 
 const Simulator: React.VFC = () => {
@@ -182,7 +182,7 @@ const Simulator: React.VFC = () => {
                     />
                 </div>
                 <div>
-                    <label htmlFor='seats'>衆院小選挙区数</label>
+                    <label htmlFor='seats'>衆院小選挙区数:</label>
                     <SeatsInput
                         type='number'
                         id='seats'
