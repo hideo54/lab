@@ -244,7 +244,7 @@ const Simulator: React.VFC = () => {
                             <td>{pref.prefName}</td>
                             <td className='right'>{populations[i].toLocaleString()}</td>
                             <td>{pref.numberOfPrefSenkyoku2017}</td>
-                            <td className='number'>{Math.ceil(pref.population2020 / xRange[0])}</td>
+                            <td className='number'>{Math.ceil(populations[i] / xRange[0])}</td>
                             <td
                                 className={
                                     describeNumberSign(populationsDivided[i] - pref.numberOfPrefSenkyoku2017)
