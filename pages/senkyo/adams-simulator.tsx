@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { Open } from '@styled-icons/ionicons-outline';
-import { IconAnchor } from '@hideo54/reactor';
+import { AlertCircle, Open } from '@styled-icons/ionicons-outline';
+import { IconSpan, IconAnchor } from '@hideo54/reactor';
 import Layout from '../../components/Layout';
 import prefecturesJson from '../../public/data/prefectures.json';
 
@@ -29,7 +29,7 @@ const Table = styled.table`
     border-collapse: collapse;
     th, td {
         text-align: center;
-        padding: 0.5em;
+        padding: 0.5em 0.25em;
         &.number {
             font-size: 1.2em;
             &.zero {
@@ -151,7 +151,8 @@ const Simulator: React.VFC = () => {
                     type='number'
                     id='seats'
                     name='seats'
-                    value={numOfSeats}
+                    value={numOfSeats > 0 ? numOfSeats : ''}
+                    inputMode='numeric'
                     onChange={e => {
                         if (e.target.value.includes('.')) return;
                         const value = parseInt(e.target.value);
@@ -167,9 +168,13 @@ const Simulator: React.VFC = () => {
                     }}
                     required
                 />
-                {numOfSeats < 48 &&
-                    <div>48以上の数字を入れてください</div>
-                }
+                <div>
+                    {numOfSeats < 48 &&
+                        <IconSpan LeftIcon={AlertCircle} color='#d7033a'>
+                            48以上の数字を入れてください
+                        </IconSpan>
+                    }
+                </div>
                 <div>↓</div>
                 <div className='large bold'>計算結果</div>
                 <div>X ∈ [{xRange.join(', ')}]</div>
