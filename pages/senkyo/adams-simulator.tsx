@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Open } from '@styled-icons/ionicons-outline';
-import { IconAnchor, ColorfulSlider } from '@hideo54/reactor';
+import { IconAnchor } from '@hideo54/reactor';
 import Layout from '../../components/Layout';
 import prefecturesJson from '../../public/data/prefectures.json';
 
@@ -78,11 +78,12 @@ const describeNumberSign = (n: number) => (
 );
 
 const bisect = (populations: number[], idealSum: number) => {
-    let min =   100_000;
-    let max = 1_000_000;
+    let min =     100_000;
+    let max = 100_000_000;
     let biggest = Math.floor((min + max) / 2);
     const calcSumOfDivided = (x: number) => sum(populations.map(p => Math.ceil(p / x)));
-    while (true) {
+    let counter = 0;
+    while (counter < 30) {
         if (calcSumOfDivided(biggest) > idealSum) {
             min = biggest;
             biggest = Math.floor((min + max) / 2);
@@ -100,6 +101,7 @@ const bisect = (populations: number[], idealSum: number) => {
                 break;
             }
         }
+        counter += 1;
     }
     return biggest;
 };
@@ -110,40 +112,64 @@ const calcXRange = (populations: number[], idealSum: number) => {
     return [from, to];
 };
 
+const SeatsInput = styled.input.attrs({
+    type: 'number',
+})`
+    font-size: 1.2em;
+    width: 3.6em;
+`;
+
 const Simulator: React.VFC = () => {
-    const [numOfSeats, setNumOfSheats] = useState(289);
+    const [numOfSeats, setNumOfSeats] = useState(289);
     const [xRange, setXRange] = useState<[number, number]>([472108, 474964]);
     const populations = prefecturesJson.map(pref => pref.population2020);
-    const [populationsDivided, setPopulationsDivided] = useState(populations);
+    const [populationsDivided, setPopulationsDivided] = useState(
+        populations.map(p => Math.ceil(p / xRange[0]))
+    );
     const currentSeats = prefecturesJson.map(pref => pref.numberOfPrefSenkyoku2017);
     const currentSum = sum(currentSeats);
     const [numOfIncrease, setNumOfIncrease] = useState(10);
     const [numOfDecrease, setNumOfDecrease] = useState(10);
     const [numOfChangedPrefs, setNumOfChangedPrefs] = useState(15);
     useEffect(() => {
-        const [xFrom, xTo] = calcXRange(populations, numOfSeats);
-        setXRange([xFrom, xTo]);
-        const newPopulationsDivided = populations.map(p => Math.ceil(p / xFrom));
-        setPopulationsDivided(newPopulationsDivided);
-        const changes = newPopulationsDivided.map((p, i) => p - currentSeats[i]);
-        setNumOfIncrease(sum(changes.filter(n => n > 0)));
-        setNumOfDecrease(-sum(changes.filter(n => n < 0)));
-        setNumOfChangedPrefs(newPopulationsDivided.filter((p, i) => p !== currentSeats[i]).length);
+        if (numOfSeats >= 47) {
+            const [xFrom, xTo] = calcXRange(populations, numOfSeats);
+            setXRange([xFrom, xTo]);
+            const newPopulationsDivided = populations.map(p => Math.ceil(p / xFrom));
+            setPopulationsDivided(newPopulationsDivided);
+            const changes = newPopulationsDivided.map((p, i) => p - currentSeats[i]);
+            setNumOfIncrease(sum(changes.filter(n => n > 0)));
+            setNumOfDecrease(-sum(changes.filter(n => n < 0)));
+            setNumOfChangedPrefs(newPopulationsDivided.filter((p, i) => p !== currentSeats[i]).length);
+        }
     }, [numOfSeats]);
     return (
         <div>
             <ControlsDiv>
-                <div className='large bold'>衆院小選挙区選挙の合計数</div>
-                <div className='large'>{numOfSeats}</div>
-                <ColorfulSlider
+                <label htmlFor='seats'>衆院小選挙区数</label>
+                <SeatsInput
+                    type='number'
+                    id='seats'
+                    name='seats'
                     value={numOfSeats}
-                    min={259}
-                    max={319}
-                    color='#0091ea'
                     onChange={e => {
-                        setNumOfSheats(e.target.valueAsNumber);
+                        if (e.target.value.includes('.')) return;
+                        const value = parseInt(e.target.value);
+                        if (isNaN(value)) {
+                            if (e.target.value === '') {
+                                setNumOfSeats(0);
+                            }
+                        } else {
+                            if (0 < value && value < 999) {
+                                setNumOfSeats(value);
+                            }
+                        }
                     }}
+                    required
                 />
+                {numOfSeats < 48 &&
+                    <div>48以上の数字を入れてください</div>
+                }
                 <div>↓</div>
                 <div className='large bold'>計算結果</div>
                 <div>X ∈ [{xRange.join(', ')}]</div>
