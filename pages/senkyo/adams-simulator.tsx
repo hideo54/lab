@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { AlertCircle, Open } from '@styled-icons/ionicons-outline';
-import { IconSpan, IconAnchor } from '@hideo54/reactor';
+import { IconSpan, IconAnchor, ColorfulSlider } from '@hideo54/reactor';
 import Layout from '../../components/Layout';
 import prefecturesJson from '../../public/data/prefectures.json';
 
@@ -20,6 +20,9 @@ const ControlsDiv = styled.div`
     }
     .bold {
         font-weight: bold;
+    }
+    input[type=range] {
+        max-width: 300px;
     }
 `;
 
@@ -122,9 +125,12 @@ const SeatsInput = styled.input.attrs({
 `;
 
 const Simulator: React.VFC = () => {
+    const [year, setYear] = useState(2020);
     const [numOfSeats, setNumOfSeats] = useState(289);
     const [xRange, setXRange] = useState<[number, number]>([472108, 474964]);
-    const populations = prefecturesJson.map(pref => pref.population2020);
+    const [populations, setPopulations] = useState(
+        prefecturesJson.map(pref => pref.population2020)
+    );
     const [populationsDivided, setPopulationsDivided] = useState(
         populations.map(p => Math.ceil(p / xRange[0]))
     );
@@ -133,6 +139,17 @@ const Simulator: React.VFC = () => {
     const [numOfIncrease, setNumOfIncrease] = useState(10);
     const [numOfDecrease, setNumOfDecrease] = useState(10);
     const [numOfChangedPrefs, setNumOfChangedPrefs] = useState(15);
+    useEffect(() => {
+        if (year === 2015) {
+            setPopulations(prefecturesJson.map(pref =>pref.population2015));
+        } else {
+            setPopulations(prefecturesJson.map(pref =>
+                Math.round(
+                    ((pref.population2020 / pref.population2015) ** ((year - 2020) / 5)) * pref.population2020
+                )
+            ));
+        }
+    }, [year]);
     useEffect(() => {
         if (numOfSeats >= 47) {
             const [xFrom, xTo] = calcXRange(populations, numOfSeats);
@@ -144,32 +161,50 @@ const Simulator: React.VFC = () => {
             setNumOfDecrease(-sum(changes.filter(n => n < 0)));
             setNumOfChangedPrefs(newPopulationsDivided.filter((p, i) => p !== currentSeats[i]).length);
         }
-    }, [numOfSeats]);
+    }, [numOfSeats, populations]);
     return (
         <div>
             <ControlsDiv>
-                <label htmlFor='seats'>衆院小選挙区数</label>
-                <SeatsInput
-                    type='number'
-                    id='seats'
-                    name='seats'
-                    value={numOfSeats > 0 ? numOfSeats : ''}
-                    inputMode='numeric'
-                    onChange={e => {
-                        if (e.target.value.includes('.')) return;
-                        const value = parseInt(e.target.value);
-                        if (isNaN(value)) {
-                            if (e.target.value === '') {
-                                setNumOfSeats(0);
+                <div>人口: {year}年{year > 2020 && ' (単純予測値)'}</div>
+                <div>
+                    <ColorfulSlider
+                        value={year}
+                        min={2015}
+                        max={2050}
+                        step={5}
+                        color={year <= 2020 ? '#0091ea' : '#36c200'}
+                        onChange={e => {
+                            const newYear = e.target.valueAsNumber;
+                            if (!isNaN(newYear)) {
+                                setYear(newYear);
                             }
-                        } else {
-                            if (0 < value && value < 999) {
-                                setNumOfSeats(value);
+                        }}
+                    />
+                </div>
+                <div>
+                    <label htmlFor='seats'>衆院小選挙区数</label>
+                    <SeatsInput
+                        type='number'
+                        id='seats'
+                        name='seats'
+                        value={numOfSeats > 0 ? numOfSeats : ''}
+                        inputMode='numeric'
+                        onChange={e => {
+                            if (e.target.value.includes('.')) return;
+                            const value = parseInt(e.target.value);
+                            if (isNaN(value)) {
+                                if (e.target.value === '') {
+                                    setNumOfSeats(0);
+                                }
+                            } else {
+                                if (0 < value && value < 999) {
+                                    setNumOfSeats(value);
+                                }
                             }
-                        }
-                    }}
-                    required
-                />
+                        }}
+                        required
+                    />
+                </div>
                 <div>
                     {numOfSeats < 48 &&
                         <IconSpan LeftIcon={AlertCircle} color='#d7033a'>
@@ -188,7 +223,7 @@ const Simulator: React.VFC = () => {
                 <thead>
                     <tr>
                         <th>都道府県</th>
-                        <th>人口 (2020)</th>
+                        <th>人口{year > 2020 && '予測'}<br />({year})</th>
                         <th>現行<br />(2017, 2021)</th>
                         <th>適用後</th>
                         <th>増減</th>
@@ -207,7 +242,7 @@ const Simulator: React.VFC = () => {
                     {prefecturesJson.map((pref, i) => (
                         <tr key={i}>
                             <td>{pref.prefName}</td>
-                            <td className='right'>{pref.population2020.toLocaleString()}</td>
+                            <td className='right'>{populations[i].toLocaleString()}</td>
                             <td>{pref.numberOfPrefSenkyoku2017}</td>
                             <td className='number'>{Math.ceil(pref.population2020 / xRange[0])}</td>
                             <td
@@ -235,7 +270,15 @@ const App: React.VFC = () => {
             <Simulator />
             <h2>注意</h2>
             <ul>
-                <li>ご意見・ご感想・ご要望などあればhideo54へ。(Twitter: <IconAnchor RightIcon={Open} href='https://twitter.com/hideo54'>@hideo54</IconAnchor>)</li>
+                <li>
+                    2015年、2020年の人口データは、国勢調査による実数を使用しています (出典は下記)。
+                </li>
+                <li>
+                    2025年以降の人口の数字は、2015年から2020年の増加率が一定のまま続くという過程による、極めて単純なモデルによる予測値を用いています。たとえば、2015年に人口1,000万人、2020年に人口900万人となった都道府県は、2025年に810万人、2030年に729万人になるとしています。
+                </li>
+                <li>
+                    ご意見・ご感想・ご要望などあればhideo54へ。(Twitter: <IconAnchor RightIcon={Open} href='https://twitter.com/hideo54'>@hideo54</IconAnchor>)
+                </li>
             </ul>
             <h2>クレジット</h2>
             <p>

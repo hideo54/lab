@@ -50,6 +50,10 @@ const GlobalStyle = createGlobalStyle`
     span, li {
         line-height: 1.5em;
     }
+
+    li {
+        margin: 1em 0;
+    }
 `;
 
 const App = ({ Component, pageProps }: AppProps) => {
