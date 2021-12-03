@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/hideo54/lab#readme",
   "dependencies": {
-    "@hideo54/reactor": "^1.4.2",
+    "@hideo54/reactor": "^1.4.8",
     "@material-ui/core": "^4.11.4",
     "@styled-icons/fa-brands": "^10.34.0",
     "@styled-icons/ionicons-outline": "^10.34.0",
