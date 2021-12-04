@@ -147,7 +147,7 @@ const Simulator: React.VFC = () => {
         ));
     }, [year]);
     useEffect(() => {
-        if (numOfSeats >= 47) {
+        if (numOfSeats >= 48) { // 47 だと無限ループになる
             const [xFrom, xTo] = calcXRange(populations, numOfSeats);
             setXRange([xFrom, xTo]);
             const newPopulationsDivided = populations.map(p => Math.ceil(p / xFrom));
@@ -290,8 +290,6 @@ const App: React.VFC = () => {
             <p>
                 2016年1月の審議会で報告された調査会答申をうけ [4]、2016年5月に衆議院議員選挙区画定審議会設置法、公職選挙法が改正され、アダムズ方式の導入が決定されました [6]。
                 そして2021年11月30日に国勢調査の結果が公表されたことで、定数を「10増10減」とすることが確定しました [7]。
-            </p>
-            <p>
                 2022年6月までに政府の審議会が勧告を出し、それを受けて法律が改正・施行されたあとの衆議院選挙から、新たな区割りが適用されます [7]。
             </p>
             <h2>参考文献</h2>
