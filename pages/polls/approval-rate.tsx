@@ -4,12 +4,12 @@ import styled from 'styled-components';
 import { Open } from '@styled-icons/ionicons-outline';
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, ReferenceLine, CartesianGrid, Legend, Tooltip, Brush } from 'recharts';
 import { FormControlLabel, Checkbox } from '@material-ui/core';
+import { IconAnchor } from '@hideo54/reactor';
 import dayjs from 'dayjs';
 import fs from 'fs/promises';
 import yaml from 'yaml';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import Layout from '../../components/Layout';
-import { IconLink, goTopHeader } from '../../components/atoms';
 
 const H1 = styled.h1`
     font-family: 'Noto Sans JP', sans-serif;
@@ -150,7 +150,6 @@ const App = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
             description='民主党が政権を担っていた2009年9月から2012年12月の間の内閣支持率と主な出来事をグラフにまとめています。'
             imageUrl='https://lab.hideo54.com/images/approval-rate.png'
             twitterCardType='summary_large_image'
-            header={goTopHeader}
         >
             <H1>民主党政権時の内閣支持率と主な出来事</H1>
             <GraphDiv>
@@ -161,9 +160,9 @@ const App = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
             </GraphDiv>
             <h2>制作動機</h2>
             <p>
-                <IconLink RightIcon={Open} href='https://www.chuko.co.jp/shinsho/2013/09/102233.html'>
+                <IconAnchor RightIcon={Open} href='https://www.chuko.co.jp/shinsho/2013/09/102233.html'>
                     日本再建イニシアティブ『民主党政権 失敗の検証』(中公新書)
-                </IconLink> を読んでいて、民主党政権時の内閣支持率と主な出来事をわかりやすく図示したグラフが欲しくなったことがきっかけです。
+                </IconAnchor> を読んでいて、民主党政権時の内閣支持率と主な出来事をわかりやすく図示したグラフが欲しくなったことがきっかけです。
                 <br />
                 この本は、3年3ヶ月で幕を閉じた民主党政権の失敗の理由を、当時政権を担っていた議員や関係者に対する多数のインタビューを踏まえながら、各政策に注目して詳細に分析した本で、おすすめの一冊です。
             </p>
@@ -175,13 +174,13 @@ const App = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
             <h2>クレジット</h2>
             <ul>
                 <li>
-                    内閣支持率のデータは、NHK放送文化研究所が公開している各年の<IconLink RightIcon={Open} href='https://www.nhk.or.jp/bunken/yoron/political/2009.html'>政治意識月例調査</IconLink>ページに掲載されているデータを利用しています。
+                    内閣支持率のデータは、NHK放送文化研究所が公開している各年の<IconAnchor RightIcon={Open} href='https://www.nhk.or.jp/bunken/yoron/political/2009.html'>政治意識月例調査</IconAnchor>ページに掲載されているデータを利用しています。
                 </li>
                 <li>
                     出来事については、上述の『民主党政権 失敗の検証』の記述を適宜参考にしつつ、重要と思ったものを選んで載せています。また、同書が行った民主党衆議院議員へのアンケート内の「民主党政権が有権者の支持を失う決定的なターニングポイントはどの時期だと思いますか?」の質問の選択肢となっている出来事はすべて載せました。
                 </li>
                 <li>
-                    出来事について、<IconLink RightIcon={Open} href='https://www.jiji.com/jc/graphics?p=ve_pol_election-syugiin20121124j-04-w680'>時事通信社『【図解・政治】衆院選・民主党政権3年の歩み (2012年11月)』(時事ドットコム)</IconLink> も参考にしました。
+                    出来事について、<IconAnchor RightIcon={Open} href='https://www.jiji.com/jc/graphics?p=ve_pol_election-syugiin20121124j-04-w680'>時事通信社『【図解・政治】衆院選・民主党政権3年の歩み (2012年11月)』(時事ドットコム)</IconAnchor> も参考にしました。
                 </li>
             </ul>
         </Layout>
