@@ -7,6 +7,9 @@ import * as gtag from '../lib/gtag';
 const GlobalStyle = createGlobalStyle`
     body {
         -webkit-text-size-adjust: 100%;
+        @media (prefers-color-scheme: dark) {
+            background-color: #000000;
+        }
     }
 
     body, select, button {
@@ -30,18 +33,26 @@ const GlobalStyle = createGlobalStyle`
         padding: 0 1em;
     }
 
-    h1, h2, h3, h4, h5, h6, p, div {
-        color: #333333;
-    }
-
-    span {
-        color: #333333;
-        line-height: 100%;
+    h1, h2, h3, h4, h5, h6, p, div, span {
+        :not(a &) {
+            color: #333333;
+            @media (prefers-color-scheme: dark) {
+                color: #eeeeee;
+            }
+        }
     }
 
     a {
         color: #0091ea;
         text-decoration: none;
+    }
+
+    p, span, li {
+        line-height: 1.5em;
+    }
+
+    li {
+        margin: 1em 0;
     }
 `;
 

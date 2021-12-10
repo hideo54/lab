@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { ChevronForward } from '@styled-icons/ionicons-outline';
 import { Flask } from '@styled-icons/ionicons-solid';
+import { IconNextLink } from '@hideo54/reactor';
 import Layout from '../components/Layout';
-import { IconLink } from '../components/atoms';
 
 const HeaderSection = styled.section`
     margin-bottom: 3em;
@@ -22,10 +22,14 @@ const CatchH1 = styled.h1`
 `;
 
 const PageArticle = styled.article`
-    margin: 1em 0;
-    border: 2px solid gray;
+    margin: 2em 0;
     border-radius: 20px;
     padding: 1em;
+    box-shadow: 0 0 10px #CCCCCC;
+    @media (prefers-color-scheme: dark) {
+        background-color: #111111;
+        box-shadow: 0 0 10px #444444;
+    }
     h2 {
         font-family: 'Noto Sans JP', sans-serif;
     }
@@ -44,6 +48,11 @@ const pages: PageMeta[] = [
         path: '/polls/approval-rate',
     },
     {
+        title: 'アダムズ方式シミュレータ',
+        caption: '「一票の格差」是正のための議員定数配分で使われる「アダムス方式」。衆議院選挙の小選挙区制におけるその配分のされかたを確認できるシミュレータです。',
+        path: '/polls/approval-rate',
+    },
+    {
         title: '2019年参院選における東京都の地区別投票傾向',
         caption: 'ひとくちに東京都と言っても、地区ごとにみると、その投票傾向は少しずつ違っています。2019年に行われた参院選の開票結果を使って、その傾向をヴィジュアライズしています。',
         path: '/senkyo/san-2019-tokyo',
@@ -52,7 +61,7 @@ const pages: PageMeta[] = [
 
 const App = () => {
     return (
-        <Layout>
+        <Layout header={<></>}>
             <HeaderSection>
                 <div className='flask'>
                     <Flask size='200px' color='silver' />
@@ -66,7 +75,7 @@ const App = () => {
             {pages.map(page => (
                 <PageArticle key={page.path}>
                     <h2>
-                        <IconLink RightIcon={ChevronForward} href={page.path}>{page.title}</IconLink>
+                        <IconNextLink RightIcon={ChevronForward} href={page.path}>{page.title}</IconNextLink>
                     </h2>
                     <p>{page.caption}</p>
                 </PageArticle>
