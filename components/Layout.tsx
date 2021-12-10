@@ -1,5 +1,19 @@
 import { ReactNode } from 'react';
 import Head from 'next/head';
+import styled from 'styled-components';
+import { ChevronBack } from '@styled-icons/ionicons-outline';
+import { IconNextLink } from '@hideo54/reactor';
+
+const HeaderDiv = styled.div`
+    margin-top: 1em;
+    padding-left: 1em;
+`;
+
+const goTopHeader = (
+    <HeaderDiv>
+        <IconNextLink LeftIcon={ChevronBack} href='/'>トップページ</IconNextLink>
+    </HeaderDiv>
+);
 
 const Layout = ({
     children,
@@ -7,7 +21,7 @@ const Layout = ({
     description = '新しいプロダクトにするほどでもないような、小さな制作物や研究結果を公開する場所。',
     imageUrl = 'https://img.hideo54.com/icons/main.png',
     twitterCardType = 'summary',
-    header,
+    header = goTopHeader,
 }: {
     children?: ReactNode;
     title?: string;

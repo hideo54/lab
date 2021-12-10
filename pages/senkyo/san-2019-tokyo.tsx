@@ -3,8 +3,8 @@ import Link from 'next/link';
 import { FormControl, InputLabel, Select, MenuItem, FormControlLabel, Slider, Checkbox, Button } from '@material-ui/core';
 import styled from 'styled-components';
 import { WikipediaW } from '@styled-icons/fa-brands';
-import { ChevronBack, Open } from '@styled-icons/ionicons-outline';
-import { IconAnchor, IconNextLink } from '@hideo54/reactor';
+import { Open } from '@styled-icons/ionicons-outline';
+import { IconAnchor } from '@hideo54/reactor';
 import Layout from '../../components/Layout';
 import yukenshasu from '../../public/data/san-2019-tokyo-yukenshasu.json';
 import votes from '../../public/data/san-2019-tokyo-votes.json';
@@ -154,14 +154,6 @@ const App = () => {
             description='2019年に行われた参院選の開票結果を使って、東京都の区画別の投票傾向をヴィジュアライズしています。'
             imageUrl='https://lab.hideo54.com/images/san-2019-tokyo.png'
             twitterCardType='summary_large_image'
-            header={(
-                <div style={{
-                    marginTop: '1em',
-                    paddingLeft: '1em',
-                }}>
-                    <IconNextLink LeftIcon={ChevronBack} href='/'>トップページ</IconNextLink>
-                </div>
-            )}
         >
             <H1>2019年参院選における東京都の区画別投票傾向</H1>
             <ControlsDiv>

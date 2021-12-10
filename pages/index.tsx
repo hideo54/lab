@@ -34,7 +34,7 @@ const PageArticle = styled.article`
 
 const App = () => {
     return (
-        <Layout>
+        <Layout header={<></>}>
             <HeaderSection>
                 <div style={{
                     padding: '1em',
@@ -48,6 +48,14 @@ const App = () => {
                 <p>小さな制作物や研究結果を公開します。</p>
             </HeaderSection>
             <section>
+                <PageArticle>
+                    <h2>
+                        <IconNextLink RightIcon={ChevronForward} href='/senkyo/adams-simulator'>
+                            アダムズ方式シミュレータ
+                        </IconNextLink>
+                    </h2>
+                    <p>「一票の格差」是正のための議員定数配分で使われる「アダムス方式」。衆議院選挙の小選挙区制におけるその配分のされかたを確認できるシミュレータです。</p>
+                </PageArticle>
                 <PageArticle>
                     <h2>
                         <IconNextLink RightIcon={ChevronForward} href='/senkyo/san-2019-tokyo'>
