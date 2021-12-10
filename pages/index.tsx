@@ -7,6 +7,9 @@ import Layout from '../components/Layout';
 const HeaderSection = styled.section`
     margin-bottom: 3em;
     text-align: center;
+    div.flask {
+        padding: 1em;
+    }
 `;
 
 const CatchH1 = styled.h1`
@@ -32,13 +35,35 @@ const PageArticle = styled.article`
     }
 `;
 
+interface PageMeta {
+    title: string;
+    caption: string;
+    path: string;
+}
+
+const pages: PageMeta[] = [
+    {
+        title: '民主党政権時の内閣支持率と主な出来事',
+        caption: '民主党が政権を担っていた2009年9月から2012年12月の間の内閣支持率と主な出来事をグラフにまとめています。',
+        path: '/polls/approval-rate',
+    },
+    {
+        title: 'アダムズ方式シミュレータ',
+        caption: '「一票の格差」是正のための議員定数配分で使われる「アダムス方式」。衆議院選挙の小選挙区制におけるその配分のされかたを確認できるシミュレータです。',
+        path: '/senkyo/adams',
+    },
+    {
+        title: '2019年参院選における東京都の地区別投票傾向',
+        caption: 'ひとくちに東京都と言っても、地区ごとにみると、その投票傾向は少しずつ違っています。2019年に行われた参院選の開票結果を使って、その傾向をヴィジュアライズしています。',
+        path: '/senkyo/san-2019-tokyo',
+    },
+];
+
 const App = () => {
     return (
         <Layout header={<></>}>
             <HeaderSection>
-                <div style={{
-                    padding: '1em',
-                }}>
+                <div className='flask'>
                     <Flask size='200px' color='silver' />
                 </div>
                 <CatchH1>
@@ -47,24 +72,14 @@ const App = () => {
                 </CatchH1>
                 <p>小さな制作物や研究結果を公開します。</p>
             </HeaderSection>
-            <section>
-                <PageArticle>
+            {pages.map(page => (
+                <PageArticle key={page.path}>
                     <h2>
-                        <IconNextLink RightIcon={ChevronForward} href='/senkyo/adams-simulator'>
-                            アダムズ方式シミュレータ
-                        </IconNextLink>
+                        <IconNextLink RightIcon={ChevronForward} href={page.path}>{page.title}</IconNextLink>
                     </h2>
-                    <p>「一票の格差」是正のための議員定数配分で使われる「アダムス方式」。衆議院選挙の小選挙区制におけるその配分のされかたを確認できるシミュレータです。</p>
+                    <p>{page.caption}</p>
                 </PageArticle>
-                <PageArticle>
-                    <h2>
-                        <IconNextLink RightIcon={ChevronForward} href='/senkyo/san-2019-tokyo'>
-                            2019年参院選における東京都の地区別投票傾向
-                        </IconNextLink>
-                    </h2>
-                    <p>ひとくちに東京都と言っても、地区ごとにみると、その投票傾向は少しずつ違っています。2019年に行われた参院選の開票結果を使って、その傾向をヴィジュアライズしています。</p>
-                </PageArticle>
-            </section>
+            ))}
         </Layout>
     );
 };
