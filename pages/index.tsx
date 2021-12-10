@@ -50,7 +50,7 @@ const pages: PageMeta[] = [
     {
         title: 'アダムズ方式シミュレータ',
         caption: '「一票の格差」是正のための議員定数配分で使われる「アダムス方式」。衆議院選挙の小選挙区制におけるその配分のされかたを確認できるシミュレータです。',
-        path: '/polls/approval-rate',
+        path: '/senkyo/adams',
     },
     {
         title: '2019年参院選における東京都の地区別投票傾向',
