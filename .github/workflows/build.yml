@@ -9,17 +9,13 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [15.x]
     env:
       NEXT_TELEMETRY_DISABLED: 1 # https://nextjs.org/telemetry
     steps:
     - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
+    - uses: actions/setup-node@v1
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: '16'
     - uses: actions/cache@v2
       with: # https://github.com/actions/cache/blob/main/examples.md#node---npm
         path: ~/.npm
