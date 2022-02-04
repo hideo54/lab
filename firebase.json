@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "site": "hideo54-lab",
+    "site": "hideo-lab",
     "public": "out",
     "ignore": [
       "firebase.json",
