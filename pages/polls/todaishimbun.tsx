@@ -11,10 +11,19 @@ const H1 = styled.h1`
 `;
 
 const Graph = () => {
+    const [isContinuent, setIsContinuent] = useState(false);
+    const [shouldZoom, setShouldZoom] = useState(false);
+    const [shouldConnectRikken, setShouldConnectRikken] = useState(false);
     const allData = pollsJson['party-approval'].map(d => ({
         year: d.year,
         method: d.method,
-        ...d.rate,
+        ...(shouldConnectRikken
+            ? Object.fromEntries(
+                Object.entries(d.rate).map(([partyId, rate]) =>
+                    [partyId.replace(/-\d+$/, ''), rate]
+                )
+            ) : d.rate
+        ),
     })).reverse();
     const formatter = (v: string) => {
         if (v === 'none') return '支持政党なし';
@@ -43,8 +52,6 @@ const Graph = () => {
                 ? e[partyId as keyof typeof allData[number]]
                 : null
     );
-    const [isContinuent, setIsContinuent] = useState(false);
-    const [shouldZoom, setShouldZoom] = useState(false);
     const makeLines = (partyId: string) => ( // React component にするとなぜか動かない
         isContinuent ? (
             <Line
@@ -87,6 +94,14 @@ const Graph = () => {
                     onChange={e => setShouldZoom(e.target.checked)}
                 />
                 15%以下を拡大
+            </label>
+            <label>
+                <input
+                    type='checkbox'
+                    checked={shouldConnectRikken}
+                    onChange={e => setShouldConnectRikken(e.target.checked)}
+                />
+                旧新立憲民主党・国民民主党を連続して表示する
             </label>
             <ResponsiveContainer width='100%' height={500}>
                 <LineChart data={allData}>
