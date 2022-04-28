@@ -50,6 +50,14 @@ const App = () => {
             <section>
                 <PageArticle>
                     <h2>
+                        <IconNextLink RightIcon={ChevronForward} href='/polls/todaishimbun'>
+                            東大新入生の政党支持
+                        </IconNextLink>
+                    </h2>
+                    <p>東京大学新聞社 (東大新聞) が毎年新入生に対して行っている支持政党の調査の結果を経時的にまとめています。</p>
+                </PageArticle>
+                <PageArticle>
+                    <h2>
                         <IconNextLink RightIcon={ChevronForward} href='/senkyo/adams-simulator'>
                             アダムズ方式シミュレータ
                         </IconNextLink>
