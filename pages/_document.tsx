@@ -4,6 +4,7 @@ import { GA_TRACKING_ID } from '../lib/gtag';
 
 const minify = (s: string) => s.replace(/(\s{4}|\n)/g, '');
 
+// @ts-expect-error @types/react v18 の問題
 export default class MyDocument extends Document {
     static async getInitialProps(ctx: any) {
         const sheet = new ServerStyleSheet();
