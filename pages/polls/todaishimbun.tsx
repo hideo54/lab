@@ -57,6 +57,7 @@ const Graph = () => {
             <Line
                 type='monotone'
                 dataKey={partyId}
+                name={formatter(partyId)}
                 stroke={getColor(partyId)}
             />
         ) : (
