@@ -1,6 +1,6 @@
 import React, { useState, createRef, useEffect } from 'react';
 import Link from 'next/link';
-import { FormControl, InputLabel, Select, MenuItem, FormControlLabel, Slider, Checkbox, Button } from '@material-ui/core';
+import { FormControl, InputLabel, Select, MenuItem, FormControlLabel, Slider, Checkbox, Button } from '@mui/material';
 import styled from 'styled-components';
 import { WikipediaW } from '@styled-icons/fa-brands';
 import { Open } from '@styled-icons/ionicons-outline';
