@@ -78,6 +78,20 @@
                 "others": 18,
                 "none": 1167,
                 "not-sure": 829
+            },
+            "rate": {
+                "jimin": 20.5,
+                "rikken-minshu-2017": 4,
+                "kokumin-minshu-2018": 0.3,
+                "komei": 0.5,
+                "kyosan": 1.1,
+                "ishin": 0.9,
+                "shakai-minshu": 0.3,
+                "kibou": 0.1,
+                "jiyu": 0.3,
+                "others": 0.6,
+                "none": 40.6,
+                "not-sure": 28.8
             }
         },
         {
