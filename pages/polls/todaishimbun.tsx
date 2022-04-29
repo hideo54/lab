@@ -10,6 +10,15 @@ const H1 = styled.h1`
     font-family: 'Noto Sans JP', sans-serif;
 `;
 
+const GraphControlsDiv = styled.div`
+    text-align: center;
+    margin: 1rem 0;
+    label {
+        display: block;
+        margin: 1rem auto;
+    }
+`;
+
 const Graph = () => {
     const [isContinuent, setIsContinuent] = useState(false);
     const [shouldZoom, setShouldZoom] = useState(false);
@@ -80,30 +89,32 @@ const Graph = () => {
     );
     return (
         <div>
-            <label>
-                <input
-                    type='checkbox'
-                    checked={isContinuent}
-                    onChange={e => setIsContinuent(e.target.checked)}
-                />
-                オンライン調査を連続して表示する
-            </label>
-            <label>
-                <input
-                    type='checkbox'
-                    checked={shouldZoom}
-                    onChange={e => setShouldZoom(e.target.checked)}
-                />
-                15%以下を拡大
-            </label>
-            <label>
-                <input
-                    type='checkbox'
-                    checked={shouldConnectRikken}
-                    onChange={e => setShouldConnectRikken(e.target.checked)}
-                />
-                旧新立憲民主党・国民民主党を連続して表示する
-            </label>
+            <GraphControlsDiv>
+                <label>
+                    <input
+                        type='checkbox'
+                        checked={shouldZoom}
+                        onChange={e => setShouldZoom(e.target.checked)}
+                    />
+                    15%以下を拡大
+                </label>
+                <label>
+                    <input
+                        type='checkbox'
+                        checked={isContinuent}
+                        onChange={e => setIsContinuent(e.target.checked)}
+                    />
+                    オンライン調査を連続して表示する
+                </label>
+                <label>
+                    <input
+                        type='checkbox'
+                        checked={shouldConnectRikken}
+                        onChange={e => setShouldConnectRikken(e.target.checked)}
+                    />
+                    旧新の立憲民主党・国民民主党を連続して表示する
+                </label>
+            </GraphControlsDiv>
             <ResponsiveContainer width='100%' height={500}>
                 <LineChart data={allData}>
                     <CartesianGrid strokeDasharray='3 3' />
