@@ -54,6 +54,10 @@ const GlobalStyle = createGlobalStyle`
     li {
         margin: 1em 0;
     }
+
+    .recharts-default-tooltip {
+        background-color: black !important;
+    }
 `;
 
 const App = ({ Component, pageProps }: AppProps) => {
