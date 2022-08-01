@@ -48,7 +48,8 @@ const CardsSection = styled.section`
 `;
 
 const CardDiv = styled.div`
-    min-width: 300px;
+    min-width: 200px;
+    max-width: 400px;
     margin: 1rem;
     padding: 1rem;
     border-radius: 0.5rem;
@@ -64,6 +65,7 @@ const CardDiv = styled.div`
         margin-top: 0;
     }
     span.campus {
+        display: inline-block;
         font-weight: normal;
         font-size: 1rem;
         margin-right: 0.5rem;
