@@ -50,7 +50,7 @@ const App = () => {
             <section>
                 <PageArticle>
                     <h2>
-                        <IconNextLink RightIcon={ChevronForward} href='/polls/todaishimbun'>
+                        <IconNextLink RightIcon={ChevronForward} href='/u-tokyo/todaishimbun'>
                             東大新入生の政党支持
                         </IconNextLink>
                     </h2>
