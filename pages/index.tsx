@@ -50,6 +50,14 @@ const App = () => {
             <section>
                 <PageArticle>
                     <h2>
+                        <IconNextLink RightIcon={ChevronForward} href='/u-tokyo/newspapers'>
+                            東京大学附属図書館 新聞所蔵リスト
+                        </IconNextLink>
+                    </h2>
+                    <p>東京大学附属図書館が所蔵しているすべての新聞のリストを見やすくまとめています。急に地方紙や業界紙を読みたくなったときなどに便利です。</p>
+                </PageArticle>
+                <PageArticle>
+                    <h2>
                         <IconNextLink RightIcon={ChevronForward} href='/senkyo/adams-simulator'>
                             アダムズ方式シミュレータ
                         </IconNextLink>
