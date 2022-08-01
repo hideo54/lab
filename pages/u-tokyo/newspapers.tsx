@@ -15,6 +15,7 @@ const ControlsDiv = styled.div`
     div {
         display: flex;
         justify-content: center;
+        flex-wrap: wrap;
     }
     .MuiCheckbox-root svg[data-testid="CheckBoxOutlineBlankIcon"] path {
         @media (prefers-color-scheme: dark) {
