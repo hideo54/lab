@@ -145,10 +145,10 @@ const Graph = () => {
 const App = () => {
     return (
         <Layout
-            title='東大新入生の政党支持 | hideo54 Lab'
+            title='東京大学新入生の政党支持 | hideo54 Lab'
             description='東京大学新聞社 (東大新聞) が毎年新入生に対して行っている支持政党の調査の結果を経時的にまとめています。'
         >
-            <H1>東大新入生の政党支持</H1>
+            <H1>東京大学新入生の政党支持</H1>
             <Graph />
             <h2>ソース</h2>
             <ul>
