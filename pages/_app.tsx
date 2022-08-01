@@ -56,7 +56,9 @@ const GlobalStyle = createGlobalStyle`
     }
 
     .recharts-default-tooltip {
-        background-color: black !important;
+        @media (prefers-color-scheme: dark) {
+            background-color: black !important;
+        }
     }
 `;
 
