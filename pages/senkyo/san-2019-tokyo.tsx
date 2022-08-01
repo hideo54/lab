@@ -91,6 +91,12 @@ const RangeSlider = styled(Slider)`
             color: red;
         }
     }
+    span.MuiSlider-valueLabel {
+        background-color: #dddddd;
+        @media (prefers-color-scheme: dark) {
+            background-color: #222222;
+        }
+    }
 `;
 
 const App = () => {
