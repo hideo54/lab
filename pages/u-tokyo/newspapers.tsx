@@ -4,16 +4,23 @@ import Layout from '../../components/Layout';
 import uTokyoLibNewspapersJson from '../../public/data/u-tokyo-lib-newspapers.json';
 import { IconAnchor, IconSpan } from '@hideo54/reactor';
 import { InformationCircle, Location, Newspaper, Open } from '@styled-icons/ionicons-outline';
-import { TextField } from '@mui/material';
+import { Checkbox, FormControlLabel, TextField } from '@mui/material';
 
 const H1 = styled.h1`
     font-family: 'Noto Sans JP', sans-serif;
 `;
 
 const ControlsDiv = styled.div`
-    display: flex;
-    justify-content: center;
-    margin: 2rem 0;
+    margin: 1rem 0;
+    div {
+        display: flex;
+        justify-content: center;
+    }
+    .MuiCheckbox-root svg[data-testid="CheckBoxOutlineBlankIcon"] path {
+        @media (prefers-color-scheme: dark) {
+            fill: #cccccc;
+        }
+    }
 `;
 
 const SearchField = styled(TextField)`
@@ -293,6 +300,14 @@ const locations = [
 
 const App = () => {
     const [searchWord, setSearchWord] = useState('');
+    const allCampuses = [
+        '本郷',
+        '弥生',
+        '駒場',
+        '柏',
+        '白金台',
+    ];
+    const [campuses, setCampuses] = useState(allCampuses);
     return (
         <Layout
             title='東京大学附属図書館 新聞所蔵リスト | hideo54 Lab'
@@ -301,16 +316,37 @@ const App = () => {
             <H1>東京大学附属図書館 新聞所蔵リスト</H1>
             <p>東京大学附属図書館が所蔵している新聞のすべてのリストを見やすくまとめています。地方紙などを探すときに便利です。</p>
             <ControlsDiv>
-                <SearchField
-                    label='新聞名'
-                    value={searchWord}
-                    onChange={e => setSearchWord(e.target.value)}
-                />
+                <div>
+                    <SearchField
+                        label='新聞名'
+                        value={searchWord}
+                        onChange={e => setSearchWord(e.target.value)}
+                    />
+                </div>
+                <div>
+                    {allCampuses.map(campus =>
+                        <FormControlLabel
+                            key={campus}
+                            control={<Checkbox checked={campuses.includes(campus)} />}
+                            label={campus}
+                            onChange={e => (e as React.ChangeEvent<HTMLInputElement>).target.checked
+                                ? setCampuses([
+                                    ...campuses,
+                                    campus,
+                                ])
+                                : setCampuses(campuses.filter(c => c !== campus))
+                            }
+                        />
+                    )}
+                </div>
             </ControlsDiv>
             <CardsSection>
                 {uTokyoLibNewspapersJson
                     .filter(p => p.新聞名.toLocaleLowerCase().includes(
                         searchWord.toLocaleLowerCase())
+                    )
+                    .filter(p => campuses.includes(
+                        locations.filter(l => l.name === p.部局名)[0].campus)
                     )
                     .map((paper, i) => {
                         const { campus, pageUrl, mapUrl } = locations.filter(l => l.name === paper.部局名)[0];
