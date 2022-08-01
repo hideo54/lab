@@ -1,0 +1,134 @@
+{
+    "party-approval": [
+        {
+            "year": 2022,
+            "method": "online",
+            "subjects": null,
+            "responses": 313,
+            "rate": {
+                "jimin": 24.9,
+                "kokumin-minshu": 6.7,
+                "rikken-minshu": 5.1,
+                "ishin": 3.2,
+                "kyosan": 1.6,
+                "reiwa": 1.6,
+                "nhk": 1.3,
+                "komei": 0,
+                "shakai-minshu": 0,
+                "others": 0.3,
+                "none": 40.3,
+                "not-sure": 15.0
+            }
+        },
+        {
+            "year": 2021,
+            "method": "online",
+            "subjects": null,
+            "responses": 541,
+            "rate": {
+                "jimin": 20.5,
+                "rikken-minshu": 4.6,
+                "kokumin-minshu": 0.9,
+                "komei": 0.2,
+                "kyosan": 0.9,
+                "ishin": 1.7,
+                "shakai-minshu": 0.4,
+                "reiwa": 0.4,
+                "nhk": 0.6,
+                "others": 0.4,
+                "none": 56.9,
+                "not-sure": 12.6
+            }
+        },
+        {
+            "year": 2020,
+            "method": "online",
+            "subjects": null,
+            "responses": 773,
+            "rate": {
+                "jimin": 24.6,
+                "rikken-minshu-2017": 7.1,
+                "kokumin-minshu-2018": 1.2,
+                "komei": 0.6,
+                "kyosan": 1.6,
+                "ishin": 3.8,
+                "shakai-minshu": 0.4,
+                "reiwa": 2.1,
+                "nhk": 1.4,
+                "others": 0.1,
+                "none": 47.9,
+                "not-sure": 9.3
+            }
+        },
+        {
+            "year": 2019,
+            "method": "onsite",
+            "subjects": 3125,
+            "responses": 2875,
+            "count": {
+                "jimin": 590,
+                "rikken-minshu-2017": 114,
+                "kokumin-minshu-2018": 9,
+                "komei": 15,
+                "kyosan": 32,
+                "ishin": 27,
+                "shakai-minshu": 10,
+                "kibou": 3,
+                "jiyu": 8,
+                "others": 18,
+                "none": 1167,
+                "not-sure": 829
+            },
+            "rate": {
+                "jimin": 20.5,
+                "rikken-minshu-2017": 4,
+                "kokumin-minshu-2018": 0.3,
+                "komei": 0.5,
+                "kyosan": 1.1,
+                "ishin": 0.9,
+                "shakai-minshu": 0.3,
+                "kibou": 0.1,
+                "jiyu": 0.3,
+                "others": 0.6,
+                "none": 40.6,
+                "not-sure": 28.8
+            }
+        },
+        {
+            "year": 2018,
+            "method": "onsite",
+            "subjects": 3132,
+            "responses": 2866,
+            "rate": {
+                "jimin": 30.1,
+                "rikken-minshu-2017": 9.5,
+                "komei": 0.6,
+                "kibou": 0.2,
+                "kyosan": 1.1,
+                "ishin": 0.7,
+                "jiyu": 0.1,
+                "shakai-minshu": 0.1,
+                "others": 0.5,
+                "none": 41.0,
+                "not-sure": 15.0
+            }
+        },
+        {
+            "year": 2017,
+            "method": "onsite",
+            "subjects": 3120,
+            "responses": 2946,
+            "rate": {
+                "jimin": 36.0,
+                "minshin": 3.4,
+                "komei": 0.7,
+                "kyosan": 2.0,
+                "ishin": 1.5,
+                "shakai-minshu": 0.3,
+                "others": 0.8,
+                "none": 38.9,
+                "not-sure": 14.8
+            }
+        }
+    ]
+}

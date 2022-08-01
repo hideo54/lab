@@ -54,6 +54,12 @@ const GlobalStyle = createGlobalStyle`
     li {
         margin: 1em 0;
     }
+
+    .recharts-default-tooltip {
+        @media (prefers-color-scheme: dark) {
+            background-color: black !important;
+        }
+    }
 `;
 
 const App = ({ Component, pageProps }: AppProps) => {

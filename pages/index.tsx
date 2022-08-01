@@ -50,6 +50,14 @@ const App = () => {
             <section>
                 <PageArticle>
                     <h2>
+                        <IconNextLink RightIcon={ChevronForward} href='/u-tokyo/party-approval-rate'>
+                            東京大学新入生の政党支持
+                        </IconNextLink>
+                    </h2>
+                    <p>東京大学新聞社 (東大新聞) が毎年新入生に対して行っている支持政党の調査の結果を経時的にまとめています。</p>
+                </PageArticle>
+                <PageArticle>
+                    <h2>
                         <IconNextLink RightIcon={ChevronForward} href='/u-tokyo/newspapers'>
                             東京大学附属図書館 新聞所蔵リスト
                         </IconNextLink>
