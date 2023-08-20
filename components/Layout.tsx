@@ -48,7 +48,7 @@ const Layout = ({
             <link rel='apple-touch-icon' href='https://img.hideo54.com/icons/main.png' />
         </Head>
         {header && <header>{header}</header>}
-        <main>
+        <main className='prose dark:prose-invert'>
             {children}
         </main>
     </>

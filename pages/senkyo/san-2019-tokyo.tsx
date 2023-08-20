@@ -177,6 +177,7 @@ const App = () => {
             <MapDiv>
                 <MapOfTokyo viewBox={showTokubetsukuOnly ? tokubetsukuViewbox : mainViewbox} ref={svgRef} style={{
                     maxHeight: '50vh',
+                    margin: '0 auto',
                 }} />
             </MapDiv>
             {showTokubetsukuOnly || <IslandsDiv id='toshobu' onClick={() => { setSelectedId('toshobu'); }}>島しょ部</IslandsDiv>}
