@@ -9,7 +9,7 @@ const Card: React.FC<{
     children: React.ReactNode;
 }> = ({ href, title, children }) => (
     <article className='shadow-xl rounded-3xl m-8 p-4 border-2 dark:border-solid dark:border-white'>
-        <h2 className='mt-2 font-bold'>
+        <h2 className='mt-2 font-bold font-noto'>
             <IconNextLink RightIcon={ChevronForward} href={href}>
                 {title}
             </IconNextLink>

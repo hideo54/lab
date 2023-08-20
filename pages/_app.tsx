@@ -4,7 +4,6 @@ import type { AppProps } from 'next/app';
 import * as gtag from '../lib/gtag';
 import './globals.css';
 
-
 const App = ({ Component, pageProps }: AppProps) => {
     const router = useRouter();
     useEffect(() => {
