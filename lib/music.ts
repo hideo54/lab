@@ -14,9 +14,9 @@ export const codeToHz = (code: string) => {
     if (code.startsWith('A')) count = 9;
     if (code.startsWith('B')) count = 11;
     if (code[1] === '#') count += 1;
-    if (code.endsWith('2')) count -= 12;
-    if (code.endsWith('4')) count += 12;
-    if (code.endsWith('5')) count += 24;
+    if (code.endsWith('2')) count -= 24;
+    if (code.endsWith('3')) count -= 12;
+    if (code.endsWith('5')) count += 12;
     return semitoneCountFromA3ToHz(count);
 };
 
