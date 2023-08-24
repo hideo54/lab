@@ -13,6 +13,7 @@ module.exports = {
             typography: {
                 DEFAULT: {
                     css: {
+                        maxWidth: '800px',
                         a: {
                             color: '#0091ea',
                             textDecoration: 'none',
