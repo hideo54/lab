@@ -1,32 +1,34 @@
-type KeyProp = {
+const WhiteKey: React.FC<{
     onClick: () => void;
-    marginLeft?: number;
-};
-
-const WhiteKey: React.FC<KeyProp> = ({ onClick }) => (
+}> = ({ onClick }) => (
     <div
-        className='w-10 h-40 bg-white border-solid border-black border-2 [&:not(:last-child)]:border-r-0 cursor-pointer'
+        className='w-1/7 h-full inline-block bg-white border-solid border-black border-2 [&:not(:last-child)]:border-r-0 cursor-pointer'
         onClick={onClick}
     />
 );
 
-const BlackKey: React.FC<KeyProp> = ({ onClick, marginLeft }) => (
+const BlackKey: React.FC<{
+    onClick: () => void;
+    left: number;
+}> = ({ onClick, left }) => (
     <div
-        className='w-8 h-24 bg-black border-solid border-x-[1px] border-white mt-[2px] cursor-pointer'
+        className='absolute w-1/14 h-7/12 top-0 bg-black border-solid border-x-[1px] border-white mt-[2px] cursor-pointer'
         style={{
-            marginLeft,
+            left: `${left * 100}%`,
         }}
         onClick={onClick}
     />
 );
 
 type PianoProp = {
+    width: string;
+    height: string;
     onClick: (code: string) => void;
 };
 
-const Piano: React.FC<PianoProp> = ({ onClick }) => (
-    <div className='relative'>
-        <div className='absolute flex'>
+const Piano: React.FC<PianoProp> = ({ width, height, onClick }) => (
+    <div className='relative mx-auto' style={{ width, height }}>
+        <div className='w-full h-full'>
             <WhiteKey onClick={() => onClick('C')} />
             <WhiteKey onClick={() => onClick('D')} />
             <WhiteKey onClick={() => onClick('E')} />
@@ -35,12 +37,12 @@ const Piano: React.FC<PianoProp> = ({ onClick }) => (
             <WhiteKey onClick={() => onClick('A')} />
             <WhiteKey onClick={() => onClick('B')} />
         </div>
-        <div className='absolute flex'>
-            <BlackKey onClick={() => onClick('C#')} marginLeft={25} />
-            <BlackKey onClick={() => onClick('D#')} marginLeft={8} />
-            <BlackKey onClick={() => onClick('F#')} marginLeft={48} />
-            <BlackKey onClick={() => onClick('G#')} marginLeft={8} />
-            <BlackKey onClick={() => onClick('A#')} marginLeft={8} />
+        <div>
+            <BlackKey left={3 / 28} onClick={() => onClick('C#')} />
+            <BlackKey left={7 / 28} onClick={() => onClick('D#')} />
+            <BlackKey left={15 / 28} onClick={() => onClick('F#')} />
+            <BlackKey left={19 / 28} onClick={() => onClick('G#')} />
+            <BlackKey left={23 / 28} onClick={() => onClick('A#')} />
         </div>
     </div>
 );
