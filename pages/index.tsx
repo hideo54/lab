@@ -33,12 +33,6 @@ const App = () => {
             </section>
             <section>
                 <Card
-                    href='/music/musescore-digest'
-                    title='MuseScore ダイジェストくん'
-                >
-                    ほげほげほげ
-                </Card>
-                <Card
                     href='/u-tokyo/party-approval-rate'
                     title='東京大学新入生の政党支持'
                 >
