@@ -21,11 +21,11 @@ const Card: React.FC<{
 const App = () => {
     return (
         <Layout header={<></>}>
-            <section className='text-center mb-10 font-noto'>
+            <section className='text-center mb-10'>
                 <div className='p-4'>
                     <Flask size='200px' color='silver' />
                 </div>
-                <h1 className='font-light'>
+                <h1 className='font-noto font-light'>
                     Welcome to
                     <div className='text-6xl m-4'>hideo54 Lab</div>
                 </h1>
