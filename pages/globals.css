@@ -14,3 +14,7 @@ a {
     color: #0091ea;
     text-decoration: none;
 }
+
+a, span {
+    font-weight: inherit !important;
+}

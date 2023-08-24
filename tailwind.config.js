@@ -23,8 +23,8 @@ module.exports = {
             },
         },
         fontFamily: {
-            sans: ['-apple-system', 'BlinkMacSystemFont', 'Hiragino Sans', 'Noto Sans JP', 'sans-serif'],
-            noto: ['Noto Sans JP', 'sans-serif'],
+            sans: ['-apple-system', 'BlinkMacSystemFont', 'Hiragino Sans', 'var(--font-noto)', 'sans-serif'],
+            noto: ['var(--font-noto)', 'sans-serif'],
         },
     },
     plugins: [
