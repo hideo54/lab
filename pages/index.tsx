@@ -33,6 +33,12 @@ const App = () => {
             </section>
             <section>
                 <Card
+                    href='/a-cappella/chord-practice'
+                    title='和音練習くん'
+                >
+                    発声練習のときに和音感覚がない奴を助けてくれます
+                </Card>
+                <Card
                     href='/u-tokyo/party-approval-rate'
                     title='東京大学新入生の政党支持'
                 >
