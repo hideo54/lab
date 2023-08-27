@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { AddCircle, RemoveCircle } from '@styled-icons/ionicons-solid';
 import Layout from '../../components/Layout';
 import Piano from '../../components/Piano';
-import { codeToHz, playSound } from '../../lib/music';
+import { playSound, toneToHz } from '../../lib/music';
 import { ArrowDown } from '@styled-icons/ionicons-outline';
 
 const App = () => {
@@ -22,7 +22,7 @@ const App = () => {
         if (audioContext === undefined) return;
         playSound({
             audioContext,
-            hz: codeToHz(tone + octave.toString()),
+            hz: toneToHz(tone + octave.toString()),
             second: 1.5,
         });
     }, [audioContext, tone, octave, counter]);

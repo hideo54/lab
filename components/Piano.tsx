@@ -21,7 +21,7 @@ const BlackKey: React.FC<{
 );
 
 type PianoProp = {
-    onClick: (code: string) => void;
+    onClick: (tone: string) => void;
 };
 
 const Piano: React.FC<PianoProp> = ({ onClick }) => (

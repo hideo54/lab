@@ -5,18 +5,18 @@ export const semitoneCountFromA3ToHz = (count: number) => {
     return hz;
 };
 
-export const codeToHz = (code: string) => {
+export const toneToHz = (tone: string) => {
     let count = 0;
-    if (code.startsWith('D')) count = 2;
-    if (code.startsWith('E')) count = 4;
-    if (code.startsWith('F')) count = 5;
-    if (code.startsWith('G')) count = 7;
-    if (code.startsWith('A')) count = 9;
-    if (code.startsWith('B')) count = 11;
-    if (code[1] === '#') count += 1;
-    if (code.endsWith('2')) count -= 24;
-    if (code.endsWith('3')) count -= 12;
-    if (code.endsWith('5')) count += 12;
+    if (tone.startsWith('D')) count = 2;
+    if (tone.startsWith('E')) count = 4;
+    if (tone.startsWith('F')) count = 5;
+    if (tone.startsWith('G')) count = 7;
+    if (tone.startsWith('A')) count = 9;
+    if (tone.startsWith('B')) count = 11;
+    if (tone[1] === '#') count += 1;
+    if (tone.endsWith('2')) count -= 24;
+    if (tone.endsWith('3')) count -= 12;
+    if (tone.endsWith('5')) count += 12;
     return semitoneCountFromA3ToHz(count);
 };
 
