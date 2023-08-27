@@ -64,10 +64,8 @@ const App = () => {
                     }}
                 />
             </div>
-            <div className='mx-auto mt-8 max-w-lg'>
+            <div className='mx-auto mt-8 max-w-lg h-48'>
                 <Piano
-                    width='90%'
-                    height='200px'
                     onClick={(tone: string) => {
                         setTone(tone);
                         setCounter(counter + 1);

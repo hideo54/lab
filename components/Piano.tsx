@@ -21,13 +21,11 @@ const BlackKey: React.FC<{
 );
 
 type PianoProp = {
-    width: string;
-    height: string;
     onClick: (code: string) => void;
 };
 
-const Piano: React.FC<PianoProp> = ({ width, height, onClick }) => (
-    <div className='relative mx-auto' style={{ width, height }}>
+const Piano: React.FC<PianoProp> = ({ onClick }) => (
+    <div className='relative w-full h-full mx-auto'>
         <div className='w-full h-full'>
             <WhiteKey onClick={() => onClick('C')} />
             <WhiteKey onClick={() => onClick('D')} />
