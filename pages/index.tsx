@@ -33,7 +33,7 @@ const App = () => {
             </section>
             <section>
                 <Card
-                    href='/a-cappella/chord-practice'
+                    href='/acapella/chord-practice'
                     title='和音練習くん'
                 >
                     発声練習のときに和音感覚がない奴を助けてくれます
