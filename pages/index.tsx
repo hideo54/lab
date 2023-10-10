@@ -33,6 +33,12 @@ const App = () => {
             </section>
             <section>
                 <Card
+                    href='/acapella/first-sight'
+                    title='FirstSight'
+                >
+                    MuseScore 形式の楽譜を選択すると、各パートの始めの音を再生します。
+                </Card>
+                <Card
                     href='/u-tokyo/party-approval-rate'
                     title='東京大学新入生の政党支持'
                 >
