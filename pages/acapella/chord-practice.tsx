@@ -20,6 +20,7 @@ const App = () => {
 
     useEffect(() => {
         if (audioContext === undefined) return;
+        if (counter === 0) return; // Avoid playing on first render
         playSound({
             audioContext,
             hz: toneToHz(tone + octave.toString()),
