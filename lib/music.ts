@@ -1,3 +1,5 @@
+export const pitchNumberToHz = (pitch: number) => 440 * Math.pow(2, (pitch - 69) / 12);
+
 export const semitoneCountFromA3ToHz = (count: number) => {
     // A3: 440 Hz or 442 Hz. Here I set 440 Hz.
     const A3Hz = 440;
