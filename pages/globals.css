@@ -10,6 +10,10 @@ main {
     @apply mx-auto px-4;
 }
 
+h1 {
+    @apply font-noto;
+}
+
 a {
     color: #0091ea;
     text-decoration: none;

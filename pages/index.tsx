@@ -33,11 +33,16 @@ const App = () => {
             </section>
             <section>
                 <Card
+                    href='/acapella/first-sight'
+                    title='FirstSight'
+                >
+                    MuseScore 楽譜を読み取り、各パートの始めの音を再生します。音取りに便利です。
+                </Card>
+                <Card
                     href='/u-tokyo/party-approval-rate'
                     title='東京大学新入生の政党支持'
                 >
-                    東京大学新聞社 (東大新聞)
-                    が毎年新入生に対して行っている支持政党の調査の結果を経時的にまとめています。
+                    東京大学新聞社 (東大新聞) が毎年新入生に対して行っている支持政党の調査の結果を経時的にまとめています。
                 </Card>
                 <Card
                     href='/u-tokyo/newspapers'
