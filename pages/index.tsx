@@ -36,7 +36,7 @@ const App = () => {
                     href='/acapella/first-sight'
                     title='FirstSight'
                 >
-                    MuseScore 形式の楽譜を選択すると、各パートの始めの音を再生します。
+                    MuseScore 楽譜を読み取り、各パートの始めの音を再生します。音取りに便利です。
                 </Card>
                 <Card
                     href='/u-tokyo/party-approval-rate'

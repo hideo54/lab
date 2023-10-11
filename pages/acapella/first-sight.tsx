@@ -79,7 +79,9 @@ const App = () => {
                 FirstSight
             </h1>
             <p>
-                各パートの始めの音を再生します。
+                MuseScore 楽譜を読み取り、各パートの始めの音を再生します。音取りに便利です。
+                <br />
+                楽譜データは完全にローカルで処理され、アップロードは発生しません。
             </p>
             <section className='my-4'>
                 <div className='form-control'>
