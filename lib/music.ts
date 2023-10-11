@@ -20,6 +20,19 @@ export const toneToHz = (tone: string) => {
     return semitoneCountFromA3ToHz(count);
 };
 
+export const toneTable = [
+    'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B',
+];
+
+export const transpose = (tone: string, octave: number, n: number): [string, number] => {
+    const i = toneTable.indexOf(tone);
+    const j = i + n;
+    if (j >= toneTable.length) {
+        return [toneTable[j - toneTable.length], octave + 1];
+    }
+    return [toneTable[j], octave];
+};
+
 type PlaySoundOption = {
     audioContext: AudioContext;
     hz: number;
