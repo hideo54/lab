@@ -21,6 +21,13 @@ module.exports = {
                     },
                 },
             },
+            width: {
+                '1/7': '14.2857143%',
+                '1/14': '7.1428571%',
+            },
+            height: {
+                '7/12': '58.3333333%',
+            },
         },
         fontFamily: {
             sans: ['-apple-system', 'BlinkMacSystemFont', 'Hiragino Sans', 'var(--font-noto)', 'sans-serif'],
