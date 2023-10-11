@@ -33,10 +33,10 @@ const App = () => {
             </section>
             <section>
                 <Card
-                    href='/acapella/chord-practice'
-                    title='和音練習くん'
+                    href='/acapella/first-sight'
+                    title='FirstSight'
                 >
-                    発声練習のときに和音感覚がない奴を助けてくれます
+                    MuseScore 楽譜を読み取り、各パートの始めの音を再生します。音取りに便利です。
                 </Card>
                 <Card
                     href='/u-tokyo/party-approval-rate'
