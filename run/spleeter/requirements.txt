@@ -1,0 +1,10 @@
+flask==2.2.5
+flask-cors==4.0.0
+spleeter==2.3.2
+
+# numpy.long is removed in numpy >= 1.24
+# A bug with Cython 3 is in 1.18.x and 1.19.x.
+numpy==1.17
+
+# Always install the latest version
+yt-dlp
