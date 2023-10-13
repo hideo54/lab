@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "music-separation"
+version = "0.1.0"
+description = ""
+authors = ["Hideo Yasumoto <hideo54@hideo54.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+demucs = "^4.0.1"
+Flask = "^3.0.0"
+yt-dlp = "*"
+gunicorn = "^21.2.0"
+
+[tool.poetry.group.dev.dependencies]
+Flask-Cors = "^4.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
