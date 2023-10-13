@@ -37,7 +37,7 @@ const App = () => {
                     disabled={isLoading}
                     onClick={async () => {
                         setIsLoading(true);
-                        await fetch('http://localhost:8080', {
+                        await fetch('/api/music-separation', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
