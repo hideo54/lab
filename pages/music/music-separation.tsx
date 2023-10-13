@@ -4,14 +4,18 @@ import { IconAnchor } from '@hideo54/reactor';
 import Layout from '../../components/Layout';
 
 const App = () => {
-    const [formAvailable, setFormAvailable] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
     const [youTubeUrl, setYouTubeUrl] = useState('');
+    const [resultUrls, setResultUrls] = useState<{[key: string]: string}>();
 
     return (
         <Layout>
             <h1>
-                Spleeter
+                Music Separation
             </h1>
+            <p>
+                Demucs Music Source Separation by Meta Research.
+            </p>
             <section>
                 <div className='form-control w-full'>
                     <label className='label'>
@@ -20,7 +24,8 @@ const App = () => {
                     <input
                         type='text'
                         placeholder='YouTube URL'
-                        disabled={!formAvailable}
+                        onChange={e => setYouTubeUrl(e.target.value)}
+                        disabled={isLoading}
                         className='input input-bordered w-full'
                     />
                     <label className='label'>
@@ -28,9 +33,11 @@ const App = () => {
                     </label>
                 </div>
                 <button
-                    disabled={!formAvailable}
-                    onClick={() => {
-                        fetch('/api/spleeter', {
+                    className='btn btn-primary'
+                    disabled={isLoading}
+                    onClick={async () => {
+                        setIsLoading(true);
+                        await fetch('http://localhost:8080', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
@@ -39,12 +46,23 @@ const App = () => {
                                 url: youTubeUrl,
                             }),
                         }).then(res => res.json()).then(data => {
-                            console.log(data);
+                            if (!data.ok) throw new Error('Something is not okay');
+                            setResultUrls(data.resultUrls);
                         });
+                        setIsLoading(false);
                     }}
                 >
-                    Analyze
+                    Separate
                 </button>
+                {isLoading && (
+                    <progress className='progress' />
+                )}
+                {resultUrls && Object.entries(resultUrls).map(([stem, url]) => (
+                    <div key={url}>
+                        <div>{stem}</div>
+                        <audio src={url} controls />
+                    </div>
+                ))}
             </section>
             <section>
                 <h2>References</h2>
@@ -55,20 +73,20 @@ const App = () => {
                         </IconAnchor>
                     </li>
                     <li>
-                        <IconAnchor href='https://github.com/deezer/spleeter' RightIcon={Open}>
-                            deezer/spleeter | GitHub
+                        <IconAnchor href='https://github.com/facebookresearch/demucs' RightIcon={Open}>
+                            facebookresearch/demucs | GitHub
                         </IconAnchor>
                     </li>
                     <li>
-                        Romain Hennequin, Anis Khlif, Felix Voituret, Manuel Moussallam.
+                        Simon Rouard, Francisco Massa, Alexandre Défossez.
                         {' '}
                         <strong>
-                            Spleeter: a fast and efficient music source separation tool with pre-trained models.
+                            Hybrid Transformers for Music Source Separation.
                         </strong>
                         {' '}
                         Journal of Open Source Software. (2020)
                         {' '}
-                        <IconAnchor href='https://doi.org/10.21105/joss.02154' RightIcon={Open}>
+                        <IconAnchor href='https://doi.org/10.48550/arXiv.2211.08553' RightIcon={Open}>
                             DOI
                         </IconAnchor>
                     </li>
