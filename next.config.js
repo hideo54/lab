@@ -1,5 +1,5 @@
 module.exports = {
-    webpack: (config, options) => {
+    webpack: config => {
         config.module.rules.push({
             test: /\.svg$/,
             use: [{
@@ -9,8 +9,10 @@ module.exports = {
                     svgoConfig: {
                         plugins: [
                             {
-                                name: 'cleanupIDs',
-                                active: false,
+                                name: 'cleanupIds',
+                                params: {
+                                    remove: false,
+                                },
                             },
                             {
                                 name: 'prefixIds',
