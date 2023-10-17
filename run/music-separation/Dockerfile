@@ -1,7 +1,8 @@
-FROM python:3.10
+FROM python:3.9
 
 RUN apt-get update
-RUN apt-get upgrade
+RUN apt-get upgrade -y
+RUN apt-get install -y ffmpeg
 RUN pip install poetry
 RUN poetry config virtualenvs.create false
 

@@ -11,7 +11,7 @@ demucs = "^4.0.1"
 Flask = "^3.0.0"
 yt-dlp = "*"
 gunicorn = "^21.2.0"
-google = "^3.0.0"
+google-cloud-storage = "^2.12.0"
 
 [tool.poetry.group.dev.dependencies]
 Flask-Cors = "^4.0.0"
