@@ -9,7 +9,7 @@ module.exports = {
                     svgoConfig: {
                         plugins: [
                             {
-                                name: 'cleanupIDs',
+                                name: 'cleanupIds',
                                 params: {
                                     remove: false,
                                 },
