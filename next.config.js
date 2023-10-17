@@ -10,7 +10,9 @@ module.exports = {
                         plugins: [
                             {
                                 name: 'cleanupIDs',
-                                active: false,
+                                params: {
+                                    remove: false,
+                                },
                             },
                             {
                                 name: 'prefixIds',
