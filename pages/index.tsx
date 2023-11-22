@@ -39,6 +39,12 @@ const App = () => {
                     MuseScore 楽譜を読み取り、各パートの始めの音を再生します。音取りに便利です。
                 </Card>
                 <Card
+                    href='/acapella/chord-practice'
+                    title='和音練習くん'
+                >
+                    基準音を選ぶと、その音と、3度・5度上の音を再生できます。音感つけましょう。
+                </Card>
+                <Card
                     href='/u-tokyo/party-approval-rate'
                     title='東京大学新入生の政党支持'
                 >
