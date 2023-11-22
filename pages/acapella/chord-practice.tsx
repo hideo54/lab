@@ -9,8 +9,9 @@ import { sleep } from '../../lib/utils';
 const ToneButton: React.FC<{
     audioContext: AudioContext;
     tone: string;
+    degree: number;
     second: number;
-}> = ({ audioContext, tone, second }) => {
+}> = ({ audioContext, tone, degree, second }) => {
     const [isPlaying, setIsPlaying] = useState(false);
 
     useEffect(() => {
@@ -29,23 +30,28 @@ const ToneButton: React.FC<{
     }, [audioContext, tone, second, isPlaying]);
 
     return (
-        <div
-            className={[
-                'text-center m-4 p-4 border-2 border-solid border-gray-700 rounded',
-                isPlaying
-                    ? 'text-white bg-gray-700'
-                    : '',
-            ].join(' ')}
-        >
-            <div className='text-xl font-bold'>
-                {tone}
+        <div className=''>
+            <div className='text-center font-bold'>
+                {degree}度
             </div>
-            <button onClick={() => setIsPlaying(!isPlaying)}>
-                {isPlaying
-                    ? <Pause size='3em' />
-                    : <Play size='3em' />
-                }
-            </button>
+            <div
+                className={[
+                    'text-center mx-4 p-4 border-2 border-solid border-gray-700 rounded',
+                    isPlaying
+                        ? 'text-white bg-gray-700'
+                        : '',
+                ].join(' ')}
+            >
+                <div className='text-xl font-bold'>
+                    {tone}
+                </div>
+                <button onClick={() => setIsPlaying(!isPlaying)}>
+                    {isPlaying
+                        ? <Pause size='3em' />
+                        : <Play size='3em' />
+                    }
+                </button>
+            </div>
         </div>
     );
 };
@@ -127,16 +133,19 @@ const App = () => {
                 <ToneButton
                     audioContext={audioContext}
                     tone={`${tone}${octave}`}
+                    degree={1}
                     second={second}
                 />
                 <ToneButton
                     audioContext={audioContext}
                     tone={transpose(tone, octave, 4).join('')}
+                    degree={3}
                     second={second}
                 />
                 <ToneButton
                     audioContext={audioContext}
                     tone={transpose(tone, octave, 7).join('')}
+                    degree={5}
                     second={second}
                 />
             </div>
