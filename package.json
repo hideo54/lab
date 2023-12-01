@@ -29,7 +29,7 @@
     "@styled-icons/fa-brands": "^10.34.0",
     "@styled-icons/ionicons-outline": "^10.34.0",
     "@styled-icons/ionicons-solid": "^10.34.0",
-    "daisyui": "^3.9.2",
+    "daisyui": "^4.4.17",
     "fast-xml-parser": "^4.3.2",
     "jszip": "^3.10.1",
     "next": "^13.4.19",
