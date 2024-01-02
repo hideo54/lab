@@ -16,6 +16,12 @@ const notUndefined = <T, >(item: T | undefined): item is T => item !== undefined
 
 const pick = <T extends Record<string, any>>(arr: T[], key: string) => arr.map(e => e[key]).filter(notUndefined);
 
+const sum = (arr: number[]) => arr.reduce((acc, val) => acc + val, 0);
+
+const dotsToMultiple = (dots: number) => sum(
+    Array.from({ length: dots + 1 }, (_, i) => (1 / 2) ** i)
+);
+
 const PlayButton: React.FC<{
     audioContext: AudioContext;
     staffs: any;
@@ -41,11 +47,13 @@ const PlayButton: React.FC<{
                     const durationType = pick(
                         pick(element.Chord, 'durationType')[0], '#text'
                     )[0];
+                    const dotsElement = pick(element.Chord, 'dots');
+                    const dots = dotsElement.length > 0 ? pick(dotsElement[0], '#text')[0] : 0;
                     const note = pick(element.Chord, 'Note')[0];
                     const pitch = pick(
                         pick(note, 'pitch')[0], '#text'
                     )[0];
-                    const duration = durationTypeToSec(bpm, durationType);
+                    const duration = durationTypeToSec(bpm, durationType) * dotsToMultiple(dots);
 
                     playSound({
                         audioContext,
