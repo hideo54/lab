@@ -17,6 +17,7 @@ const App = () => {
         AudioContext | undefined
     >();
     const [currentPitch, setCurrentPitch] = useState<number | undefined>();
+    const [currentConfidence, setCurrentConfidence] = useState<number | undefined>();
     const [currentDb, setCurrentDb] = useState<number | undefined>();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -26,11 +27,8 @@ const App = () => {
                 const { pitch, rms } = event.data;
                 const db = 20 * Math.log10(rms.rms);
                 setCurrentDb(db);
-                if (pitch.pitchConfidence > 0.5) {
-                    setCurrentPitch(pitch.pitch);
-                } else {
-                    setCurrentPitch(undefined);
-                }
+                setCurrentPitch(pitch.pitch);
+                setCurrentConfidence(pitch.pitchConfidence);
             },
             200
         ),
@@ -68,6 +66,12 @@ const App = () => {
                 </span>
                 <span>
                     Hz
+                </span>
+            </p>
+            <p className='text-center'>
+                <span>Confidence: {' '}</span>
+                <span className='font-mono'>
+                    {(100 * (currentConfidence || 0)).toFixed() || '--'}%
                 </span>
             </p>
             <p className='text-center'>
