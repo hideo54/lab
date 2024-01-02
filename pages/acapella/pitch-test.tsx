@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { throttle } from 'lodash';
 import Layout from '../../components/Layout';
+import { hzToTone } from '../../lib/music';
 
 type AudioWorkletMessage = {
     pitch: {
@@ -20,6 +21,7 @@ const App = () => {
     const [currentConfidence, setCurrentConfidence] = useState<number | undefined>();
     const [currentDb, setCurrentDb] = useState<number | undefined>();
 
+    const throttleMs = 1000;
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const handleMessage = useCallback(
         throttle(
@@ -30,7 +32,7 @@ const App = () => {
                 setCurrentPitch(pitch.pitch);
                 setCurrentConfidence(pitch.pitchConfidence);
             },
-            200
+            throttleMs
         ),
         []
     );
@@ -60,28 +62,33 @@ const App = () => {
             <h1>
                 Pitch Test
             </h1>
-            <p className='text-center'>
-                <span className='text-6xl font-mono font-black mr-2 whitespace-pre'>
-                    {currentPitch?.toFixed() || '---'}
-                </span>
-                <span>
-                    Hz
-                </span>
-            </p>
-            <p className='text-center'>
-                <span>Confidence: {' '}</span>
-                <span className='font-mono'>
-                    {(100 * (currentConfidence || 0)).toFixed() || '--'}%
-                </span>
-            </p>
-            <p className='text-center'>
-                <span className='text-3xl font-mono font-black mr-2'>
-                    {currentDb?.toFixed() || '--'}
-                </span>
-                <span>
-                    dB
-                </span>
-            </p>
+            <div className='text-center'>
+                <p className='text-6xl my-0'>
+                    {currentPitch && hzToTone(currentPitch)}
+                </p>
+                <p>
+                    <span className='text-4xl font-mono font-black mr-2 whitespace-pre'>
+                        {currentPitch?.toFixed() || '---'}
+                    </span>
+                    <span>
+                        Hz
+                    </span>
+                </p>
+                <p>
+                    <span>Confidence: {' '}</span>
+                    <span className='font-mono'>
+                        {(100 * (currentConfidence || 0)).toFixed() || '--'}%
+                    </span>
+                </p>
+                <p>
+                    <span className='text-3xl font-mono font-black mr-2'>
+                        {currentDb?.toFixed() || '--'}
+                    </span>
+                    <span>
+                        dB
+                    </span>
+                </p>
+            </div>
         </Layout>
     );
 };

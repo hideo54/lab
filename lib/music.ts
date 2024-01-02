@@ -22,6 +22,14 @@ export const toneToHz = (tone: string) => {
     return semitoneCountFromA4ToHz(count);
 };
 
+export const hzToTone = (hz: number) => {
+    const A4Hz = 440;
+    const count = Math.round(12 * Math.log2(hz / A4Hz));
+    const tone = toneTable[(count + 9) % 12 >= 0 ? (count + 9) % 12 : (count + 9) % 12 + 12];
+    const octave = Math.floor(count / 12) + 4;
+    return `${tone}${octave}`;
+};
+
 export const toneTable = [
     'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B',
 ];
