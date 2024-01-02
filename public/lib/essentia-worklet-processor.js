@@ -1,34 +1,145 @@
-// https://mtg.github.io/essentia.js/docs/api/tutorial-2.%20Real-time%20analysis.html#using-the-web-audio-api-with-audioworklets
 import { EssentiaWASM } from 'https://cdn.jsdelivr.net/npm/essentia.js@0.1.3/dist/essentia-wasm.es.js';
 import Essentia from 'https://cdn.jsdelivr.net/npm/essentia.js@0.1.3/dist/essentia.js-core.es.js';
 
-let essentia = new Essentia(EssentiaWASM);
+const essentia = new Essentia(EssentiaWASM);
 
 class EssentiaWorkletProcessor extends AudioWorkletProcessor {
     constructor() {
         super();
         this.essentia = essentia;
         console.log('Backend - essentia:' + this.essentia.version + '- http://essentia.upf.edu');
+
+        this.bufferSize = 8192;
+        this.inputRingBuffer = new ChromeLabsRingBuffer(this.bufferSize, 1);
+        this.frameSize = this.bufferSize / 2;
+        this.accumData = [new Float32Array(this.bufferSize)];
     }
 
-    //System-invoked process callback function.
-    process(inputs, outputs) {
+    process(inputs) {
+        const input = inputs[0];
+        this.inputRingBuffer.push(input);
 
-        // <inputs> and <outputs> will have as many as were specified in the options passed to the AudioWorkletNode constructor, each subsequently spanning potentially multiple channels
-        let input = inputs[0];
-        let output = outputs[0];
+        if (this.inputRingBuffer.framesAvailable >= this.bufferSize) {
+            this.inputRingBuffer.pull(this.accumData);
+            const accumDataVector = this.essentia.arrayToVector(this.accumData[0]);
+            const rms = this.essentia.RMS(accumDataVector);
+            const pitch = this.essentia.PitchYin(accumDataVector, this.frameSize, this.frameSize / 2);
 
-        // convert the input audio frame array from channel 0 to a std::vector<float> type for using it in essentia
-        let vectorInput = this.essentia.arrayToVector(input[0]);
-
-        // In this case we compute the Root Mean Square of every input audio frame
-        // check https://mtg.github.io/essentia.js/docs/api/Essentia.html#RMS
-        let rmsFrame = this.essentia.RMS(vectorInput); // input audio frame
-
-        output[0][0] = rmsFrame.rms;
+            this.port.postMessage({
+                rms,
+                pitch,
+            });
+        }
 
         return true; // keep the process running
     }
 }
 
 registerProcessor('essentia-worklet-processor', EssentiaWorkletProcessor); // must use the same name we gave our processor in `createEssentiaNode`
+
+/**
+ * A JS FIFO implementation for the AudioWorklet. 3 assumptions for the
+ * simpler operation:
+ *  1. the push and the pull operation are done by 128 frames. (Web Audio
+ *    API's render quantum size in the specification)
+ *  2. the channel count of input/output cannot be changed dynamically.
+ *    The AudioWorkletNode should be configured with the `.channelCount = k`
+ *    (where k is the channel count you want) and
+ *    `.channelCountMode = explicit`.
+ *  3. This is for the single-thread operation. (obviously)
+ *
+ * @class
+ */
+class ChromeLabsRingBuffer {
+    /**
+     * @constructor
+     * @param  {number} length Buffer length in frames.
+     * @param  {number} channelCount Buffer channel count.
+     */
+    constructor(length, channelCount) {
+        this._readIndex = 0;
+        this._writeIndex = 0;
+        this._framesAvailable = 0;
+
+        this._channelCount = channelCount;
+        this._length = length;
+        this._channelData = [];
+        for (let i = 0; i < this._channelCount; ++i) {
+            this._channelData[i] = new Float32Array(length);
+        }
+    }
+
+    /**
+     * Getter for Available frames in buffer.
+     *
+     * @return {number} Available frames in buffer.
+     */
+    get framesAvailable() {
+        return this._framesAvailable;
+    }
+
+    /**
+     * Push a sequence of Float32Arrays to buffer.
+     *
+     * @param  {array} arraySequence A sequence of Float32Arrays.
+     */
+    push(arraySequence) {
+        // The channel count of arraySequence and the length of each channel must
+        // match with this buffer object.
+
+        // Transfer data from the |arraySequence| storage to the internal buffer.
+        let sourceLength = arraySequence[0].length;
+        for (let i = 0; i < sourceLength; ++i) {
+            let writeIndex = (this._writeIndex + i) % this._length;
+            for (let channel = 0; channel < this._channelCount; ++channel) {
+                this._channelData[channel][writeIndex] = arraySequence[channel][i];
+            }
+        }
+
+        this._writeIndex += sourceLength;
+        if (this._writeIndex >= this._length) {
+            this._writeIndex = 0;
+        }
+
+        // For excessive frames, the buffer will be overwritten.
+        this._framesAvailable += sourceLength;
+        if (this._framesAvailable > this._length) {
+            this._framesAvailable = this._length;
+        }
+    }
+
+    /**
+     * Pull data out of buffer and fill a given sequence of Float32Arrays.
+     *
+     * @param  {array} arraySequence An array of Float32Arrays.
+     */
+    pull(arraySequence) {
+        // The channel count of arraySequence and the length of each channel must
+        // match with this buffer object.
+
+        // If the FIFO is completely empty, do nothing.
+        if (this._framesAvailable === 0) {
+            return;
+        }
+
+        let destinationLength = arraySequence[0].length;
+
+        // Transfer data from the internal buffer to the |arraySequence| storage.
+        for (let i = 0; i < destinationLength; ++i) {
+            let readIndex = (this._readIndex + i) % this._length;
+            for (let channel = 0; channel < this._channelCount; ++channel) {
+                arraySequence[channel][i] = this._channelData[channel][readIndex];
+            }
+        }
+
+        this._readIndex += destinationLength;
+        if (this._readIndex >= this._length) {
+            this._readIndex = 0;
+        }
+
+        this._framesAvailable -= destinationLength;
+        if (this._framesAvailable < 0) {
+            this._framesAvailable = 0;
+        }
+    }
+}
