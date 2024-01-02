@@ -1,74 +1,66 @@
 import { useEffect, useState } from 'react';
 import JSZip from 'jszip';
 import { XMLParser } from 'fast-xml-parser';
+import { PauseCircle, PlayCircle } from '@styled-icons/ionicons-outline';
 import Layout from '../../components/Layout';
 import { playSound } from '../../lib/music';
-import type { MuseScore, Chord } from '../../lib/MuseScore';
-import { PauseCircle, PlayCircle } from '@styled-icons/ionicons-outline';
-
-const durationTypeToSec = (bpm: number, durationType: Chord['durationType']) => {
-    const beatSecond = 4 * 60 / bpm;
-    if (durationType === 'whole') return beatSecond;
-    if (durationType === 'half') return beatSecond / 2;
-    if (durationType === 'quarter') return beatSecond / 4;
-    if (durationType === 'eighth') return beatSecond / 8;
-    if (durationType === '16th') return beatSecond / 16;
-    console.log(durationType);
-    return 0;
-};
+import { durationTypeToSec } from '../../lib/MuseScore';
 
 const sleep = async (sec: number) => new Promise(resolve =>
     setTimeout(resolve, sec * 1000)
 );
 
-const pluralize = <T, >(value: T | T[]) => Array.isArray(value) ? value : [value];
-
 const pitchNumberToHz = (pitch: number) => 440 * Math.pow(2, (pitch - 69) / 12);
 
 const notUndefined = <T, >(item: T | undefined): item is T => item !== undefined;
 
-const PlayButton: React.FC<{
-    audioContext: AudioContext,
-    scoreData: MuseScore,
-    partIndex: number,
-}> = ({ audioContext, scoreData, partIndex }) => {
-    const [isPlaying, setIsPlaying] = useState(false);
+const pick = <T extends Record<string, any>>(arr: T[], key: string) => arr.map(e => e[key]).filter(notUndefined);
 
-    const tempos = scoreData.Score.Staff.map(staff =>
-        staff.Measure.map(measure => measure.voice.Tempo)
-    ).flat().filter(notUndefined);
-    const bpm = tempos[0].tempo * 60;
+const PlayButton: React.FC<{
+    audioContext: AudioContext;
+    staffs: any;
+}> = ({ audioContext, staffs }) => {
+    const [isPlaying, setIsPlaying] = useState(false);
 
     useEffect(() => {
         if (!isPlaying) return;
         let isCancelled = false;
+        let bpm = 0;
         const play = async () => {
-            for (const measure of scoreData.Score.Staff[partIndex].Measure) {
+            const elements = pick(staffs, 'Measure').map(measure => pick(measure, 'voice')).flat().flat();
+            for (const element of elements) {
                 if (isCancelled) break;
-                if (measure.voice.Chord) {
-                    const chords = pluralize(measure.voice.Chord);
-                    for (const chord of chords) {
-                        const notes = pluralize(chord.Note);
-                        for (const note of notes) {
-                            const duration = durationTypeToSec(bpm, chord.durationType);
-                            playSound({
-                                audioContext,
-                                hz: pitchNumberToHz(note.pitch),
-                                second: duration,
-                            });
-                            await sleep(duration);
-                        }
-                    }
+
+                if (element.Tempo) {
+                    bpm = pick(
+                        pick(element.Tempo, 'tempo')[0], '#text'
+                    )[0] * 60;
                 }
-                if (measure.voice.Rest) {
-                    const rests = pluralize(measure.voice.Rest);
-                    for (const rest of rests) {
-                        const duration = durationTypeToSec(
-                            bpm,
-                            rest.durationType === 'measure' ? 'whole' : rest.durationType
-                        );
-                        await sleep(duration);
-                    }
+
+                if (element.Chord) {
+                    const durationType = pick(
+                        pick(element.Chord, 'durationType')[0], '#text'
+                    )[0];
+                    const note = pick(element.Chord, 'Note')[0];
+                    const pitch = pick(
+                        pick(note, 'pitch')[0], '#text'
+                    )[0];
+                    const duration = durationTypeToSec(bpm, durationType);
+
+                    playSound({
+                        audioContext,
+                        hz: pitchNumberToHz(pitch),
+                        second: duration,
+                    });
+                    await sleep(duration);
+                }
+
+                if (element.Rest) {
+                    const durationType = pick(
+                        pick(element.Rest, 'durationType')[0], '#text'
+                    )[0];
+                    const duration = durationTypeToSec(bpm, durationType);
+                    await sleep(duration);
                 }
             }
             setIsPlaying(false);
@@ -96,7 +88,7 @@ const App = () => {
     >();
 
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
-    const [scoreData, setScoreData] = useState<MuseScore | null>(null);
+    const [scoreData, setScoreData] = useState<any>(null);
 
     useEffect(() => {
         setAudioContext(new AudioContext());
@@ -112,8 +104,12 @@ const App = () => {
                 const result = await zip.loadAsync(buf);
                 const mscxFile = Object.entries(result.files).filter(([k]) => k.endsWith('.mscx'))[0][1];
                 const mscxXmlStr = await mscxFile.async('string');
-                const parser = new XMLParser();
-                const data = parser.parse(mscxXmlStr).museScore as MuseScore;
+                const parser = new XMLParser({
+                    preserveOrder: true,
+                });
+                const data = pick(
+                    pick(parser.parse(mscxXmlStr), 'museScore')[0], 'Score'
+                )[0];
                 setScoreData(data);
             };
             reader.readAsArrayBuffer(selectedFile);
@@ -150,8 +146,15 @@ const App = () => {
             {audioContext && scoreData && (
                 <table className='w-auto mx-auto'>
                     <tbody>
-                        {scoreData.Score.Part.map(part => part.Instrument.longName).map((partName, i) =>
-                            <tr key={partName} className='px-4'>
+                        {pick(scoreData, 'Part').map(part =>
+                            pick(
+                                pick(
+                                    pick(part, 'Instrument')[0], 'longName'
+                                )[0],
+                                '#text'
+                            )[0]
+                        ).map((partName, i) => (
+                            <tr key={i} className='px-4'>
                                 <td className='text-2xl font-bold mr-4'>
                                     {partName}
                                 </td>
@@ -159,13 +162,12 @@ const App = () => {
                                     <span className='align-[4px]'>
                                         <PlayButton
                                             audioContext={audioContext}
-                                            scoreData={scoreData}
-                                            partIndex={i}
+                                            staffs={pick(scoreData, 'Staff')[i]}
                                         />
                                     </span>
                                 </td>
                             </tr>
-                        )}
+                        ))}
                     </tbody>
                 </table>
             )}
