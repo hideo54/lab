@@ -38,6 +38,7 @@ const App = () => {
     );
 
     useEffect(() => {
+        if (audioContext) return;
         (async () => {
             const audioContext = new AudioContext();
             await audioContext.audioWorklet.addModule('/lib/essentia-worklet-processor.js');
@@ -51,8 +52,10 @@ const App = () => {
             mediaStreamAudioSourceNode.connect(audioWorkletNode);
 
             audioWorkletNode.port.onmessage = handleMessage;
+
+            setAudioContext(audioContext);
         })();
-    }, []);
+    }, [audioContext, handleMessage]);
 
     return (
         <Layout>
