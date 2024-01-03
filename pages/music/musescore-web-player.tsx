@@ -67,8 +67,25 @@ const PlayButton: React.FC<{
                     const durationType = pick(
                         pick(element.Rest, 'durationType')[0], '#text'
                     )[0];
-                    const duration = durationTypeToSec(bpm, durationType);
-                    await sleep(duration);
+                    if (durationType === 'measure') {
+                        const durationText = pick(
+                            pick(element.Rest, 'duration')[0], '#text'
+                        )[0];
+                        if (durationText === '4/4') {
+                            const duration = durationTypeToSec(bpm, 'whole');
+                            await sleep(duration);
+                        } else if (durationText === '2/4') {
+                            const duration = durationTypeToSec(bpm, 'half');
+                            await sleep(duration);
+                        } else {
+                            console.error('Unknown durationText for "while" rest: ', durationText);
+                            const duration = durationTypeToSec(bpm, 'whole');
+                            await sleep(duration);
+                        }
+                    } else {
+                        const duration = durationTypeToSec(bpm, durationType);
+                        await sleep(duration);
+                    }
                 }
             }
             setIsPlaying(false);

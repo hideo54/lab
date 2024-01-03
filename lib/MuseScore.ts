@@ -1,5 +1,4 @@
 type DurationType =
-    | 'measure'
     | 'whole'
     | 'half'
     | 'quarter'
@@ -8,7 +7,6 @@ type DurationType =
 
 export const durationTypeToSec = (bpm: number, durationType: DurationType) => {
     const beatSecond = 4 * 60 / bpm;
-    if (durationType === 'measure') return beatSecond;
     if (durationType === 'whole') return beatSecond;
     if (durationType === 'half') return beatSecond / 2;
     if (durationType === 'quarter') return beatSecond / 4;
