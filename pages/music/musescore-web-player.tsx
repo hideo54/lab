@@ -31,7 +31,7 @@ const PlayButton: React.FC<{
     useEffect(() => {
         if (!isPlaying) return;
         let isCancelled = false;
-        let bpm = 0;
+        let bpm = 1;
         const play = async () => {
             const elements = pick(staffs, 'Measure').map(measure => pick(measure, 'voice')).flat().flat();
             for (const element of elements) {
@@ -47,20 +47,61 @@ const PlayButton: React.FC<{
                     const durationType = pick(
                         pick(element.Chord, 'durationType')[0], '#text'
                     )[0];
+
                     const dotsElement = pick(element.Chord, 'dots');
                     const dots = dotsElement.length > 0 ? pick(dotsElement[0], '#text')[0] : 0;
+
                     const note = pick(element.Chord, 'Note')[0];
                     const pitch = pick(
                         pick(note, 'pitch')[0], '#text'
                     )[0];
                     const duration = durationTypeToSec(bpm, durationType) * dotsToMultiple(dots);
 
-                    playSound({
-                        audioContext,
-                        hz: pitchNumberToHz(pitch),
-                        second: duration,
-                    });
-                    await sleep(duration);
+                    const tie = note.map((e: any) =>
+                        e.Spanner && e[':@']['@_type'] === 'Tie'
+                            ? e.Spanner
+                            : undefined
+                    ).filter(notUndefined)[0];
+                    if (tie) {
+                        if (pick(tie, 'next')[0]) {
+                            // tie の前半なので、後半のぶんまで鳴らす (duration を増やす)
+                            const next = pick(tie, 'next')[0];
+                            const location = pick(next, 'location')[0];
+                            const measures = pick(
+                                pick(location, 'measures')[0] || [], '#text'
+                            )[0];
+                            const fractions = pick(
+                                pick(location, 'fractions')[0] || [], '#text'
+                            )[0];
+                            const nextDuration = ((ms: number | undefined, fr: string) => {
+                                if (ms === 1) {
+                                    if (fr === '-1/2') return durationTypeToSec(bpm, '1/2');
+                                    if (fr === '-3/4') return durationTypeToSec(bpm, '1/4');
+                                    if (fr === '-7/8') return durationTypeToSec(bpm, '1/8');
+                                }
+                                if (ms === undefined) return durationTypeToSec(bpm, fr as any);
+                                console.error('Unknown fractions for "next" tie: ', fr);
+                                return 0;
+                            })(measures, fractions);
+                            playSound({
+                                audioContext,
+                                hz: pitchNumberToHz(pitch),
+                                second: duration + nextDuration,
+                            });
+                            await sleep(duration + nextDuration);
+                        }
+                        if (pick(tie, 'prev')[0]) {
+                            // tie の後半なので、音を鳴らさない
+                            continue;
+                        }
+                    } else {
+                        playSound({
+                            audioContext,
+                            hz: pitchNumberToHz(pitch),
+                            second: duration,
+                        });
+                        await sleep(duration);
+                    }
                 }
 
                 if (element.Rest) {
@@ -130,6 +171,7 @@ const App = () => {
                 const mscxFile = Object.entries(result.files).filter(([k]) => k.endsWith('.mscx'))[0][1];
                 const mscxXmlStr = await mscxFile.async('string');
                 const parser = new XMLParser({
+                    ignoreAttributes: false,
                     preserveOrder: true,
                 });
                 const data = pick(
