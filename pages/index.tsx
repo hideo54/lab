@@ -42,7 +42,7 @@ const App = () => {
                     href='/acapella/chord-practice'
                     title='和音練習くん'
                 >
-                    発声練習のときに和音感覚がない奴を助けてくれます
+                    基準音を選ぶと、その音と、3度・5度上の音を再生できます。音感つけましょう。
                 </Card>
                 <Card
                     href='/u-tokyo/party-approval-rate'

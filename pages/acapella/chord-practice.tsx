@@ -1,9 +1,60 @@
 import { useEffect, useState } from 'react';
-import { AddCircle, RemoveCircle } from '@styled-icons/ionicons-solid';
+import { AddCircle, Pause, Play, RemoveCircle } from '@styled-icons/ionicons-solid';
+import { ArrowDown } from '@styled-icons/ionicons-outline';
 import Layout from '../../components/Layout';
 import Piano from '../../components/Piano';
-import { playSound, toneToHz } from '../../lib/music';
-import { ArrowDown } from '@styled-icons/ionicons-outline';
+import { playSound, toneToHz, transpose } from '../../lib/music';
+import { sleep } from '../../lib/utils';
+
+const ToneButton: React.FC<{
+    audioContext: AudioContext;
+    tone: string;
+    degree: number;
+    second: number;
+}> = ({ audioContext, tone, degree, second }) => {
+    const [isPlaying, setIsPlaying] = useState(false);
+
+    useEffect(() => {
+        if (!audioContext || !second) return;
+        if (!isPlaying) return;
+        const play = async () => {
+            playSound({
+                audioContext,
+                hz: toneToHz(tone),
+                second,
+            });
+            await sleep(second);
+            setIsPlaying(false);
+        };
+        play();
+    }, [audioContext, tone, second, isPlaying]);
+
+    return (
+        <div className=''>
+            <div className='text-center font-bold'>
+                {degree}度
+            </div>
+            <div
+                className={[
+                    'text-center mx-4 p-4 border-2 border-solid border-gray-700 rounded',
+                    isPlaying
+                        ? 'text-white bg-gray-700'
+                        : '',
+                ].join(' ')}
+            >
+                <div className='text-xl font-bold'>
+                    {tone}
+                </div>
+                <button onClick={() => setIsPlaying(!isPlaying)}>
+                    {isPlaying
+                        ? <Pause size='3em' />
+                        : <Play size='3em' />
+                    }
+                </button>
+            </div>
+        </div>
+    );
+};
 
 const App = () => {
     const [audioContext, setAudioContext] = useState<
@@ -12,6 +63,8 @@ const App = () => {
     const [tone, setTone] = useState<string>('C');
     const [octave, setOctave] = useState<number>(3);
     const [counter, setCounter] = useState<number>(0); // Just for re-rendering
+
+    const second = 2;
 
     useEffect(() => {
         setAudioContext(new AudioContext());
@@ -75,6 +128,26 @@ const App = () => {
             </div>
             <div className='text-center my-8'>
                 <ArrowDown size='3em' />
+            </div>
+            <div className='flex justify-center'>
+                <ToneButton
+                    audioContext={audioContext}
+                    tone={`${tone}${octave}`}
+                    degree={1}
+                    second={second}
+                />
+                <ToneButton
+                    audioContext={audioContext}
+                    tone={transpose(tone, octave, 4).join('')}
+                    degree={3}
+                    second={second}
+                />
+                <ToneButton
+                    audioContext={audioContext}
+                    tone={transpose(tone, octave, 7).join('')}
+                    degree={5}
+                    second={second}
+                />
             </div>
         </Layout>
     );
