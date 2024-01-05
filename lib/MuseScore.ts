@@ -7,7 +7,11 @@ type DurationType =
     | 'quarter'
     | '1/4'
     | 'eighth'
+    | '3/4'
+    | '1/6'
     | '1/8'
+    | '3/8'
+    | '1/12'
     | '16th'
     | '1/16'
     | '32nd'
@@ -23,7 +27,11 @@ export const durationTypeToSec = (bpm: number, durationType: DurationType) => {
     if (durationType === 'quarter') return beatSecond / 4;
     if (durationType === '1/4') return beatSecond / 4;
     if (durationType === 'eighth') return beatSecond / 8;
+    if (durationType === '3/4') return beatSecond * 3 / 4;
+    if (durationType === '1/6') return beatSecond / 6;
     if (durationType === '1/8') return beatSecond / 8;
+    if (durationType === '3/8') return beatSecond * 3 / 8;
+    if (durationType === '1/12') return beatSecond / 12;
     if (durationType === '16th') return beatSecond / 16;
     if (durationType === '1/16') return beatSecond / 16;
     if (durationType === '32nd') return beatSecond / 32;
@@ -105,15 +113,18 @@ export const parseMuseScoreScoreIntoPartCommands = (score: any): Command[][] => 
                         const fractions = pick(
                             pick(location, 'fractions')[0] || [], '#text'
                         )[0];
-                        const nextDuration = ((ms: number | undefined, fr: string) => {
+                        const nextDuration = ((ms: number | undefined, fr: string | undefined) => {
                             if (ms === 1) {
                                 if (fr === '-1/2') return durationTypeToSec(1, '1/2');
                                 if (fr === '-3/4') return durationTypeToSec(1, '1/4');
+                                if (fr === '-5/6') return durationTypeToSec(1, '1/6');
                                 if (fr === '-7/8') return durationTypeToSec(1, '1/8');
+                                if (fr === '-11/12') return durationTypeToSec(1, '1/12');
+                                if (fr === undefined) return durationTypeToSec(1, 'whole');
                             }
                             // eslint-disable-next-line @typescript-eslint/no-explicit-any
                             if (ms === undefined) return durationTypeToSec(1, fr as any);
-                            console.error('Unknown fractions for "next" tie: ', fr);
+                            console.error('Unknown fractions for "next" tie: ', ms, fr);
                             return 0;
                         })(measures, fractions);
                         return [
