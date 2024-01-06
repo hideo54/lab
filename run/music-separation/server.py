@@ -29,23 +29,24 @@ def main():
         yt_dlp_result = ydl.extract_info(url, download=True)
         original_mp3_filename = yt_dlp_result['requested_downloads'][0]['filename']
 
-    demucs.separate.main([
-        '-o', 'tmp',
-        '-n', model,
-        '--filename', '{track}_{stem}.{ext}',
-        '--jobs', 0,
-        '--mp3',
-        original_mp3_filename,
-    ])
+    if not os.path.exists(original_mp3_filename.replace('/original/', f'/{model}/').replace('.mp3', f'_{stems[0]}.mp3')):
+        demucs.separate.main([
+            '-o', 'tmp',
+            '-n', model,
+            '--filename', '{track}_{stem}.{ext}',
+            '--jobs', 0,
+            '--mp3',
+            original_mp3_filename,
+        ])
 
     result_urls = dict()
 
     for stem in stems:
-        source_filename = f'tmp/{model}/{stem}'
-        dest_filename = 'music-separation/' + original_mp3_filename.replace('.mp3', f'_{model}_stem.mp3')
+        source_filename = original_mp3_filename.replace('/original/', f'/{model}/').replace('.mp3', f'_{stem}.mp3')
+        dest_filename = 'music-separation/' + original_mp3_filename.replace('tmp/original/', '').replace('.mp3', f'_{model}_{stem}.mp3')
         blob = bucket.blob(dest_filename)
         upload_result = blob.upload_from_filename(source_filename)
-        result_urls[stem] = f'{bucket_url}/music-separation/{dest_filename}'
+        result_urls[stem] = f'{bucket_url}/{dest_filename}'
 
     return {
         'ok': True,
