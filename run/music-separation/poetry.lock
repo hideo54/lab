@@ -992,6 +992,25 @@ extra = ["lxml (>=4.6)", "pydot (>=1.4.2)", "pygraphviz (>=1.10)", "sympy (>=1.1
 test = ["codecov (>=2.1)", "pytest (>=7.2)", "pytest-cov (>=4.0)"]
 
 [[package]]
+name = "ngrok"
+version = "0.12.1"
+description = "The ngrok Agent SDK for Python"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "ngrok-0.12.1-cp37-abi3-macosx_10_7_x86_64.whl", hash = "sha256:b77e76249f50da4b7758aba5cef5a6b48e778a6e8d0294265fd0d4cbf38f0014"},
+    {file = "ngrok-0.12.1-cp37-abi3-macosx_10_9_x86_64.macosx_11_0_arm64.macosx_10_9_universal2.whl", hash = "sha256:5c18ce97294581de3c3f95e38364513a14796508e8a81e7e52ab8e4fa8d3bac7"},
+    {file = "ngrok-0.12.1-cp37-abi3-macosx_11_0_arm64.whl", hash = "sha256:ab76656c6373018176bb88e0f8afe54a9c9ecbc7e9a619dd964271203203213a"},
+    {file = "ngrok-0.12.1-cp37-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:de1f2e31bff82dd2b9a3bd00cba3c48fb54bf71e9ed6a2b514280108d12c29fa"},
+    {file = "ngrok-0.12.1-cp37-abi3-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:d453bea65439daf4bcb29ed827f28028ca1a0b8340a304c3389eb18c85b74c7b"},
+    {file = "ngrok-0.12.1-cp37-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:8b8843335612485c33b809971fb24834f0dd56276de44b323726ae523429b92f"},
+    {file = "ngrok-0.12.1-cp37-abi3-musllinux_1_2_aarch64.whl", hash = "sha256:25bd7bb64aabb7a678eb3202d01516e9efb4992d5d02eee05523beb197e8651d"},
+    {file = "ngrok-0.12.1-cp37-abi3-musllinux_1_2_x86_64.whl", hash = "sha256:56bca0413bb565f4167b41b75f03df8c336e30f4999d9c0300cc938f6837c6a3"},
+    {file = "ngrok-0.12.1-cp37-abi3-win32.whl", hash = "sha256:d2fa9fbd7363176740bd901a75b3b5a5b45fae91487c2c5c4c31383ad5fb770e"},
+    {file = "ngrok-0.12.1-cp37-abi3-win_amd64.whl", hash = "sha256:dcd510d5f0d382688610a863ab94df97f5bbfdd7b88c6edc2320ee8860c20dd9"},
+]
+
+[[package]]
 name = "numpy"
 version = "1.25.2"
 description = "Fundamental package for array computing in Python"
@@ -1587,4 +1606,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "0374e8c1e9e73bd7b8be5d23c6fb5fa492b3e379617226640b9b9ac0d958877c"
+content-hash = "e90044343b8f716df47dfa482decc2817df49252c377d0ca56ea9ac23928efa3"
