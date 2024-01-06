@@ -105,7 +105,7 @@ const App = () => {
                 </div>
             </section>
             {audioContext && scoreData && (
-                <section className='flex items-center'>
+                <section className='flex justify-center items-center'>
                     <table className='w-auto mx-4'>
                         <tbody>
                             {pick(scoreData, 'Part').map(part =>
