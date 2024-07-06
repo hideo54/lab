@@ -33,13 +33,13 @@ const App = () => {
             </section>
             <section>
                 <Card
-                    href='/acapella/first-sight'
+                    href='/music/first-sight'
                     title='FirstSight'
                 >
                     MuseScore 楽譜を読み取り、各パートの始めの音を再生します。音取りに便利です。
                 </Card>
                 <Card
-                    href='/acapella/chord-practice'
+                    href='/music/chord-practice'
                     title='和音練習くん'
                 >
                     基準音を選ぶと、その音と、3度・5度上の音を再生できます。音感つけましょう。
