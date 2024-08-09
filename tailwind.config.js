@@ -38,11 +38,15 @@ module.exports = {
     daisyui: {
         themes: [
             {
-                light: require('daisyui/src/theming/themes')['[data-theme=light]'],
+                light: {
+                    ...require('daisyui/src/theming/themes')['[data-theme=light]'],
+                    primary: '#0091ea',
+                },
                 dark: {
                     ...require('daisyui/src/theming/themes')['[data-theme=dark]'],
                     'base-100': '#000000',
                     'base-content': '#ffffff',
+                    primary: '#0091ea',
                 },
             },
         ],

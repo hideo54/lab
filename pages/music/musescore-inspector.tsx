@@ -2,10 +2,12 @@ import { useEffect, useState } from 'react';
 import { PauseCircle, PlayCircle } from '@styled-icons/ionicons-outline';
 import JSZip from 'jszip';
 import { XMLParser } from 'fast-xml-parser';
+import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from 'recharts';
 import Layout from '../../components/Layout';
 import type { MuseScore } from '../../lib/MuseScore';
 import { midiNumberToNoteName, pitchNumberToHz, playSound } from '../../lib/music';
 import { notUndefined, sleep } from '../../lib/utils';
+import { countBy, range } from 'lodash';
 
 const getFirstPitch = (scoreData: MuseScore, partIndex: number) => {
     const chords = scoreData.Score.Staff[partIndex].Measure.map(measure => measure.voice.Chord).flat().filter(notUndefined);
@@ -43,6 +45,81 @@ const PlayButton: React.FC<{
                 : <PlayCircle size='3em' />
             }
         </button>
+    );
+};
+
+const PitchDistribution: React.FC<{
+    audioContext: AudioContext;
+    scoreData: MuseScore;
+}> = ({ audioContext, scoreData }) => {
+    const partNames = scoreData.Score.Part.map(part => part.Instrument.longName);
+    const [selectedPartIndex, setSelectedPartIndex] = useState(0);
+    const getPitches = (partIndex: number) => (
+        scoreData.Score.Staff[partIndex].Measure
+            .map(measure => measure.voice.Chord).flat().filter(notUndefined)
+            .map(chord => chord.Note).flat().filter(notUndefined)
+            .map(note => note.pitch)
+    );
+    const pitches = getPitches(selectedPartIndex);
+    const minPitch = Math.min(...range(partNames.length).map(i => getPitches(i)).flat());
+    const maxPitch = Math.max(...range(partNames.length).map(i => getPitches(i)).flat());
+    const pitchCount = countBy(pitches);
+    const maxPitchCount = Math.max(
+        ...range(partNames.length).map(i =>
+            Object.values(countBy(getPitches(i)))
+        ).flat()
+    );
+    const filledPitchCountEntries = range(minPitch, maxPitch + 1).map(pitch => [
+        pitch,
+        pitchCount[pitch] || 0,
+    ]);
+    return (
+        <section>
+            <h2 className='mb-0'>音の高さの分布</h2>
+            <div className='mb-4'>
+                <small>
+                    音の長さは考慮しておらず、純粋に音符の数のみをカウントしていることに注意。
+                </small>
+            </div>
+            <div className='text-center'>
+                <select
+                    className='select select-bordered w-full max-w-xs'
+                    onChange={e => setSelectedPartIndex(parseInt(e.target.value))}
+                >
+                    {partNames.map((partName, i) =>
+                        <option key={partName} value={i}>{partName}</option>
+                    )}
+                </select>
+                <ResponsiveContainer width='100%' height={500}>
+                    <BarChart
+                        width={600}
+                        height={400}
+                        data={filledPitchCountEntries.map(([pitch, count]) => ({
+                            pitch,
+                            pitchName: midiNumberToNoteName(pitch),
+                            count,
+                        }))}
+                    >
+                        <XAxis dataKey='pitchName' />
+                        <YAxis
+                            domain={[0, Math.floor(maxPitchCount * 1.1)]}
+                            minTickGap={10}
+                        />
+                        <Bar
+                            dataKey='count'
+                            className='fill-primary cursor-pointer'
+                            onClick={data => {
+                                playSound({
+                                    audioContext,
+                                    hz: pitchNumberToHz(data.payload.pitch),
+                                    second: 2,
+                                });
+                            }}
+                        />
+                    </BarChart>
+                </ResponsiveContainer>
+            </div>
+        </section>
     );
 };
 
@@ -142,6 +219,7 @@ const App = () => {
             </section>
             {audioContext && scoreData && (
                 <div>
+                    <PitchDistribution audioContext={audioContext} scoreData={scoreData} />
                     <FirstPitch audioContext={audioContext} scoreData={scoreData} />
                 </div>
             )}
