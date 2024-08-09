@@ -22,6 +22,13 @@ export const toneToHz = (tone: string) => {
     return semitoneCountFromA4ToHz(count);
 };
 
+export const midiNumberToNoteName = (midiNumber: number): string => {
+    const noteNames: string[] = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+    const octave: number = Math.floor(midiNumber / 12) - 1;
+    const note: string = noteNames[midiNumber % 12];
+    return `${note}${octave}`;
+};
+
 export const hzToTone = (hz: number) => {
     const A4Hz = 440;
     const count = Math.round(12 * Math.log2(hz / A4Hz));

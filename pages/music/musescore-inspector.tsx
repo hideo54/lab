@@ -4,34 +4,37 @@ import JSZip from 'jszip';
 import { XMLParser } from 'fast-xml-parser';
 import Layout from '../../components/Layout';
 import type { MuseScore } from '../../lib/MuseScore';
-import { pitchNumberToHz, playSound } from '../../lib/music';
+import { midiNumberToNoteName, pitchNumberToHz, playSound } from '../../lib/music';
 import { notUndefined, sleep } from '../../lib/utils';
+
+const getFirstPitch = (scoreData: MuseScore, partIndex: number) => {
+    const chords = scoreData.Score.Staff[partIndex].Measure.map(measure => measure.voice.Chord).flat().filter(notUndefined);
+    const notes = chords.map(chord => chord.Note).flat().filter(notUndefined);
+    const firstPitch = notes[0].pitch;
+    return firstPitch;
+};
 
 const PlayButton: React.FC<{
     audioContext: AudioContext;
-    scoreData: MuseScore;
-    partIndex: number;
+    hz: number;
     second: number;
-}> = ({ audioContext, scoreData, partIndex, second }) => {
+}> = ({ audioContext, hz, second }) => {
     const [isPlaying, setIsPlaying] = useState(false);
 
     useEffect(() => {
-        if (!audioContext || !scoreData || !second) return;
+        if (!audioContext) return;
         if (!isPlaying) return;
         const play = async () => {
-            const chords = scoreData.Score.Staff[partIndex].Measure.map(measure => measure.voice.Chord).flat().filter(notUndefined);
-            const notes = chords.map(chord => chord.Note).flat().filter(notUndefined);
-            const firstPitch = notes[0].pitch;
             playSound({
                 audioContext,
-                hz: pitchNumberToHz(firstPitch),
+                hz,
                 second,
             });
             await sleep(second);
             setIsPlaying(false);
         };
         play();
-    }, [audioContext, scoreData, partIndex, second, isPlaying]);
+    }, [audioContext, hz, second, isPlaying]);
 
     return (
         <button onClick={() => setIsPlaying(!isPlaying)}>
@@ -40,6 +43,41 @@ const PlayButton: React.FC<{
                 : <PlayCircle size='3em' />
             }
         </button>
+    );
+};
+
+const FirstPitch: React.FC<{
+    audioContext: AudioContext;
+    scoreData: MuseScore;
+}> = ({ audioContext, scoreData }) => {
+    const partNames = scoreData.Score.Part.map(part => part.Instrument.longName);
+    return (
+        <section>
+            <h2>はじめの音</h2>
+            <table className='w-auto mx-auto'>
+                <tbody>
+                    {partNames.map((partName, i) =>
+                        <tr key={partName} className='px-4'>
+                            <td className='text-2xl font-bold mr-4'>
+                                {partName}
+                            </td>
+                            <td>
+                                <span className='align-[4px]'>
+                                    <PlayButton
+                                        audioContext={audioContext}
+                                        hz={pitchNumberToHz(getFirstPitch(scoreData, i))}
+                                        second={2}
+                                    />
+                                </span>
+                                <span className='text-xl'>
+                                    {midiNumberToNoteName(getFirstPitch(scoreData, i))}
+                                </span>
+                            </td>
+                        </tr>
+                    )}
+                </tbody>
+            </table>
+        </section>
     );
 };
 
@@ -76,10 +114,10 @@ const App = () => {
     return (
         <Layout>
             <h1>
-                FirstSight
+                MuseScore Inspector
             </h1>
             <p>
-                MuseScore 楽譜を読み取り、各パートの始めの音を再生します。音取りに便利です。
+                MuseScore 楽譜を読み取り、情報を表示します。
                 <br />
                 楽譜データは完全にローカルで処理され、アップロードは発生しません。
             </p>
@@ -103,27 +141,9 @@ const App = () => {
                 </div>
             </section>
             {audioContext && scoreData && (
-                <table className='w-auto mx-auto'>
-                    <tbody>
-                        {scoreData.Score.Part.map(part => part.Instrument.longName).map((partName, i) =>
-                            <tr key={partName} className='px-4'>
-                                <td className='text-2xl font-bold mr-4'>
-                                    {partName}
-                                </td>
-                                <td>
-                                    <span className='align-[4px]'>
-                                        <PlayButton
-                                            audioContext={audioContext}
-                                            scoreData={scoreData}
-                                            partIndex={i}
-                                            second={2}
-                                        />
-                                    </span>
-                                </td>
-                            </tr>
-                        )}
-                    </tbody>
-                </table>
+                <div>
+                    <FirstPitch audioContext={audioContext} scoreData={scoreData} />
+                </div>
             )}
         </Layout>
     );

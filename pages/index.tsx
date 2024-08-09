@@ -30,10 +30,10 @@ const App = () => {
             </section>
             <section>
                 <Card
-                    href='/music/first-sight'
-                    title='FirstSight'
+                    href='/music/musescore-inspector'
+                    title='MuseScore Inspector'
                 >
-                    MuseScore 楽譜を読み取り、各パートの始めの音を再生します。音取りに便利です。
+                    MuseScore 楽譜ファイルを読み取り、詳細を表示します。
                 </Card>
                 <Card
                     href='/music/chord-practice'
