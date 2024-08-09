@@ -22,14 +22,11 @@ const App = () => {
     return (
         <Layout header={<></>}>
             <section className='text-center mb-10'>
-                <div className='p-4'>
-                    <Flask size='200px' color='silver' />
+                <div className='p-4 flex justify-center items-center'>
+                    <Flask size='54px' className='fill-base-content' />
+                    <span className='text-4xl font-noto m-4'>hideo54 Lab</span>
                 </div>
-                <h1 className='font-noto font-light'>
-                    Welcome to
-                    <div className='text-6xl m-4'>hideo54 Lab</div>
-                </h1>
-                <p>小さな制作物や研究結果を公開します。</p>
+                <div>小さな制作物や研究結果を公開します。</div>
             </section>
             <section>
                 <Card
