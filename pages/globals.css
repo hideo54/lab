@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-html, body {
-    @apply w-full h-full dark:bg-black;
-}
-
 main {
     @apply mx-auto px-4;
 }

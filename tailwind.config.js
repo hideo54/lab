@@ -35,6 +35,17 @@ module.exports = {
             mono: ['var(--font-mono)', 'monospace'],
         },
     },
+    daisyui: {
+        themes: [
+            {
+                dark: {
+                    ...require('daisyui/src/theming/themes')['dark'],
+                    'base-100': '#000000',
+                    'base-content': '#ffffff',
+                },
+            },
+        ],
+    },
     plugins: [
         require('@tailwindcss/typography'),
         require('daisyui'),
