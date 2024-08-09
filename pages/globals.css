@@ -2,8 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-    @apply dark:bg-black;
+html, body {
+    @apply w-full h-full dark:bg-black;
 }
 
 main {

@@ -1,18 +1,12 @@
 import { ReactNode } from 'react';
 import Head from 'next/head';
-import styled from 'styled-components';
 import { ChevronBack } from '@styled-icons/ionicons-outline';
 import { IconNextLink } from '@hideo54/reactor';
 
-const HeaderDiv = styled.div`
-    margin-top: 1em;
-    padding-left: 1em;
-`;
-
 const goTopHeader = (
-    <HeaderDiv>
+    <div className='py-4 pl-4'>
         <IconNextLink LeftIcon={ChevronBack} href='/'>トップページ</IconNextLink>
-    </HeaderDiv>
+    </div>
 );
 
 const Layout = ({
