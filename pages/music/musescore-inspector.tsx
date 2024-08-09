@@ -77,7 +77,7 @@ const PitchDistribution: React.FC<{
     return (
         <section>
             <h2 className='mb-0'>音の高さの分布</h2>
-            <div className='mb-4'>
+            <div className='my-4 leading-4'>
                 <small>
                     音の長さは考慮しておらず、純粋に音符の数のみをカウントしていることに注意。
                 </small>
@@ -100,6 +100,10 @@ const PitchDistribution: React.FC<{
                             pitchName: midiNumberToNoteName(pitch),
                             count,
                         }))}
+                        margin={{
+                            top: 40,
+                            left: -20,
+                        }}
                     >
                         <XAxis dataKey='pitchName' />
                         <YAxis
