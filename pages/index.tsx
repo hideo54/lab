@@ -31,7 +31,7 @@ const App = () => {
             <section>
                 <Card
                     href='/music/musescore-inspector'
-                    title='MuseScore Inspector'
+                    title='MuseScore Inspector (beta)'
                 >
                     MuseScore 楽譜ファイルを読み取り、詳細を表示します。
                 </Card>
@@ -39,7 +39,7 @@ const App = () => {
                     href='/music/chord-practice'
                     title='和音練習くん'
                 >
-                    基準音を選ぶと、その音と、3度・5度上の音を再生できます。音感つけましょう。
+                    基準音を選ぶと、その音と、3度・5度上の音を再生できます。
                 </Card>
                 <Card
                     href='/u-tokyo/party-approval-rate'
