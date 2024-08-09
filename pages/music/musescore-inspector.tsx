@@ -207,6 +207,9 @@ const App = () => {
             <p>
                 まだ検証が足りていないため、おかしな結果になる楽譜があればお問い合わせください。
             </p>
+            <p>
+                デバイスによっては、音を再生する際に設定が必要な場合があります。例えば iPhone の場合、消音モードをオフにする必要があります (Apple の方針による Safari の仕様)。
+            </p>
             <section className='my-4'>
                 <div className='form-control'>
                     <label className='label'>
