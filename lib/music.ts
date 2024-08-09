@@ -1,9 +1,9 @@
 export const pitchNumberToHz = (pitch: number) => 440 * Math.pow(2, (pitch - 69) / 12);
 
-export const semitoneCountFromA3ToHz = (count: number) => {
-    // A3: 440 Hz or 442 Hz. Here I set 440 Hz.
-    const A3Hz = 440;
-    const hz = A3Hz * Math.pow(2, (1 / 12) * (count - 9));
+export const semitoneCountFromA4ToHz = (count: number) => {
+    // A4: 440 Hz or 442 Hz. Here I set 440 Hz.
+    const A4Hz = 440;
+    const hz = A4Hz * Math.pow(2, (1 / 12) * (count - 9));
     return hz;
 };
 
@@ -19,7 +19,22 @@ export const toneToHz = (tone: string) => {
     if (tone.endsWith('2')) count -= 24;
     if (tone.endsWith('3')) count -= 12;
     if (tone.endsWith('5')) count += 12;
-    return semitoneCountFromA3ToHz(count);
+    return semitoneCountFromA4ToHz(count);
+};
+
+export const midiNumberToNoteName = (midiNumber: number): string => {
+    const noteNames: string[] = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+    const octave: number = Math.floor(midiNumber / 12) - 1;
+    const note: string = noteNames[midiNumber % 12];
+    return `${note}${octave}`;
+};
+
+export const hzToTone = (hz: number) => {
+    const A4Hz = 440;
+    const count = Math.round(12 * Math.log2(hz / A4Hz));
+    const tone = toneTable[(count + 9) % 12 >= 0 ? (count + 9) % 12 : (count + 9) % 12 + 12];
+    const octave = Math.floor(count / 12) + 5;
+    return `${tone}${octave}`;
 };
 
 export const toneTable = [

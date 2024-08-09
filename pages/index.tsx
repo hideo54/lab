@@ -22,24 +22,21 @@ const App = () => {
     return (
         <Layout header={<></>}>
             <section className='text-center mb-10'>
-                <div className='p-4'>
-                    <Flask size='200px' color='silver' />
+                <div className='p-4 flex justify-center items-center'>
+                    <Flask size='54px' className='fill-base-content' />
+                    <span className='text-4xl font-noto m-4'>hideo54 Lab</span>
                 </div>
-                <h1 className='font-noto font-light'>
-                    Welcome to
-                    <div className='text-6xl m-4'>hideo54 Lab</div>
-                </h1>
-                <p>小さな制作物や研究結果を公開します。</p>
+                <div>小さな制作物や研究結果を公開します。</div>
             </section>
             <section>
                 <Card
-                    href='/acapella/first-sight'
-                    title='FirstSight'
+                    href='/music/musescore-inspector'
+                    title='MuseScore Inspector'
                 >
-                    MuseScore 楽譜を読み取り、各パートの始めの音を再生します。音取りに便利です。
+                    MuseScore 楽譜ファイルを読み取り、詳細を表示します。
                 </Card>
                 <Card
-                    href='/acapella/chord-practice'
+                    href='/music/chord-practice'
                     title='和音練習くん'
                 >
                     基準音を選ぶと、その音と、3度・5度上の音を再生できます。音感つけましょう。
