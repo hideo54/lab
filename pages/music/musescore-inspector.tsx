@@ -12,6 +12,7 @@ import { countBy, range } from 'lodash';
 const getFirstPitch = (scoreData: MuseScore, partIndex: number) => {
     const chords = scoreData.Score.Staff[partIndex].Measure.map(measure => measure.voice.Chord).flat().filter(notUndefined);
     const notes = chords.map(chord => chord.Note).flat().filter(notUndefined);
+    if (notes.length === 0) return undefined;
     const firstPitch = notes[0].pitch;
     return firstPitch;
 };
@@ -128,6 +129,7 @@ const FirstPitch: React.FC<{
     scoreData: MuseScore;
 }> = ({ audioContext, scoreData }) => {
     const partNames = scoreData.Score.Part.map(part => part.Instrument.longName);
+    const firstPitchEntries = partNames.map((partName, i) => [partName, getFirstPitch(scoreData, i)] as const);
     return (
         <section>
             <h2>はじめの音</h2>
@@ -139,16 +141,20 @@ const FirstPitch: React.FC<{
                                 {partName}
                             </td>
                             <td>
-                                <span className='align-[4px]'>
-                                    <PlayButton
-                                        audioContext={audioContext}
-                                        hz={pitchNumberToHz(getFirstPitch(scoreData, i))}
-                                        second={2}
-                                    />
-                                </span>
-                                <span className='text-xl'>
-                                    {midiNumberToNoteName(getFirstPitch(scoreData, i))}
-                                </span>
+                                {firstPitchEntries[i][1] && (
+                                    <span>
+                                        <span className='align-[4px]'>
+                                            <PlayButton
+                                                audioContext={audioContext}
+                                                hz={pitchNumberToHz(firstPitchEntries[i][1])}
+                                                second={2}
+                                            />
+                                        </span>
+                                        <span className='text-xl'>
+                                            {midiNumberToNoteName(firstPitchEntries[i][1])}
+                                        </span>
+                                    </span>
+                                )}
                             </td>
                         </tr>
                     )}
