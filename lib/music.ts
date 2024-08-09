@@ -26,7 +26,7 @@ export const hzToTone = (hz: number) => {
     const A4Hz = 440;
     const count = Math.round(12 * Math.log2(hz / A4Hz));
     const tone = toneTable[(count + 9) % 12 >= 0 ? (count + 9) % 12 : (count + 9) % 12 + 12];
-    const octave = Math.floor(count / 12) + 4;
+    const octave = Math.floor(count / 12) + 5;
     return `${tone}${octave}`;
 };
 
