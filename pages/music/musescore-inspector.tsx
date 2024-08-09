@@ -197,12 +197,15 @@ const App = () => {
     return (
         <Layout>
             <h1>
-                MuseScore Inspector
+                MuseScore Inspector <span className='text-red-800'>(beta)</span>
             </h1>
             <p>
                 MuseScore 楽譜を読み取り、情報を表示します。
                 <br />
                 楽譜データは完全にローカルで処理され、アップロードは発生しません。
+            </p>
+            <p>
+                まだ検証が足りていないため、おかしな結果になる楽譜があればお問い合わせください。
             </p>
             <section className='my-4'>
                 <div className='form-control'>
