@@ -1,14 +1,15 @@
-import { ChevronForward } from '@styled-icons/ionicons-outline';
+import { ChevronForward, Open } from '@styled-icons/ionicons-outline';
 import { Flask } from '@styled-icons/ionicons-solid';
-import { IconNextLink } from '@hideo54/reactor';
+import { IconAnchor, IconNextLink } from '@hideo54/reactor';
 import Layout from '../components/Layout';
+import { Github } from '@styled-icons/fa-brands';
 
 const Card: React.FC<{
     href: string;
     title: string;
     children: React.ReactNode;
 }> = ({ href, title, children }) => (
-    <article className='shadow-xl rounded-3xl m-8 p-4 border-2 dark:border-solid dark:border-white'>
+    <article className='shadow rounded-3xl m-8 p-4 border-2 dark:border-solid dark:border-white'>
         <h2 className='mt-2 font-bold font-noto'>
             <IconNextLink RightIcon={ChevronForward} href={href}>
                 {title}
@@ -26,7 +27,16 @@ const App = () => {
                     <Flask size='54px' className='fill-base-content' />
                     <span className='text-4xl font-noto m-4'>hideo54 Lab</span>
                 </div>
-                <div>小さな制作物や研究結果を公開します。</div>
+                <div>単独でリリースするほどでもない小さな制作物を公開します。</div>
+                <div className='my-4'>
+                    <IconAnchor
+                        href='https://github.com/hideo54/lab'
+                        LeftIcon={Github}
+                        RightIcon={Open}
+                    >
+                        GitHub Repository
+                    </IconAnchor>
+                </div>
             </section>
             <section>
                 <Card

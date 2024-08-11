@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { PauseCircle, PlayCircle } from '@styled-icons/ionicons-outline';
 import JSZip from 'jszip';
 import { XMLParser } from 'fast-xml-parser';
-import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from 'recharts';
+import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import Layout from '../../components/Layout';
 import type { MuseScore } from '../../lib/MuseScore';
 import { midiNumberToNoteName, pitchNumberToHz, playSound } from '../../lib/music';
@@ -110,6 +110,7 @@ const PitchDistribution: React.FC<{
                             domain={[0, Math.floor(maxPitchCount * 1.1)]}
                             minTickGap={10}
                         />
+                        <Tooltip />
                         <Bar
                             dataKey='count'
                             className='fill-primary cursor-pointer'
@@ -199,7 +200,10 @@ const App = () => {
     }, [audioContext, selectedFile]);
 
     return (
-        <Layout>
+        <Layout
+            title = 'MuseScore Inspector | hideo54 Lab'
+            description = 'MuseScore 楽譜を読み取り、情報を表示します。'
+        >
             <h1>
                 MuseScore Inspector <span className='text-red-800'>(beta)</span>
             </h1>
