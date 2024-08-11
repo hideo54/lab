@@ -1,6 +1,27 @@
 {
     "party-approval": [
         {
+            "year": 2024,
+            "method": "onsite",
+            "subjects": null,
+            "responses": 2796,
+            "rate": {
+                "jimin": 19.3,
+                "kokumin-minshu": 5.2,
+                "rikken-minshu": 3.5,
+                "ishin": 2.5,
+                "kyosan": 1.2,
+                "reiwa": 1.0,
+                "komei": 0.5,
+                "kyoiku": 0.3,
+                "sansei": 0.3,
+                "shakai-minshu": 0.2,
+                "others": 1.0,
+                "none": 47.0,
+                "not-sure": 18.0
+            }
+        },
+        {
             "year": 2023,
             "method": "onsite",
             "subjects": null,
