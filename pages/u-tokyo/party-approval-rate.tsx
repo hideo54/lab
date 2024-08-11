@@ -165,8 +165,8 @@ const App = () => {
                 <li>2020年: <IconAnchor RightIcon={Open} href='https://www.todaishimbun.org/enquate2020_4_20200504/'>新入生アンケート2020分析④ 社会問題編 オリ委員による「東大女子お断り」サークルの新歓制限「適切」78% | 東大新聞オンライン</IconAnchor></li>
                 <li>2021年: <IconAnchor RightIcon={Open} href='https://www.todaishimbun.org/questionnaire0422/'>【新入生アンケート2021】77%が対面授業を希望 今年の新入生の傾向とは？ | 東大新聞オンライン</IconAnchor></li>
                 <li>2022年: <IconAnchor RightIcon={Open} href='https://www.todaishimbun.org/questionnaire_20220426/'> 【新入生アンケート2022 ④社会問題】対面授業中心84%で最多 | 東大新聞オンライン</IconAnchor></li>
-                <li>2023年: <IconAnchor RightIcon={Open} href='https://www.todaishimbun.org/questionnaire4_20230504/'>【新入生アンケート2023 ④社会問題】東大の男女比「問題だ」 昨年から16ポイント減 | 東大新聞オンライン</IconAnchor></li>
-                <li>2024年: <IconAnchor RightIcon={Open} href='https://www.todaishimbun.org/questionnaire4_20240417/'>【新入生アンケート2024 社会問題】東大が発表した5年制新課程開設 約7割が「評価する」</IconAnchor></li>
+                <li>2023年: <IconAnchor RightIcon={Open} href='https://www.todaishimbun.org/questionnaire4_20230504/'>【新入生アンケート2023 ④社会問題】東大の男女比「問題だ」 昨年から16ポイント減 | 東大新聞オンライン</IconAnchor> (小数点第1位はグラフのピクセル数から算出)</li>
+                <li>2024年: <IconAnchor RightIcon={Open} href='https://www.todaishimbun.org/questionnaire4_20240417/'>【新入生アンケート2024 社会問題】東大が発表した5年制新課程開設 約7割が「評価する」</IconAnchor> (小数点第1位はグラフのピクセル数から算出)</li>
             </ul>
         </Layout>
     );

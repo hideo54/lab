@@ -27,18 +27,19 @@
             "subjects": null,
             "responses": 2820,
             "rate": {
-                "jimin": 24,
-                "kokumin-minshu": 7,
-                "rikken-minshu": 4,
-                "ishin": 3,
-                "kyosan": 1,
-                "nhk": 1,
-                "reiwa": 0,
-                "komei": 0,
-                "shakai-minshu": 0,
-                "others": 0,
-                "none": 43,
-                "not-sure": 14
+                "jimin": 23.7,
+                "kokumin-minshu": 6.6,
+                "rikken-minshu": 4.2,
+                "ishin": 3.3,
+                "kyosan": 1.5,
+                "nhk": 1.2,
+                "reiwa": 0.8,
+                "komei": 0.6,
+                "shakai-minshu": 0.6,
+                "sansei": 0.6,
+                "others": 0.6,
+                "none": 42.5,
+                "not-sure": 14.0
             }
         },
         {
