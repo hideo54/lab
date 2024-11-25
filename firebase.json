@@ -8,6 +8,15 @@
       "**/node_modules/**"
     ],
     "cleanUrls": true,
-    "trailingSlash": false
+    "trailingSlash": false,
+    "rewrites": [
+      {
+        "source": "/api/music-separation",
+        "run": {
+          "serviceId": "lab-music-separation",
+          "region": "asia-northeast1"
+        }
+      }
+    ]
   }
 }
